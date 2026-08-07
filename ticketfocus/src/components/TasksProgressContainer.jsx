@@ -1,4 +1,4 @@
-
+import "./TasksProgressContainer.css";
 
 export function TasksProgressContainer({ tasks }) {
   const totalTasks = tasks.length;

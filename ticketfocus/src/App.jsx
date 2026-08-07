@@ -40,7 +40,7 @@ function App() {
           </section>
 
           <section className="task-list-container p-inline-1rem white-bg rounded-8px">
-            <div className="list-container">
+            <div className="list-container p-block-1rem">
               {/* <div className="input-container">
                 <div className="input-icon">
                   <i className="fa-solid fa-plus"></i>
@@ -80,7 +80,7 @@ function App() {
             </div>
             <ul className="task-list">
               {tasks.length === 0 && (
-                <li className="no-task-yet item-container">No tasks yet.</li>
+                <li className="no-task-yet item-container p-block-1rem">No tasks yet.</li>
               )}
               {tasks.map((task) => {
                 return (

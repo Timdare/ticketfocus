@@ -1,4 +1,5 @@
 import { updateLocalStorage } from "../utils/updateLocalStorage";
+import "./InputContainer.css";
 
 export function InputContainer({
   input,

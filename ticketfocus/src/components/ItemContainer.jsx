@@ -1,4 +1,5 @@
 import { updateLocalStorage } from "../utils/updateLocalStorage";
+import "./ItemContainer.css";
 export function ItemContainer({ task, setTasks, updateInputs }) {
   function updateTaskStatus(e) {
     setTasks((prevTasks) => {
@@ -30,7 +31,7 @@ export function ItemContainer({ task, setTasks, updateInputs }) {
   };
 
   return (
-    <li className="item-container d-flex">
+    <li className="item-container d-flex p-block-1rem">
       <div className="item-text-container dark-grey-text">
         <input
           type="checkbox"

@@ -1,0 +1,107 @@
+.item-container{
+  border-bottom: 1px solid var(--light-grey-color);
+}
+.item-container:last-child{
+  border-bottom: none;
+}
+.item-container{
+  padding-inline: 1.5rem;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.item-container input[type="checkbox"], .item-text-container{
+  font-size: 1.2rem;
+}
+.item-text-container{
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  user-select: none; /* Prevents text selection on double click */
+}
+.item-container .item-text-container input[type="checkbox"]{
+  margin-right: .5rem;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  display: inline-grid;
+  place-content: center;
+  border: 2px solid var(--dark-grey-color);
+  border-radius: 50px;
+  margin: 0;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+.item-text-container input[type="checkbox"]::before{
+  content: "";
+  width: 10px;
+  height: 10px;
+  transform: scale(0);
+  transform-origin: center;
+  transition: transform 0.2s ease-in-out;
+  background-color: #ffffff;
+  /* Clips a sharp checkmark shape */
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+.item-text-container input[type="checkbox"]:checked {
+  background-color: var(--dark-blue-color);
+  border-color: var(--dark-blue-color);
+}
+.item-text-container input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+/* Keyboard focus accessibility states */
+.item-text-container input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--dark-blue-color);
+  outline-offset: 1px;
+}
+.item-text{
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.item-container .utils{
+  display: none;
+  align-items: center;
+  gap: 1rem;
+}
+.item-container:hover .utils{
+  display: flex;
+}
+.item-container .utils .category{
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: .25rem .5rem;
+  border-radius: 4px;
+  letter-spacing: 0.05rem;
+}
+.item-container .utils .delete-icon-container, .edit-icon-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+.item-container .utils .delete-icon,.edit-icon{
+  color: var(--dark-grey-color);
+  cursor: pointer;
+}
+.item-container .utils .delete-icon-container:hover{
+  color: red;
+  background-color: rgba(255, 0, 0, 0.1);
+}
+.item-container .utils .delete-icon:hover{
+  color: red;
+}
+.item-container .utils .edit-icon-container:hover{
+  color: var(--dark-blue-color);
+  background-color: var(--light-grey-color);
+}
+.item-container .utils .edit-icon:hover{
+  color: var(--dark-blue-color);
+}
