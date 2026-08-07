@@ -22,7 +22,7 @@ function App() {
     <>
       <div className="main-content">
         <header>
-          <h1 className="project-name dark-blue">TaskFocus</h1>
+          <h1 className="project-name dark-blue">TicketFocus</h1>
         </header>
 
         <main>
@@ -75,7 +75,7 @@ function App() {
             </div>
             <ul className="task-list">
               {tasks.length === 0 && (
-                <li className="no-task-yet item-container p-block-1rem">No tasks yet.</li>
+                <li className="no-task-yet item-container p-block-1rem">No tickets yet.</li>
               )}
               {tasks.map((task) => {
                 return (

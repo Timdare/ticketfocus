@@ -14,7 +14,7 @@ export function TasksProgressContainer({ tasks }) {
         <div className="task-progress-status">
           <span className="task-progress-status-text">
             {completeTasks.length} of {totalTasks}{" "}
-            {totalTasks === 1 ? "task" : "tasks"} completed
+            {totalTasks === 1 ? "ticket" : "tickets"} completed
           </span>
           <span className="task-progress-status-percent dark-blue">
             {completeTasksPercent ? Math.floor(completeTasksPercent) : 0}%

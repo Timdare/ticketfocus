@@ -43,7 +43,7 @@ export function InputContainer({
       </div>
       <input
         type="text"
-        placeholder="Add a new task..."
+        placeholder="Add a new ticket..."
         className="light-grey-bg"
         onChange={saveInput}
         onKeyDown={addTaskEnterKey}
@@ -60,7 +60,7 @@ export function InputContainer({
       </select>
       <div className="add-task-button-container">
         <button className="add-task-button" onClick={addTask}>
-          Add Task
+          Add Ticket
         </button>
       </div>
     </div>
