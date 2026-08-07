@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ItemContainer } from "./components/ItemContainer";
 import { TasksProgressContainer } from "./components/TasksProgressContainer";
 import { InputContainer } from "./components/InputContainer";
+import { WorkSessionContainer } from "./components/WorkSessionContainer";
 import "./App.css";
 
 function App() {
@@ -28,15 +29,9 @@ function App() {
           <section className="task-details-container">
             <TasksProgressContainer tasks={tasks} />
 
-            <section className="work-session-container light-blue-bg rounded-8px p-inline-1rem">
-              <div>
-                <i className="fa-solid fa-stopwatch fa-2x white-text"></i>
-              </div>
-              <p className="white-text deep-work-session-text">
-                Deep Work Session
-              </p>
-              <p className="white-text deep-work-session-time">25:00</p>
-            </section>
+
+            <WorkSessionContainer />
+
           </section>
 
           <section className="task-list-container p-inline-1rem white-bg rounded-8px">
