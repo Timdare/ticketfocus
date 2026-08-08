@@ -41,6 +41,12 @@
 .p-block-1rem{
   padding-block: 1rem;
 }
+.p-inline-2rem{
+  padding-inline: 2rem;
+}
+.p-block-2rem{
+  padding-block: 2rem;
+}
 .white-bg{
   background-color: var(--white-color);
 }
@@ -55,6 +61,9 @@
 }
 .mt-8px{
   margin-top: 0.5rem;
+}
+.centered-text{
+  text-align: center;
 }
 h3,p{
   margin: 0;
