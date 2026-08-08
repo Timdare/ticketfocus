@@ -1,6 +1,13 @@
+import { useState } from "react";
 import "./LoginPage.css";
 
 export function LoginPage() {
+  const [hidePassword, setHidePassword] = useState(true);
+
+  function togglePasswordVisibility(){
+    hidePassword ? setHidePassword(false) : setHidePassword(true);
+  }
+
   return (
     <>
       <title>TicketFocus - Login</title>
@@ -29,12 +36,16 @@ export function LoginPage() {
               </div>
 
               <input
-                type="password"
+                type={hidePassword ? "password" : "text"}
                 className="light-grey-bg rounded-8px"
                 placeholder="Password"
               />
-              <div className="input-icon toggle-visibility-icon">
-                <i className="fa-regular fa-eye-slash"></i>
+              <div className="input-icon toggle-visibility-icon" onClick={togglePasswordVisibility}>
+                {hidePassword ? (
+                  <i className="fa-regular fa-eye-slash"></i>
+                ) : (
+                  <i className="fa-regular fa-eye"></i>
+                )}
               </div>
             </div>
 
