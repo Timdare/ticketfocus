@@ -1,0 +1,93 @@
+.main-content{
+    /* max-width: 700px;
+    margin-inline: auto; */
+    margin-top: 60px;
+    display: flex;
+    justify-content: center;
+    padding-inline: 0;
+}
+.form-container{
+    /* width: fit-content; */
+    padding: 2rem;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, .2);
+    transition: transform .3s ease-in-out;
+}
+.form-container:hover{
+    transform: scale(1.01);
+}
+.form-container h2,p{
+    text-align: center;
+}
+.form-container h2{
+    margin-block: 0.5rem;
+    font-weight: 700;
+    font-size: 2rem;
+}
+.form-container p{
+    font-weight: 400;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+.login-form{
+    margin-block: 1.5rem;
+}
+.login-form .login-input-container{
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    margin-block: .5rem;
+}
+.login-form .login-input-container .input-icon{
+  font-size: 1rem;
+  color: var(--dark-grey-color);
+  padding-inline: .5rem;
+  grid-column: 1 / 2;
+  grid-row: 1 / 1;
+  z-index: 1;
+}
+.login-form .login-input-container input{
+    width: 100%;
+    padding-block: 1rem;
+    border: none;
+    outline: none;
+    padding-inline: 1rem;
+    padding-left: 2rem;
+    font-size: 1rem;
+    grid-column: 1 / 4;
+    grid-row: 1 / 1;
+}
+.login-form .login-input-container input[type="password"]{
+    padding-inline: 2rem;
+}
+.login-form .login-input-container .input-icon.toggle-visibility-icon{
+    grid-column: 3 / 3;
+    cursor: pointer;
+}
+.login-form .login-input-container .input-icon.toggle-visibility-icon:hover{
+    color: var(--light-blue-color);
+}
+.login-form .login-btn{
+    display: block;
+    margin-block: 1.5rem;
+    width: 100%;
+    padding-block: 1rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 5rem;
+    transition: all .2s linear;
+}
+.login-form .login-btn:hover{
+    filter: brightness(1.2);
+}
+.login-form .login-btn:hover .login-icon{
+    transform: translateX(.5rem);
+}
+.forgot-password-link{
+    text-decoration: none;
+    font-weight: 400;
+    transition: opacity .2s linear;
+}
+.forgot-password-link:hover{
+    opacity: .7;
+    text-decoration: underline;
+}

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router";
 import { Dashboard } from "./pages/Dashboard";
+import { LoginPage } from "./pages/LoginPage";
 import "./App.css";
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
     <>
       <Routes>
         <Route index element={<Dashboard tasks={tasks} setTasks={setTasks} />} />
+        <Route path="login" element={<LoginPage />} />
       </Routes>
 
     </>
