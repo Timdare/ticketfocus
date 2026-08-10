@@ -5,31 +5,32 @@ import { ItemContainer } from "../components/ItemContainer";
 import { WorkSessionContainer } from "../components/WorkSessionContainer";
 
 export function Dashboard({ tasks, setTasks }) {
+  const [input, setInput] = useState("");
+  const [categorySelected, setCategorySelected] = useState("personal");
 
-    const [input, setInput] = useState("");
-    const [categorySelected, setCategorySelected] = useState("personal");
+  function updateInputs(name, category) {
+    setInput(name);
+    setCategorySelected(category);
+  }
 
-    function updateInputs(name, category) {
-        setInput(name);
-        setCategorySelected(category);
-    }
-    
   return (
-    <div className="main-content">
-      <header>
-        <h1 className="project-name dark-blue">TicketFocus</h1>
-      </header>
+    <>
+      <title>TicketFocus - Dashboard</title>
+      <div className="main-content">
+        <header>
+          <h1 className="project-name dark-blue">TicketFocus</h1>
+        </header>
 
-      <main>
-        <section className="task-details-container">
-          <TasksProgressContainer tasks={tasks} />
+        <main>
+          <section className="task-details-container">
+            <TasksProgressContainer tasks={tasks} />
 
-          <WorkSessionContainer />
-        </section>
+            <WorkSessionContainer />
+          </section>
 
-        <section className="task-list-container p-inline-1rem white-bg rounded-8px">
-          <div className="list-container p-block-1rem">
-            {/* <div className="input-container">
+          <section className="task-list-container p-inline-1rem white-bg rounded-8px">
+            <div className="list-container p-block-1rem">
+              {/* <div className="input-container">
                     <div className="input-icon">
                       <i className="fa-solid fa-plus"></i>
                     </div>
@@ -57,33 +58,33 @@ export function Dashboard({ tasks, setTasks }) {
                     </div>
                   </div> */}
 
-            <InputContainer
-              input={input}
-              setInput={setInput}
-              categorySelected={categorySelected}
-              setCategorySelected={setCategorySelected}
-              tasks={tasks}
-              setTasks={setTasks}
-            />
-          </div>
-          <ul className="task-list">
-            {tasks.length === 0 && (
-              <li className="no-task-yet item-container p-block-1rem">
-                No tickets yet.
-              </li>
-            )}
-            {tasks.map((task) => {
-              return (
-                <ItemContainer
-                  task={task}
-                  key={task.id}
-                  setTasks={setTasks}
-                  updateInputs={updateInputs}
-                />
-              );
-            })}
+              <InputContainer
+                input={input}
+                setInput={setInput}
+                categorySelected={categorySelected}
+                setCategorySelected={setCategorySelected}
+                tasks={tasks}
+                setTasks={setTasks}
+              />
+            </div>
+            <ul className="task-list">
+              {tasks.length === 0 && (
+                <li className="no-task-yet item-container p-block-1rem">
+                  No tickets yet.
+                </li>
+              )}
+              {tasks.map((task) => {
+                return (
+                  <ItemContainer
+                    task={task}
+                    key={task.id}
+                    setTasks={setTasks}
+                    updateInputs={updateInputs}
+                  />
+                );
+              })}
 
-            {/* <li className="item-container d-flex">
+              {/* <li className="item-container d-flex">
                     <label className="item-text-container dark-grey-text" htmlFor="task1">
                       <input type="checkbox" name="" id="task1" className="check" />
                       <span className="item-text dark-grey-text">Finalize project proposal</span>
@@ -124,9 +125,10 @@ export function Dashboard({ tasks, setTasks }) {
                       </span>
                     </div>
                   </li> */}
-          </ul>
-        </section>
-      </main>
-    </div>
+            </ul>
+          </section>
+        </main>
+      </div>
+    </>
   );
 }
