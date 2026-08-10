@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { updateLocalStorage } from "../utils/updateLocalStorage";
 import "./InputContainer.css";
 
@@ -25,6 +26,7 @@ export function InputContainer({
         text: input,
         category: categorySelected,
         completed: false,
+        createdAt: dayjs().format(),
       },
     ];
     setTasks(newTasks);
