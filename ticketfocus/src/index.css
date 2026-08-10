@@ -62,11 +62,11 @@
 .mt-8px{
   margin-top: 0.5rem;
 }
+.m-0{
+  margin: 0;
+}
 .centered-text{
   text-align: center;
-}
-h3,p{
-  margin: 0;
 }
 
 body{

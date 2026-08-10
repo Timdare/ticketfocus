@@ -1,4 +1,4 @@
-.main-content{
+.main-content-login{
     /* max-width: 700px;
     margin-inline: auto; */
     margin-top: 60px;
@@ -7,16 +7,12 @@
     padding-inline: 0;
 }
 .form-container{
-    /* width: fit-content; */
     padding: 2rem;
     box-shadow: 2px 2px 8px rgba(0, 0, 0, .2);
     transition: transform .3s ease-in-out;
 }
 .form-container:hover{
     transform: scale(1.01);
-}
-.form-container h2,p{
-    text-align: center;
 }
 .form-container h2{
     margin-block: 0.5rem;

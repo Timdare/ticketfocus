@@ -12,10 +12,10 @@ export function LoginPage() {
     <>
       <title>TicketFocus - Login</title>
 
-      <div className="main-content">
+      <div className="main-content-login">
         <section className="form-container white-bg rounded-8px">
-          <h2>Welcome to TicketFocus!</h2>
-          <p className="dark-grey-text">Login to continue to your dashboard.</p>
+          <h2 className="centered-text">Welcome to TicketFocus!</h2>
+          <p className="dark-grey-text centered-text m-0">Login to continue to your dashboard.</p>
 
           <form className="login-form">
             <div className="login-input-container">
