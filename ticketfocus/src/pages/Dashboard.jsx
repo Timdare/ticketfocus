@@ -1,10 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 import { TasksProgressContainer } from "../components/TasksProgressContainer";
 import { InputContainer } from "../components/InputContainer";
 import { ItemContainer } from "../components/ItemContainer";
 import { WorkSessionContainer } from "../components/WorkSessionContainer";
 
-export function Dashboard({ tasks, setTasks }) {
+export function Dashboard({ tasks, setTasks, users }) {
+  const navigate = useNavigate();
+  const ongoingSess = JSON.parse(localStorage.getItem("ongoingSess")) || {};
+  useEffect(() => {
+    
+    if (!ongoingSess || !ongoingSess.userId){
+      navigate("/login")
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  } , []);
+  
+  const user = users.find(u => u.userId === ongoingSess.userId);
+  console.log(user);  
+
   const [input, setInput] = useState("");
   const [categorySelected, setCategorySelected] = useState("personal");
 
@@ -23,7 +37,7 @@ export function Dashboard({ tasks, setTasks }) {
 
         <main>
           <section className="task-details-container">
-            <TasksProgressContainer tasks={tasks} />
+            <TasksProgressContainer tasks={tasks} user={user} />
 
             <WorkSessionContainer />
           </section>

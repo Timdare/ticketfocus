@@ -1,14 +1,14 @@
 import "./TasksProgressContainer.css";
 
-export function TasksProgressContainer({ tasks }) {
+export function TasksProgressContainer({ tasks, user }) {
   const totalTasks = tasks.length;
   const completeTasks = tasks.filter((task) => task.completed === true);
   const completeTasksPercent = (completeTasks.length / totalTasks) * 100;
 
   return (
     <section className="tasks-progress-container white-bg rounded-8px p-inline-1rem">
-      <h3 className="dark-grey-text">Daily Progress</h3>
-      <p className="mt-8px">Focus on what matters</p>
+      <h3 className="dark-grey-text">Daily Tickets</h3>
+      <p className="mt-8px">Welcome {user.firstname}{user.isAdmin && <i>(Admin)</i>}.</p>
 
       <div className="tasks-progress mt-16px">
         <div className="task-progress-status">

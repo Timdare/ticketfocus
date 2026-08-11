@@ -1,11 +1,42 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import "./LoginPage.css";
 
-export function LoginPage() {
+export function LoginPage({ users }) {
   const [hidePassword, setHidePassword] = useState(true);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState(null);
+
+  const navigate = useNavigate();
 
   function togglePasswordVisibility(){
     hidePassword ? setHidePassword(false) : setHidePassword(true);
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    // Handle login logic here
+    const user = users.find((u) => u.username() === username && u.password === password);
+
+    const ongoingSess = {
+      userId: user ? user.userId : null,
+    }
+
+    console.log(ongoingSess.userId);
+
+    if (user) {
+      // Login successful
+      console.log("Login successful!");
+      localStorage.setItem("ongoingSess", JSON.stringify(ongoingSess));
+      navigate("/",{ replace: true });
+
+    } else {
+      // Login failed
+      console.log("Login failed!");
+      setLoginError("Invalid username/password");
+    }
   }
 
   return (
@@ -27,6 +58,9 @@ export function LoginPage() {
                 type="text"
                 className="light-grey-bg rounded-8px"
                 placeholder="Username"
+                required
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </div>
 
@@ -39,6 +73,9 @@ export function LoginPage() {
                 type={hidePassword ? "password" : "text"}
                 className="light-grey-bg rounded-8px"
                 placeholder="Password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <div className="input-icon toggle-visibility-icon" onClick={togglePasswordVisibility}>
                 {hidePassword ? (
@@ -49,7 +86,9 @@ export function LoginPage() {
               </div>
             </div>
 
-            <button type="submit" className="login-btn dark-blue-bg">
+            {loginError && <p className="login-error-message m-0">{loginError}</p>}
+
+            <button type="submit" className="login-btn dark-blue-bg" onClick={handleSubmit}>
               Log In <i className="fa-solid fa-arrow-right login-icon"></i>
             </button>
           </form>

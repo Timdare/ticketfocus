@@ -62,6 +62,9 @@
 .login-form .login-input-container .input-icon.toggle-visibility-icon:hover{
     color: var(--light-blue-color);
 }
+.login-form .login-error-message{
+    color: red;
+}
 .login-form .login-btn{
     display: block;
     margin-block: 1.5rem;
