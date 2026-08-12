@@ -5,16 +5,21 @@ import { InputContainer } from "../components/InputContainer";
 import { ItemContainer } from "../components/ItemContainer";
 import { WorkSessionContainer } from "../components/WorkSessionContainer";
 
-export function Dashboard({ tasks, setTasks, users }) {
-  const navigate = useNavigate();
-  const ongoingSess = JSON.parse(localStorage.getItem("ongoingSess")) || {};
-  useEffect(() => {
-    
-    if (!ongoingSess || !ongoingSess.userId){
-      navigate("/login")
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  } , []);
+export function Dashboard({ tasks, setTasks, users, ongoingSess }) {
+  // const navigate = useNavigate();
+  // const ongoingSess = JSON.parse(localStorage.getItem("ongoingSess")) || {};
+
+  // const checkOngoingSess = () => {
+  //   if (!ongoingSess || !ongoingSess.userId) {
+  //     navigate("/login");
+  //   }
+  // }  
+  // useEffect(() => {
+  //   if (!ongoingSess || !ongoingSess.userId) {
+  //     navigate("/login");
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // } , []);
   
   const user = users.find(u => u.userId === ongoingSess.userId);
   console.log(user);  
@@ -37,7 +42,7 @@ export function Dashboard({ tasks, setTasks, users }) {
 
         <main>
           <section className="task-details-container">
-            <TasksProgressContainer tasks={tasks} user={user} />
+            <TasksProgressContainer tasks={tasks} user={user ? user : ""} />
 
             <WorkSessionContainer />
           </section>
