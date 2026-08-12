@@ -32,6 +32,11 @@ export function Dashboard({ tasks, setTasks, users, ongoingSess }) {
     setCategorySelected(category);
   }
 
+  const logoutUser = () => {
+    localStorage.removeItem("ongoingSess");
+    window.location.replace("/login");
+  }
+
   return (
     <>
       <title>TicketFocus - Dashboard</title>
@@ -146,6 +151,13 @@ export function Dashboard({ tasks, setTasks, users, ongoingSess }) {
                   </li> */}
             </ul>
           </section>
+
+          <div className="logout-btn-container">
+            <button className="logout-btn" onClick={logoutUser}>
+              Logout
+            </button>
+          </div>
+
         </main>
       </div>
     </>
