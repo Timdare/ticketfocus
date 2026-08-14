@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import "./LoginPage.css";
 
-export function LoginPage({ users }) {
+export function LoginPage({ users, setOngoingSess }) {
   const [hidePassword, setHidePassword] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -30,6 +30,7 @@ export function LoginPage({ users }) {
       // Login successful
       console.log("Login successful!");
       localStorage.setItem("ongoingSess", JSON.stringify(ongoingSess));
+      setOngoingSess(ongoingSess);
       navigate("/",{ replace: true });
 
     } else {

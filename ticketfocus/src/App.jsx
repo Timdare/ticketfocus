@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router";
+import { useState } from "react";
+import { Routes, Route } from "react-router";
 import { Dashboard } from "./pages/Dashboard";
 import { LoginPage } from "./pages/LoginPage";
+import {ProtectedRoute } from "./components/ProtectedRoute";
 import "./App.css";
 
 function App() {
@@ -99,20 +100,11 @@ function App() {
       tasks: []
     },
   ]);
-  const navigate = useNavigate();
-  const ongoingSess = JSON.parse(localStorage.getItem("ongoingSess")) || {};
 
-  const checkOngoingSess = () => {
-    if (!ongoingSess || !ongoingSess.userId) {
-      navigate("/login");
-    }
-  };
-  useEffect(() => {
-    checkOngoingSess();
-
-    // THE LINE BELOW IS USED TO DISABLE ESLINT WARNING FOR THE DEPENDENCY ARRAY.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ongoingSess.userId]);
+  const [ongoingSess, setOngoingSess] = useState(() => {
+    const storedSess = localStorage.getItem("ongoingSess");
+    return storedSess ? JSON.parse(storedSess) : {};
+  });
 
   return (
     <>
@@ -120,14 +112,16 @@ function App() {
         <Route
           index
           element={
-            <Dashboard
-              users={users}
-              setUsers={setUsers}
-              ongoingSess={ongoingSess}
-            />
+            <ProtectedRoute>
+              <Dashboard
+                users={users}
+                setUsers={setUsers}
+                ongoingSess={ongoingSess}
+              />
+            </ProtectedRoute>
           }
         />
-        <Route path="login" element={<LoginPage users={users} />} />
+        <Route path="login" element={<LoginPage users={users} setOngoingSess={setOngoingSess} />} />
       </Routes>
     </>
   );
