@@ -2,17 +2,16 @@ import { updateLocalStorage } from "../utils/updateLocalStorage";
 import "./ItemContainer.css";
 export function ItemContainer({ task, updateInputs, user, setUsers }) {
   function updateTaskStatus(e) {
-    
-    setUsers(prevUsers => {
+    setUsers((prevUsers) => {
       // const ongoingSess = JSON.parse(localStorage.getItem("ongoingSess")) || {};
       // if (!ongoingSess.userId) return prevUsers;
       if (!user.tasks) return prevUsers;
-      const updatedUsers = prevUsers.map(u => {
+      const updatedUsers = prevUsers.map((u) => {
         if (u.userId === user.userId) {
           const updatedTasks = u.tasks.map((prevTask) =>
             prevTask.id === task.id
               ? { ...prevTask, completed: e.target.checked }
-              : prevTask
+              : prevTask,
           );
           return { ...u, tasks: updatedTasks };
         }
@@ -23,13 +22,12 @@ export function ItemContainer({ task, updateInputs, user, setUsers }) {
   }
 
   function deleteTask() {
-    
     setUsers((prevUsers) => {
       if (!user.tasks) return prevUsers;
-      const updatedUsers = prevUsers.map(u =>{
+      const updatedUsers = prevUsers.map((u) => {
         if (u.userId === user.userId) {
           const updatedTasks = u.tasks.filter(
-            (currentTask) => currentTask.id !== task.id
+            (currentTask) => currentTask.id !== task.id,
           );
           return { ...u, tasks: updatedTasks };
         }
@@ -41,12 +39,14 @@ export function ItemContainer({ task, updateInputs, user, setUsers }) {
   }
 
   const editTask = () => {
-    updateInputs(task.text, task.category);
+    updateInputs(task.text, task.office);
     setUsers((prevUsers) => {
       if (!user.tasks) return prevUsers;
       const updatedUsers = prevUsers.map((u) => {
         if (u.userId === user.userId) {
-          const updatedTasks = u.tasks.filter((currentTask) => currentTask.id !== task.id);
+          const updatedTasks = u.tasks.filter(
+            (currentTask) => currentTask.id !== task.id,
+          );
           return { ...u, tasks: updatedTasks };
         }
         return u;
@@ -75,8 +75,11 @@ export function ItemContainer({ task, updateInputs, user, setUsers }) {
         <span className="edit-icon-container" onClick={editTask}>
           <i className="fa-regular fa-pen-to-square edit-icon"></i>
         </span>
-        <span className="category dark-grey-text light-grey-bg">
-          {task.category}
+        <span
+          className="office dark-grey-text light-grey-bg"
+          title={`Office: ${task.office}`}
+        >
+          Office: {task.office}
         </span>
         <span className="delete-icon-container" onClick={deleteTask}>
           <i className="fa-solid fa-trash-can delete-icon "></i>

@@ -4,12 +4,7 @@ import { InputContainer } from "../components/InputContainer";
 import { ItemContainer } from "../components/ItemContainer";
 import { WorkSessionContainer } from "../components/WorkSessionContainer";
 
-export function Dashboard({ 
-
-  users, 
-  setUsers,
-  ongoingSess 
-}) {
+export function Dashboard({ users, setUsers, ongoingSess }) {
   // const navigate = useNavigate();
   // const ongoingSess = JSON.parse(localStorage.getItem("ongoingSess")) || {};
 
@@ -29,11 +24,11 @@ export function Dashboard({
   console.log(user);
 
   const [input, setInput] = useState("");
-  const [categorySelected, setCategorySelected] = useState("personal");
+  const [officeSelected, setOfficeSelected] = useState("701");
 
-  function updateInputs(name, category) {
+  function updateInputs(name, office) {
     setInput(name);
-    setCategorySelected(category);
+    setOfficeSelected(office);
   }
 
   const logoutUser = () => {
@@ -51,9 +46,9 @@ export function Dashboard({
 
         <main>
           <section className="task-details-container">
-            <TasksProgressContainer 
-              // tasks={tasks} 
-              user={user ? user : ""} 
+            <TasksProgressContainer
+              // tasks={tasks}
+              user={user ? user : ""}
             />
 
             <WorkSessionContainer />
@@ -74,9 +69,9 @@ export function Dashboard({
                       value={input}
                     />
                     <select
-                      className="category dark-grey-text"
-                      onChange={selectCategory}
-                      value={categorySelected}
+                      className="office dark-grey-text"
+                      onChange={selectOffice}
+                      value={officeSelected}
                     >
                       <option value="personal">Personal</option>
                       <option value="work">Work</option>
@@ -92,8 +87,8 @@ export function Dashboard({
               <InputContainer
                 input={input}
                 setInput={setInput}
-                categorySelected={categorySelected}
-                setCategorySelected={setCategorySelected}
+                officeSelected={officeSelected}
+                setOfficeSelected={setOfficeSelected}
                 // tasks={tasks}
                 // setTasks={setTasks}
                 // users={users}
@@ -107,18 +102,19 @@ export function Dashboard({
                   No tickets yet.
                 </li>
               )}
-              {user.tasks && user.tasks.map((task) => {
-                return (
-                  <ItemContainer
-                    task={task}
-                    key={task.id}
-                    // setTasks={setTasks}
-                    updateInputs={updateInputs}
-                    user={user}
-                    setUsers={setUsers}
-                  />
-                );
-              })}
+              {user.tasks &&
+                user.tasks.map((task) => {
+                  return (
+                    <ItemContainer
+                      task={task}
+                      key={task.id}
+                      // setTasks={setTasks}
+                      updateInputs={updateInputs}
+                      user={user}
+                      setUsers={setUsers}
+                    />
+                  );
+                })}
 
               {/* <li className="item-container d-flex">
                     <label className="item-text-container dark-grey-text" htmlFor="task1">
@@ -127,7 +123,7 @@ export function Dashboard({
                     </label>
                     
                     <div className="utils">
-                      <span className="category dark-grey-text light-grey-bg">Work</span>
+                      <span className="office dark-grey-text light-grey-bg">Work</span>
                       <span className="delete-icon-container">
                         <i className="fa-solid fa-trash-can delete-icon "></i>
                       </span>
@@ -141,7 +137,7 @@ export function Dashboard({
                     </label>
                     
                     <div className="utils">
-                      <span className="category dark-grey-text light-grey-bg">Personal</span>
+                      <span className="office dark-grey-text light-grey-bg">Personal</span>
                       <span className="delete-icon-container">
                         <i className="fa-solid fa-trash-can delete-icon "></i>
                       </span>
@@ -155,7 +151,7 @@ export function Dashboard({
                     </label>
                     
                     <div className="utils">
-                      <span className="category dark-grey-text light-grey-bg">Health</span>
+                      <span className="office dark-grey-text light-grey-bg">Health</span>
                       <span className="delete-icon-container">
                         <i className="fa-solid fa-trash-can delete-icon "></i>
                       </span>

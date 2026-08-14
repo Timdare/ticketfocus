@@ -69,7 +69,7 @@
 .item-container:hover .utils{
   display: flex;
 }
-.item-container .utils .category{
+.item-container .utils .office{
   font-size: .75rem;
   font-weight: 700;
   text-transform: uppercase;

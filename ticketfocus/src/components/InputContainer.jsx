@@ -5,17 +5,17 @@ import "./InputContainer.css";
 export function InputContainer({
   input,
   setInput,
-  categorySelected,
-  setCategorySelected,
+  officeSelected,
+  setOfficeSelected,
   setUsers,
-  user
+  user,
 }) {
   // const user = users.find((u) => u.userId === JSON.parse(localStorage.getItem("ongoingSess"))?.userId);
   function saveInput(e) {
     setInput(e.target.value);
   }
-  const selectCategory = (e) => {
-    setCategorySelected(e.target.value.toLowerCase());
+  const selectOffice = (e) => {
+    setOfficeSelected(e.target.value.toLowerCase());
   };
 
   function addTask() {
@@ -25,16 +25,16 @@ export function InputContainer({
       {
         id: crypto.randomUUID(),
         text: input,
-        category: categorySelected,
+        office: officeSelected,
         completed: false,
         createdAt: dayjs().format(),
       },
     ];
     // setTasks(newTasks);
-    setUsers(prevUsers => {
+    setUsers((prevUsers) => {
       const ongoingSess = JSON.parse(localStorage.getItem("ongoingSess")) || {};
       if (!ongoingSess.userId) return prevUsers; // If no ongoing session, return previous users
-      const updatedUsers = prevUsers.map(user => {
+      const updatedUsers = prevUsers.map((user) => {
         if (user.userId === ongoingSess.userId) {
           return { ...user, tasks: newTasks };
         }
@@ -43,7 +43,6 @@ export function InputContainer({
       console.log(updatedUsers);
       return updatedUsers;
     });
-
 
     setInput("");
     // updateLocalStorage("tasks", newTasks);
@@ -67,13 +66,20 @@ export function InputContainer({
         value={input}
       />
       <select
-        className="category dark-grey-text"
-        onChange={selectCategory}
-        value={categorySelected}
+        className="office dark-grey-text"
+        onChange={selectOffice}
+        value={officeSelected}
       >
-        <option value="personal">Personal</option>
-        <option value="work">Work</option>
-        <option value="health">Health</option>
+        <option value="701">701</option>
+        <option value="702">702</option>
+        <option value="703">703</option>
+        <option value="704">704</option>
+        <option value="705">705</option>
+        <option value="706">706</option>
+        <option value="707">707</option>
+        <option value="708">708</option>
+        <option value="709">709</option>
+        <option value="710">710</option>
       </select>
       <div className="add-task-button-container">
         <button className="add-task-button" onClick={addTask}>
