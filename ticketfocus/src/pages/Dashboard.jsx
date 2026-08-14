@@ -1,11 +1,15 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
+import { useState } from "react";
 import { TasksProgressContainer } from "../components/TasksProgressContainer";
 import { InputContainer } from "../components/InputContainer";
 import { ItemContainer } from "../components/ItemContainer";
 import { WorkSessionContainer } from "../components/WorkSessionContainer";
 
-export function Dashboard({ tasks, setTasks, users, ongoingSess }) {
+export function Dashboard({ 
+
+  users, 
+  setUsers,
+  ongoingSess 
+}) {
   // const navigate = useNavigate();
   // const ongoingSess = JSON.parse(localStorage.getItem("ongoingSess")) || {};
 
@@ -13,16 +17,16 @@ export function Dashboard({ tasks, setTasks, users, ongoingSess }) {
   //   if (!ongoingSess || !ongoingSess.userId) {
   //     navigate("/login");
   //   }
-  // }  
+  // }
   // useEffect(() => {
   //   if (!ongoingSess || !ongoingSess.userId) {
   //     navigate("/login");
   //   }
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // } , []);
-  
-  const user = users.find(u => u.userId === ongoingSess.userId);
-  console.log(user);  
+
+  const user = users.find((u) => u.userId === ongoingSess.userId);
+  console.log(user);
 
   const [input, setInput] = useState("");
   const [categorySelected, setCategorySelected] = useState("personal");
@@ -35,7 +39,7 @@ export function Dashboard({ tasks, setTasks, users, ongoingSess }) {
   const logoutUser = () => {
     localStorage.removeItem("ongoingSess");
     window.location.replace("/login");
-  }
+  };
 
   return (
     <>
@@ -47,7 +51,10 @@ export function Dashboard({ tasks, setTasks, users, ongoingSess }) {
 
         <main>
           <section className="task-details-container">
-            <TasksProgressContainer tasks={tasks} user={user ? user : ""} />
+            <TasksProgressContainer 
+              // tasks={tasks} 
+              user={user ? user : ""} 
+            />
 
             <WorkSessionContainer />
           </section>
@@ -87,23 +94,28 @@ export function Dashboard({ tasks, setTasks, users, ongoingSess }) {
                 setInput={setInput}
                 categorySelected={categorySelected}
                 setCategorySelected={setCategorySelected}
-                tasks={tasks}
-                setTasks={setTasks}
+                // tasks={tasks}
+                // setTasks={setTasks}
+                // users={users}
+                user={user ? user : ""}
+                setUsers={setUsers}
               />
             </div>
             <ul className="task-list">
-              {tasks.length === 0 && (
+              {user.tasks && user.tasks.length === 0 && (
                 <li className="no-task-yet item-container p-block-1rem">
                   No tickets yet.
                 </li>
               )}
-              {tasks.map((task) => {
+              {user.tasks && user.tasks.map((task) => {
                 return (
                   <ItemContainer
                     task={task}
                     key={task.id}
-                    setTasks={setTasks}
+                    // setTasks={setTasks}
                     updateInputs={updateInputs}
+                    user={user}
+                    setUsers={setUsers}
                   />
                 );
               })}
@@ -157,7 +169,6 @@ export function Dashboard({ tasks, setTasks, users, ongoingSess }) {
               Logout
             </button>
           </div>
-
         </main>
       </div>
     </>

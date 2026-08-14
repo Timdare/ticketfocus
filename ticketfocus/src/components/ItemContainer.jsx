@@ -1,33 +1,58 @@
 import { updateLocalStorage } from "../utils/updateLocalStorage";
 import "./ItemContainer.css";
-export function ItemContainer({ task, setTasks, updateInputs }) {
+export function ItemContainer({ task, updateInputs, user, setUsers }) {
   function updateTaskStatus(e) {
-    setTasks((prevTasks) => {
-      const updated = prevTasks.map((prevTask) =>
-        prevTask.id === task.id
-          ? { ...prevTask, completed: e.target.checked }
-          : prevTask,
-      );
-      updateLocalStorage("tasks", updated);
-      return updated;
+    
+    setUsers(prevUsers => {
+      // const ongoingSess = JSON.parse(localStorage.getItem("ongoingSess")) || {};
+      // if (!ongoingSess.userId) return prevUsers;
+      if (!user.tasks) return prevUsers;
+      const updatedUsers = prevUsers.map(u => {
+        if (u.userId === user.userId) {
+          const updatedTasks = u.tasks.map((prevTask) =>
+            prevTask.id === task.id
+              ? { ...prevTask, completed: e.target.checked }
+              : prevTask
+          );
+          return { ...u, tasks: updatedTasks };
+        }
+        return u;
+      });
+      return updatedUsers;
     });
   }
 
   function deleteTask() {
-    setTasks((prevTasks) => {
-      const updated = prevTasks.filter(
-        (currentTask) => currentTask.id !== task.id,
-      );
-      updateLocalStorage("tasks", updated);
-      return updated;
+    
+    setUsers((prevUsers) => {
+      if (!user.tasks) return prevUsers;
+      const updatedUsers = prevUsers.map(u =>{
+        if (u.userId === user.userId) {
+          const updatedTasks = u.tasks.filter(
+            (currentTask) => currentTask.id !== task.id
+          );
+          return { ...u, tasks: updatedTasks };
+        }
+        return u;
+      });
+      console.log(updatedUsers);
+      return updatedUsers;
     });
   }
 
   const editTask = () => {
     updateInputs(task.text, task.category);
-    setTasks((prevTasks) =>
-      prevTasks.filter((currentTask) => currentTask.id !== task.id),
-    );
+    setUsers((prevUsers) => {
+      if (!user.tasks) return prevUsers;
+      const updatedUsers = prevUsers.map((u) => {
+        if (u.userId === user.userId) {
+          const updatedTasks = u.tasks.filter((currentTask) => currentTask.id !== task.id);
+          return { ...u, tasks: updatedTasks };
+        }
+        return u;
+      });
+      return updatedUsers;
+    });
   };
 
   return (

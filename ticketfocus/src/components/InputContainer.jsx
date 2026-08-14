@@ -7,9 +7,10 @@ export function InputContainer({
   setInput,
   categorySelected,
   setCategorySelected,
-  tasks,
-  setTasks,
+  setUsers,
+  user
 }) {
+  // const user = users.find((u) => u.userId === JSON.parse(localStorage.getItem("ongoingSess"))?.userId);
   function saveInput(e) {
     setInput(e.target.value);
   }
@@ -20,7 +21,7 @@ export function InputContainer({
   function addTask() {
     if (input === "") return;
     const newTasks = [
-      ...tasks,
+      ...user.tasks,
       {
         id: crypto.randomUUID(),
         text: input,
@@ -29,9 +30,23 @@ export function InputContainer({
         createdAt: dayjs().format(),
       },
     ];
-    setTasks(newTasks);
+    // setTasks(newTasks);
+    setUsers(prevUsers => {
+      const ongoingSess = JSON.parse(localStorage.getItem("ongoingSess")) || {};
+      if (!ongoingSess.userId) return prevUsers; // If no ongoing session, return previous users
+      const updatedUsers = prevUsers.map(user => {
+        if (user.userId === ongoingSess.userId) {
+          return { ...user, tasks: newTasks };
+        }
+        return user;
+      });
+      console.log(updatedUsers);
+      return updatedUsers;
+    });
+
+
     setInput("");
-    updateLocalStorage("tasks", newTasks);
+    // updateLocalStorage("tasks", newTasks);
   }
 
   const addTaskEnterKey = (e) => {

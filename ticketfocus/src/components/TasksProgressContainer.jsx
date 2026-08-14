@@ -1,9 +1,9 @@
 import "./TasksProgressContainer.css";
 
-export function TasksProgressContainer({ tasks, user }) {
-  const totalTasks = tasks.length;
-  const completeTasks = tasks.filter((task) => task.completed === true);
-  const completeTasksPercent = (completeTasks.length / totalTasks) * 100;
+export function TasksProgressContainer({ user }) {
+  const totalTasks = user.tasks ? user.tasks.length : 0;
+  const completeTasks = user.tasks ? user.tasks.filter((task) => task.completed === true) : [];
+  const completeTasksPercent = totalTasks > 0 ? (completeTasks.length / totalTasks) * 100 : 0;
 
   return (
     <section className="tasks-progress-container white-bg rounded-8px p-inline-1rem">
@@ -17,7 +17,7 @@ export function TasksProgressContainer({ tasks, user }) {
             {totalTasks === 1 ? "ticket" : "tickets"} completed
           </span>
           <span className="task-progress-status-percent dark-blue">
-            {completeTasksPercent ? Math.floor(completeTasksPercent) : 0}%
+            {Math.floor(completeTasksPercent)}%
           </span>
         </div>
 
