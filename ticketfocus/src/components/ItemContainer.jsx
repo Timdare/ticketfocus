@@ -17,6 +17,7 @@ export function ItemContainer({ task, updateInputs, user, setUsers }) {
         }
         return u;
       });
+      updateLocalStorage("users", updatedUsers);
       return updatedUsers;
     });
   }
@@ -33,7 +34,7 @@ export function ItemContainer({ task, updateInputs, user, setUsers }) {
         }
         return u;
       });
-      console.log(updatedUsers);
+      updateLocalStorage("users", updatedUsers);
       return updatedUsers;
     });
   }

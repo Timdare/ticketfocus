@@ -54,14 +54,12 @@ function App() {
   //   },
   // ];
 
-  const [users, setUsers] = useState([
+  const [users, setUsers] = useState(JSON.parse(localStorage.getItem("users")) || [
     {
       userId: 'staff-0001',
       firstname: "Oluwatimilehin",
       lastname: "Atandare",
-      username: function () {
-        return `${this.firstname.toLowerCase()}.${this.lastname.toLowerCase()}`
-      },
+      username: "oluwatimilehin.atandare",
       password: "123456",
       isAdmin: true,
       tasks: []
@@ -70,9 +68,7 @@ function App() {
       userId: 'staff-0002',
       firstname: "Hassan",
       lastname: "Olamilekan",
-      username: function () {
-        return `${this.firstname.toLowerCase()}.${this.lastname.toLowerCase()}`
-      },
+      username: "hassan.olamilekan",
       password: "123456",
       isAdmin: false,
       tasks: []
@@ -81,9 +77,7 @@ function App() {
       userId: 'staff-0003',
       firstname: "Gift",
       lastname: "Asuquo",
-      username: function () {
-        return `${this.firstname.toLowerCase()}.${this.lastname.toLowerCase()}`
-      },
+      username: "gift.asuquo",
       password: "123456",
       isAdmin: false,
       tasks: []
@@ -92,14 +86,13 @@ function App() {
       userId: 'staff-0004',
       firstname: "Moses",
       lastname: "Bliss",
-      username: function () {
-        return `${this.firstname.toLowerCase()}.${this.lastname.toLowerCase()}`
-      },
+      username: "moses.bliss",
       password: "123456",
       isAdmin: false,
       tasks: []
     },
   ]);
+  console.log(users);
 
   const [ongoingSess, setOngoingSess] = useState(() => {
     const storedSess = localStorage.getItem("ongoingSess");

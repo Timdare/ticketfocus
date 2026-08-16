@@ -40,12 +40,11 @@ export function InputContainer({
         }
         return user;
       });
-      console.log(updatedUsers);
+      updateLocalStorage("users", updatedUsers);
       return updatedUsers;
     });
 
     setInput("");
-    // updateLocalStorage("tasks", newTasks);
   }
 
   const addTaskEnterKey = (e) => {

@@ -19,7 +19,7 @@ export function LoginPage({ users, setOngoingSess }) {
     e.preventDefault();
     
     // Handle login logic here
-    const user = users.find((u) => u.username() === username && u.password === password);
+    const user = users.find((u) => u.username === username.toLowerCase() && u.password === password);
 
     const ongoingSess = {
       userId: user ? user.userId : null,
