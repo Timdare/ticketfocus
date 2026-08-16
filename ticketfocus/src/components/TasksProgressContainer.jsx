@@ -1,6 +1,18 @@
+import dayjs from "dayjs";
+import { useState } from "react";
 import "./TasksProgressContainer.css";
 
 export function TasksProgressContainer({ user }) {
+
+  const [ticketDate, setTicketDate] = useState("");
+  const dates = [...new Set(user.tasks.map(task => dayjs(task.createdAt).format("YYYY-MM-DD")))];
+  console.log(dates);
+  
+
+  const viewPastTicket = e => {
+    setTicketDate(e.target.value);
+  }
+
   const totalTasks = user.tasks ? user.tasks.length : 0;
   const completeTasks = user.tasks ? user.tasks.filter((task) => task.completed === true) : [];
   const completeTasksPercent = totalTasks > 0 ? (completeTasks.length / totalTasks) * 100 : 0;
@@ -28,6 +40,25 @@ export function TasksProgressContainer({ user }) {
           ></div>
         </div>
       </div>
+
+      <select className="past-tickets" onChange={viewPastTicket} value={ticketDate}>
+        <option value="">Past Tickets</option>
+
+        {
+          dates.map(date => {
+            return (
+              <option 
+                key={date}
+                value={date}
+                title={dayjs(date).format("dddd D MMM, YYYY")}
+              >
+                {dayjs(date).format("MMM DD, YYYY")}
+              </option>
+            );
+          })
+        }
+
+      </select>
     </section>
   );
 }
