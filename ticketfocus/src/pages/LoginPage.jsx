@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { updateLocalStorage } from "../utils/updateLocalStorage";
 import "./LoginPage.css";
 
 export function LoginPage({ users, setOngoingSess }) {
@@ -29,7 +30,7 @@ export function LoginPage({ users, setOngoingSess }) {
     if (user) {
       // Login successful
       console.log("Login successful!");
-      localStorage.setItem("ongoingSess", JSON.stringify(ongoingSess));
+      updateLocalStorage("ongoingSess", ongoingSess);
       setOngoingSess(ongoingSess);
       navigate("/",{ replace: true });
 
