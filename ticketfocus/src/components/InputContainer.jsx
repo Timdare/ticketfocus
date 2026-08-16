@@ -27,7 +27,7 @@ export function InputContainer({
         text: input,
         office: officeSelected,
         completed: false,
-        createdAt: dayjs().format(),
+        createdAt: dayjs().valueOf(),
       },
     ];
     // setTasks(newTasks);
