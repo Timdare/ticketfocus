@@ -2,12 +2,12 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import "./TasksProgressContainer.css";
 
-export function TasksProgressContainer({ user, todaysDate }) {
+export function TasksProgressContainer({ user, date }) {
 
   const [ticketDate, setTicketDate] = useState("");
-  
+
   const dates = [...new Set(user.tasks.map(task => dayjs(task.createdAt).format("YYYY-MM-DD")))];
-  const pastTicketsExist = dates.some(date => date !== todaysDate);
+  const pastTicketsExist = dates.some(d => d !== date);
   
   const viewPastTicket = e => {
     setTicketDate(e.target.value);
@@ -48,7 +48,7 @@ export function TasksProgressContainer({ user, todaysDate }) {
             {
               dates.map(date => {
                 return (
-                  date !== todaysDate && <option 
+                  date !== date && <option 
                     key={date}
                     value={date}
                     title={dayjs(date).format("dddd D MMM, YYYY")}

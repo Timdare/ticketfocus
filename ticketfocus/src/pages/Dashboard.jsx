@@ -52,7 +52,7 @@ export function Dashboard({ users, setUsers, ongoingSess }) {
             <TasksProgressContainer
               // tasks={tasks}
               user={user ? user : ""}
-              todaysDate={todaysDate}
+              date={todaysDate}
             />
 
             <WorkSessionContainer />
