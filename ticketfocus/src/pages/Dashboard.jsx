@@ -93,9 +93,6 @@ export function Dashboard({ users, setUsers, ongoingSess }) {
                 setInput={setInput}
                 officeSelected={officeSelected}
                 setOfficeSelected={setOfficeSelected}
-                // tasks={tasks}
-                // setTasks={setTasks}
-                // users={users}
                 user={user ? user : ""}
                 setUsers={setUsers}
               />
@@ -108,15 +105,18 @@ export function Dashboard({ users, setUsers, ongoingSess }) {
               )}
               {user.tasks &&
                 user.tasks.map((task) => {
+                  const formattedTaskDate = dayjs(task.createdAt).format("YYYY-MM-DD");
                   return (
-                    <ItemContainer
-                      task={task}
-                      key={task.id}
-                      // setTasks={setTasks}
-                      updateInputs={updateInputs}
-                      user={user}
-                      setUsers={setUsers}
-                    />
+                    formattedTaskDate === todaysDate && (
+                      <ItemContainer
+                        task={task}
+                        key={task.id}
+                        // setTasks={setTasks}
+                        updateInputs={updateInputs}
+                        user={user}
+                        setUsers={setUsers}
+                      />
+                    )
                   );
                 })}
 
