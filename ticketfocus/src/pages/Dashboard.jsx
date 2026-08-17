@@ -1,4 +1,5 @@
 import { useState } from "react";
+import dayjs from "dayjs";
 import { TasksProgressContainer } from "../components/TasksProgressContainer";
 import { InputContainer } from "../components/InputContainer";
 import { ItemContainer } from "../components/ItemContainer";
@@ -36,6 +37,8 @@ export function Dashboard({ users, setUsers, ongoingSess }) {
     window.location.replace("/login");
   };
 
+  const todaysDate = dayjs().format("YYYY-MM-DD");
+
   return (
     <>
       <title>TicketFocus - Dashboard</title>
@@ -49,6 +52,7 @@ export function Dashboard({ users, setUsers, ongoingSess }) {
             <TasksProgressContainer
               // tasks={tasks}
               user={user ? user : ""}
+              todaysDate={todaysDate}
             />
 
             <WorkSessionContainer />

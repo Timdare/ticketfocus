@@ -2,13 +2,13 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import "./TasksProgressContainer.css";
 
-export function TasksProgressContainer({ user }) {
+export function TasksProgressContainer({ user, todaysDate }) {
 
   const [ticketDate, setTicketDate] = useState("");
-  const dates = [...new Set(user.tasks.map(task => dayjs(task.createdAt).format("YYYY-MM-DD")))];
-  console.log(dates);
   
-
+  const dates = [...new Set(user.tasks.map(task => dayjs(task.createdAt).format("YYYY-MM-DD")))];
+  const pastTicketsExist = dates.some(date => date !== todaysDate);
+  
   const viewPastTicket = e => {
     setTicketDate(e.target.value);
   }
@@ -41,24 +41,26 @@ export function TasksProgressContainer({ user }) {
         </div>
       </div>
 
-      <select className="past-tickets" onChange={viewPastTicket} value={ticketDate}>
-        <option value="">Past Tickets</option>
+        {pastTicketsExist &&
+          <select className="past-tickets" onChange={viewPastTicket} value={ticketDate}>
+            <option value="">Past Tickets</option>
 
-        {
-          dates.map(date => {
-            return (
-              <option 
-                key={date}
-                value={date}
-                title={dayjs(date).format("dddd D MMM, YYYY")}
-              >
-                {dayjs(date).format("MMM DD, YYYY")}
-              </option>
-            );
-          })
+            {
+              dates.map(date => {
+                return (
+                  date !== todaysDate && <option 
+                    key={date}
+                    value={date}
+                    title={dayjs(date).format("dddd D MMM, YYYY")}
+                  >
+                    {dayjs(date).format("MMM DD, YYYY")}
+                  </option>
+                );
+              })
+            }
+
+          </select>
         }
-
-      </select>
     </section>
   );
 }
