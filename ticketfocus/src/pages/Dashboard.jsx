@@ -1,11 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { TasksProgressContainer } from "../components/TasksProgressContainer";
 import { InputContainer } from "../components/InputContainer";
 import { ItemContainer } from "../components/ItemContainer";
 import { WorkSessionContainer } from "../components/WorkSessionContainer";
 
-export function Dashboard({ users, setUsers, ongoingSess }) {
+export function Dashboard({ 
+  users, 
+  setUsers, 
+  ongoingSess, 
+  input,
+  setInput,
+  officeSelected,
+  setOfficeSelected,
+  displayInputContainer,
+  setDisplayInputContainer,
+  page,
+  setPage,
+  updateInputs,
+}) {
   // const navigate = useNavigate();
   // const ongoingSess = JSON.parse(localStorage.getItem("ongoingSess")) || {};
 
@@ -20,17 +33,17 @@ export function Dashboard({ users, setUsers, ongoingSess }) {
   //   }
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // } , []);
+  useEffect(()=> {
+    setPage("dashboard");
+    setDisplayInputContainer(()=> page === "dashboard");
+  }, [page])
 
   const user = users.find((u) => u.userId === ongoingSess.userId);
   console.log(user);
 
-  const [input, setInput] = useState("");
-  const [officeSelected, setOfficeSelected] = useState("701");
+  // const [input, setInput] = useState("");
+  // const [officeSelected, setOfficeSelected] = useState("701");
 
-  function updateInputs(name, office) {
-    setInput(name);
-    setOfficeSelected(office);
-  }
 
   const logoutUser = () => {
     localStorage.removeItem("ongoingSess");
@@ -88,14 +101,16 @@ export function Dashboard({ users, setUsers, ongoingSess }) {
                     </div>
                   </div> */}
 
-              <InputContainer
+              {displayInputContainer &&
+                <InputContainer
                 input={input}
                 setInput={setInput}
                 officeSelected={officeSelected}
                 setOfficeSelected={setOfficeSelected}
                 user={user ? user : ""}
                 setUsers={setUsers}
-              />
+                page={"dashboard"}
+              />}
             </div>
             <ul className="task-list">
               {user.tasks && user.tasks.length === 0 && (
@@ -115,6 +130,7 @@ export function Dashboard({ users, setUsers, ongoingSess }) {
                         updateInputs={updateInputs}
                         user={user}
                         setUsers={setUsers}
+                        setDisplayInputContainer={setDisplayInputContainer}
                       />
                     )
                   );

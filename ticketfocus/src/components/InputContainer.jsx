@@ -9,6 +9,7 @@ export function InputContainer({
   setOfficeSelected,
   setUsers,
   user,
+  page
 }) {
   // const user = users.find((u) => u.userId === JSON.parse(localStorage.getItem("ongoingSess"))?.userId);
   function saveInput(e) {
@@ -82,7 +83,7 @@ export function InputContainer({
       </select>
       <div className="add-task-button-container">
         <button className="add-task-button" onClick={addTask}>
-          Add Ticket
+          {page === "dashboard" ? "Add" : "Edit"} Ticket
         </button>
       </div>
     </div>

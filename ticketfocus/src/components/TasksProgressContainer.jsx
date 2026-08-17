@@ -7,6 +7,7 @@ export function TasksProgressContainer({ user, date }) {
   const [ticketDate, setTicketDate] = useState("");
 
   const dates = [...new Set(user.tasks.map(task => dayjs(task.createdAt).format("YYYY-MM-DD")))];
+  const reversedDates = dates.toReversed();
   const pastTicketsExist = dates.some(d => d !== date);
   
   const viewPastTicket = e => {
@@ -46,12 +47,13 @@ export function TasksProgressContainer({ user, date }) {
             <option value="">Past Tickets</option>
 
             {
-              dates.map(date => {
+              
+              reversedDates.map(d => {
                 return (
-                  date !== date && <option 
-                    key={date}
-                    value={date}
-                    title={dayjs(date).format("dddd D MMM, YYYY")}
+                  d !== date && <option 
+                    key={d}
+                    value={d}
+                    title={dayjs(d).format("dddd D MMM, YYYY")}
                   >
                     {dayjs(date).format("MMM DD, YYYY")}
                   </option>

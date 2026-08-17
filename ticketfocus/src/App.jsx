@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Routes, Route } from "react-router";
 import { Dashboard } from "./pages/Dashboard";
 import { LoginPage } from "./pages/LoginPage";
+import { PrevTicketPage } from "./pages/PrevTicketPage.jsx"
 import {ProtectedRoute } from "./components/ProtectedRoute";
 import "./App.css";
 
@@ -99,6 +100,21 @@ function App() {
     return storedSess ? JSON.parse(storedSess) : {};
   });
 
+  const [input, setInput] = useState("");
+  const [officeSelected, setOfficeSelected] = useState("701");
+  const [displayInputContainer, setDisplayInputContainer] = useState(false);
+  const [page, setPage] = useState("dashboard");
+
+
+  function updateInputs(name, office) {
+    setInput(name);
+    setOfficeSelected(office);
+  }
+
+  // const taskDate = users[0].tasks[0].createdAt;
+  // console.log(dayjs(taskDate).minute())
+  // console.log(dayjs().valueOf())
+
   return (
     <>
       <Routes>
@@ -110,6 +126,36 @@ function App() {
                 users={users}
                 setUsers={setUsers}
                 ongoingSess={ongoingSess}
+                input={input}
+                setInput={setInput}
+                officeSelected={officeSelected}
+                setOfficeSelected={setOfficeSelected}
+                displayInputContainer={displayInputContainer}
+                setDisplayInputContainer={setDisplayInputContainer}
+                page={page}
+                setPage={setPage}
+                updateInputs={updateInputs}
+              />
+            </ProtectedRoute>
+          }
+        />
+        <Route 
+          path="prev-ticket"
+          element={
+            <ProtectedRoute>
+              <PrevTicketPage 
+                ongoingSess={ongoingSess} 
+                users={users} 
+                setUsers={setUsers}
+                input={input}
+                setInput={setInput}
+                officeSelected={officeSelected}
+                setOfficeSelected={setOfficeSelected}
+                displayInputContainer={displayInputContainer}
+                setDisplayInputContainer={setDisplayInputContainer}
+                page={page}
+                setPage={setPage}
+                updateInputs={updateInputs}
               />
             </ProtectedRoute>
           }
