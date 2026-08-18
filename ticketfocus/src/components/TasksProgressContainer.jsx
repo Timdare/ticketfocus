@@ -55,7 +55,7 @@ export function TasksProgressContainer({ user, date }) {
                     value={d}
                     title={dayjs(d).format("dddd D MMM, YYYY")}
                   >
-                    {dayjs(date).format("MMM DD, YYYY")}
+                    {d === dayjs().format("YYYY-MM-DD") ? "Today's ticket" :dayjs(d).format("MMM DD, YYYY")}
                   </option>
                 );
               })
