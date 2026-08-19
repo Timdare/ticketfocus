@@ -9,7 +9,12 @@ export function InputContainer({
   setOfficeSelected,
   setUsers,
   user,
-  page
+  page,
+  isEditingTicket,
+  setIsEditingTicket,
+  ticketToEdit,
+  setTicketToEdit,
+  setDisplayInputContainer
 }) {
   // const user = users.find((u) => u.userId === JSON.parse(localStorage.getItem("ongoingSess"))?.userId);
   function saveInput(e) {
@@ -48,9 +53,46 @@ export function InputContainer({
     setInput("");
   }
 
-  const addTaskEnterKey = (e) => {
+  const handleSpecialKeys = (e) => {
     e.key === "Enter" && addTask();
+    if (e.key === "Escape" ){
+      setInput("");
+      setIsEditingTicket(false);
+      page !== "dashboard" && setDisplayInputContainer(false);
+      setUsers(JSON.parse(localStorage.getItem("users")));
+    }
   };
+
+  const editTask = () => {
+    if (input === "") return;
+    const newTasks = [
+      ...user.tasks,
+      {
+        id: ticketToEdit.id,
+        text: input,
+        office: officeSelected,
+        completed: ticketToEdit.completed,
+        createdAt: ticketToEdit.createdAt,
+      },
+    ];
+    setUsers((prevUsers) => {
+      const ongoingSess = JSON.parse(localStorage.getItem("ongoingSess")) || {};
+      if (!ongoingSess.userId) return prevUsers; // If no ongoing session, return previous users
+      const updatedUsers = prevUsers.map((user) => {
+        if (user.userId === ongoingSess.userId) {
+          return { ...user, tasks: newTasks };
+        }
+        return user;
+      });
+      updateLocalStorage("users", updatedUsers);
+      return updatedUsers;
+    });
+
+    setIsEditingTicket(false);
+    setTicketToEdit({});
+    setInput("");
+    setDisplayInputContainer(false);
+  }
 
   return (
     <div className="input-container">
@@ -62,7 +104,7 @@ export function InputContainer({
         placeholder="Add a new ticket..."
         className="light-grey-bg"
         onChange={saveInput}
-        onKeyDown={addTaskEnterKey}
+        onKeyDown={handleSpecialKeys}
         value={input}
       />
       <select
@@ -82,9 +124,17 @@ export function InputContainer({
         <option value="710">710</option>
       </select>
       <div className="add-task-button-container">
-        <button className="add-task-button" onClick={addTask}>
-          {page === "dashboard" ? "Add" : "Edit"} Ticket
-        </button>
+        {isEditingTicket ? (
+          <button className="add-task-button" onClick={editTask}>
+            Edit Ticket
+          </button>
+        ) : (
+          <button className="add-task-button" onClick={addTask}>
+            {page === "dashboard" ? "Add" : "Edit"} Ticket
+          </button>
+        )
+      }
+
       </div>
     </div>
   );

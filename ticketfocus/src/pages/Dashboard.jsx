@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import dayjs from "dayjs";
 import { TasksProgressContainer } from "../components/TasksProgressContainer";
 import { InputContainer } from "../components/InputContainer";
 import { ItemContainer } from "../components/ItemContainer";
 import { WorkSessionContainer } from "../components/WorkSessionContainer";
 
-export function Dashboard({ 
-  users, 
-  setUsers, 
-  ongoingSess, 
+export function Dashboard({
+  users,
+  setUsers,
+  ongoingSess,
   input,
   setInput,
   officeSelected,
@@ -18,6 +18,10 @@ export function Dashboard({
   page,
   setPage,
   updateInputs,
+  isEditingTicket,
+  setIsEditingTicket,
+  ticketToEdit,
+  setTicketToEdit,
 }) {
   // const navigate = useNavigate();
   // const ongoingSess = JSON.parse(localStorage.getItem("ongoingSess")) || {};
@@ -33,17 +37,16 @@ export function Dashboard({
   //   }
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // } , []);
-  useEffect(()=> {
+  useEffect(() => {
     setPage("dashboard");
-    setDisplayInputContainer(()=> page === "dashboard");
-  }, [page])
+    setDisplayInputContainer(() => page === "dashboard");
+  }, [page]);
 
   const user = users.find((u) => u.userId === ongoingSess.userId);
   console.log(user);
 
   // const [input, setInput] = useState("");
   // const [officeSelected, setOfficeSelected] = useState("701");
-
 
   const logoutUser = () => {
     localStorage.removeItem("ongoingSess");
@@ -101,16 +104,22 @@ export function Dashboard({
                     </div>
                   </div> */}
 
-              {displayInputContainer &&
+              {displayInputContainer && (
                 <InputContainer
-                input={input}
-                setInput={setInput}
-                officeSelected={officeSelected}
-                setOfficeSelected={setOfficeSelected}
-                user={user ? user : ""}
-                setUsers={setUsers}
-                page={"dashboard"}
-              />}
+                  input={input}
+                  setInput={setInput}
+                  officeSelected={officeSelected}
+                  setOfficeSelected={setOfficeSelected}
+                  user={user ? user : ""}
+                  setUsers={setUsers}
+                  page={"dashboard"}
+                  isEditingTicket={isEditingTicket}
+                  setIsEditingTicket={setIsEditingTicket}
+                  ticketToEdit={ticketToEdit}
+                  setTicketToEdit={setTicketToEdit}
+                  setDisplayInputContainer={setDisplayInputContainer}
+                />
+              )}
             </div>
             <ul className="task-list">
               {user.tasks && user.tasks.length === 0 && (
@@ -120,7 +129,9 @@ export function Dashboard({
               )}
               {user.tasks &&
                 user.tasks.map((task) => {
-                  const formattedTaskDate = dayjs(task.createdAt).format("YYYY-MM-DD");
+                  const formattedTaskDate = dayjs(task.createdAt).format(
+                    "YYYY-MM-DD",
+                  );
                   return (
                     formattedTaskDate === todaysDate && (
                       <ItemContainer
@@ -131,6 +142,8 @@ export function Dashboard({
                         user={user}
                         setUsers={setUsers}
                         setDisplayInputContainer={setDisplayInputContainer}
+                        setIsEditingTicket={setIsEditingTicket}
+                        setTicketToEdit={setTicketToEdit}
                       />
                     )
                   );

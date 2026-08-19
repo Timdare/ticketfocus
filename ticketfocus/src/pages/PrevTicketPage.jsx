@@ -16,7 +16,11 @@ export function PrevTicketPage({
     setDisplayInputContainer,
     page,
     setPage,
-    updateInputs
+    updateInputs,
+    isEditingTicket,
+    setIsEditingTicket,
+    ticketToEdit,
+    setTicketToEdit,
 }) {
     
     const user = users.find((u) => u.userId === ongoingSess.userId);
@@ -57,6 +61,11 @@ export function PrevTicketPage({
                                     user={user ? user : ""}
                                     setUsers={setUsers}
                                     page={"prev-tickets"}
+                                    isEditingTicket={isEditingTicket}
+                                    setIsEditingTicket={setIsEditingTicket}
+                                    ticketToEdit={ticketToEdit}
+                                    setTicketToEdit={setTicketToEdit}
+                                    setDisplayInputContainer={setDisplayInputContainer}
                                 />
                             }
                         </div>
@@ -75,6 +84,8 @@ export function PrevTicketPage({
                                             user={user}
                                             setUsers={setUsers}
                                             setDisplayInputContainer={setDisplayInputContainer}
+                                            setIsEditingTicket={setIsEditingTicket}
+                                            setTicketToEdit={setTicketToEdit}
                                         />
                                     );
                                 })

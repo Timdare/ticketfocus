@@ -1,6 +1,14 @@
 import { updateLocalStorage } from "../utils/updateLocalStorage";
 import "./ItemContainer.css";
-export function ItemContainer({ task, updateInputs, user, setUsers, setDisplayInputContainer }) {
+export function ItemContainer({ 
+  task, 
+  updateInputs, 
+  user, 
+  setUsers, 
+  setDisplayInputContainer,
+  setIsEditingTicket,
+  setTicketToEdit 
+}) {
   function updateTaskStatus(e) {
     setUsers((prevUsers) => {
       // const ongoingSess = JSON.parse(localStorage.getItem("ongoingSess")) || {};
@@ -41,7 +49,10 @@ export function ItemContainer({ task, updateInputs, user, setUsers, setDisplayIn
 
   const editTask = () => {
     setDisplayInputContainer(true);
-    updateInputs(task.text, task.office);
+    setIsEditingTicket(true);
+    const ticketCopy = {...task};
+    setTicketToEdit(ticketCopy);
+    updateInputs(ticketCopy.text, ticketCopy.office);
     setUsers((prevUsers) => {
       if (!user.tasks) return prevUsers;
       const updatedUsers = prevUsers.map((u) => {

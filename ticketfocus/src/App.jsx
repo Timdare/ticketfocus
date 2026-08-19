@@ -104,7 +104,8 @@ function App() {
   const [officeSelected, setOfficeSelected] = useState("701");
   const [displayInputContainer, setDisplayInputContainer] = useState(false);
   const [page, setPage] = useState("dashboard");
-
+  const [isEditingTicket, setIsEditingTicket] = useState(false);
+  const [ticketToEdit,setTicketToEdit] = useState({});
 
   function updateInputs(name, office) {
     setInput(name);
@@ -135,6 +136,10 @@ function App() {
                 page={page}
                 setPage={setPage}
                 updateInputs={updateInputs}
+                isEditingTicket={isEditingTicket}
+                setIsEditingTicket={setIsEditingTicket}
+                ticketToEdit={ticketToEdit}
+                setTicketToEdit={setTicketToEdit}
               />
             </ProtectedRoute>
           }
@@ -156,6 +161,10 @@ function App() {
                 page={page}
                 setPage={setPage}
                 updateInputs={updateInputs}
+                isEditingTicket={isEditingTicket}
+                setIsEditingTicket={setIsEditingTicket}
+                ticketToEdit={ticketToEdit}
+                setTicketToEdit={setTicketToEdit}
               />
             </ProtectedRoute>
           }
