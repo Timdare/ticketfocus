@@ -1,0 +1,20 @@
+.logout-btn-container{
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+.logout-btn{
+  background-color: transparent;
+  color: red;
+  border: 1px solid red;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+.logout-btn:hover{
+  background-color: red;
+  color: var(--white-color);
+}

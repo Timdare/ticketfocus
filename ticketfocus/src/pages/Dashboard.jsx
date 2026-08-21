@@ -4,6 +4,7 @@ import { TasksProgressContainer } from "../components/TasksProgressContainer";
 import { InputContainer } from "../components/InputContainer";
 import { ItemContainer } from "../components/ItemContainer";
 import { WorkSessionContainer } from "../components/WorkSessionContainer";
+import { LogoutBtnContainer } from "../components/LogoutBtnContainer";
 
 export function Dashboard({
   users,
@@ -47,11 +48,6 @@ export function Dashboard({
 
   // const [input, setInput] = useState("");
   // const [officeSelected, setOfficeSelected] = useState("701");
-
-  const logoutUser = () => {
-    localStorage.removeItem("ongoingSess");
-    window.location.replace("/login");
-  };
 
   const todaysDate = dayjs().format("YYYY-MM-DD");
 
@@ -193,11 +189,8 @@ export function Dashboard({
             </ul>
           </section>
 
-          <div className="logout-btn-container">
-            <button className="logout-btn" onClick={logoutUser}>
-              Logout
-            </button>
-          </div>
+          <LogoutBtnContainer />
+
         </main>
       </div>
     </>

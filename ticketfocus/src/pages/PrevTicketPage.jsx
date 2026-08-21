@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { TasksProgressContainer } from "../components/TasksProgressContainer";
 import { InputContainer } from "../components/InputContainer";
 import { ItemContainer } from "../components/ItemContainer";
+import { LogoutBtnContainer } from "../components/LogoutBtnContainer";
 
 export function PrevTicketPage({ 
     users, 
@@ -94,6 +95,8 @@ export function PrevTicketPage({
                         </ul>
 
                     </section>
+
+          <LogoutBtnContainer />
 
                 </main>    
                 
