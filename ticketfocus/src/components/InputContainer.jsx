@@ -51,10 +51,11 @@ export function InputContainer({
     });
 
     setInput("");
+    setDisplayInputContainer(true);
   }
 
   const handleSpecialKeys = (e) => {
-    e.key === "Enter" && addTask();
+    e.key === "Enter" && (isEditingTicket ? editTask() : addTask());
     if (e.key === "Escape") {
       setInput("");
       setIsEditingTicket(false);
@@ -91,7 +92,7 @@ export function InputContainer({
     setIsEditingTicket(false);
     setTicketToEdit({});
     setInput("");
-    setDisplayInputContainer(false);
+    page === "dashboard" ? setDisplayInputContainer(true) : setDisplayInputContainer(false);
   };
 
   return (
