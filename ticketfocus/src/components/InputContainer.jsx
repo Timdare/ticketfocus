@@ -14,7 +14,7 @@ export function InputContainer({
   setIsEditingTicket,
   ticketToEdit,
   setTicketToEdit,
-  setDisplayInputContainer
+  setDisplayInputContainer,
 }) {
   // const user = users.find((u) => u.userId === JSON.parse(localStorage.getItem("ongoingSess"))?.userId);
   function saveInput(e) {
@@ -55,7 +55,7 @@ export function InputContainer({
 
   const handleSpecialKeys = (e) => {
     e.key === "Enter" && addTask();
-    if (e.key === "Escape" ){
+    if (e.key === "Escape") {
       setInput("");
       setIsEditingTicket(false);
       page !== "dashboard" && setDisplayInputContainer(false);
@@ -92,7 +92,7 @@ export function InputContainer({
     setTicketToEdit({});
     setInput("");
     setDisplayInputContainer(false);
-  }
+  };
 
   return (
     <div className="input-container">
@@ -132,9 +132,7 @@ export function InputContainer({
           <button className="add-task-button" onClick={addTask}>
             {page === "dashboard" ? "Add" : "Edit"} Ticket
           </button>
-        )
-      }
-
+        )}
       </div>
     </div>
   );

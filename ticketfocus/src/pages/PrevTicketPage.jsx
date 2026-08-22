@@ -1,111 +1,131 @@
 import dayjs from "dayjs";
 import { useEffect } from "react";
+import { useParams, useNavigate } from "react-router";
 import { TasksProgressContainer } from "../components/TasksProgressContainer";
 import { InputContainer } from "../components/InputContainer";
 import { ItemContainer } from "../components/ItemContainer";
 import { LogoutBtnContainer } from "../components/LogoutBtnContainer";
 
-export function PrevTicketPage({ 
-    users, 
-    setUsers, 
-    ongoingSess,
-    input,
-    setInput,
-    officeSelected,
-    setOfficeSelected,
-    displayInputContainer,
-    setDisplayInputContainer,
-    page,
-    setPage,
-    updateInputs,
-    isEditingTicket,
-    setIsEditingTicket,
-    ticketToEdit,
-    setTicketToEdit,
+export function PrevTicketPage({
+  users,
+  setUsers,
+  ongoingSess,
+  input,
+  setInput,
+  officeSelected,
+  setOfficeSelected,
+  displayInputContainer,
+  setDisplayInputContainer,
+  page,
+  setPage,
+  updateInputs,
+  isEditingTicket,
+  setIsEditingTicket,
+  ticketToEdit,
+  setTicketToEdit,
+  ticketDate,
+  setTicketDate,
 }) {
-    
-    const user = users.find((u) => u.userId === ongoingSess.userId);
+  const navigate = useNavigate();
+  const params = useParams();
+  const { ticketDateParams } = params;
 
-    useEffect(()=> {
-        setPage("prev-tickets");
-        setDisplayInputContainer(false);
-    }, [page])
+  console.log(dayjs(ticketDate).valueOf());
 
-    const testDate = "2026-08-16";
-    
-    return (
-        <>
-            <title>TicketFocus - Prev. Tickets</title>
+  const user = users.find((u) => u.userId === ongoingSess.userId);
 
-            <div className="main-content">
-                <header>
-                  <h1 className="project-name dark-blue">TicketFocus</h1>
-                </header>
+  useEffect(() => {
+    setPage("prev-ticket");
+    setDisplayInputContainer(false);
+    setTicketDate(ticketDate);
+  }, []);
 
-                <main>
-                    <section className="task-details-container">
-                        <TasksProgressContainer
-                            // tasks={tasks}
-                            user={user ? user : ""}
-                            todaysDate={""}
-                        />
-                    </section>
+  const ticketDateExists = user.tasks.find(
+    (task) => dayjs(task.createdAt).format("YYYY-MM-DD") === ticketDateParams,
+  );
+  if (!ticketDateExists) navigate("/");
 
-                    <section className="task-list-container p-inline-1rem white-bg rounded-8px">
-                        <div className="list-container p-block-1rem">
-                            {displayInputContainer &&
-                                <InputContainer
-                                    input={input}
-                                    setInput={setInput}
-                                    officeSelected={officeSelected}
-                                    setOfficeSelected={setOfficeSelected}
-                                    user={user ? user : ""}
-                                    setUsers={setUsers}
-                                    page={"prev-tickets"}
-                                    isEditingTicket={isEditingTicket}
-                                    setIsEditingTicket={setIsEditingTicket}
-                                    ticketToEdit={ticketToEdit}
-                                    setTicketToEdit={setTicketToEdit}
-                                    setDisplayInputContainer={setDisplayInputContainer}
-                                />
-                            }
-                        </div>
+  return (
+    <>
+      <title>TicketFocus - Prev. Tickets</title>
 
-                        <ul className="task-list">
-                            {user.tasks &&
-                                user.tasks.map(task => {
-                                    const formattedTaskDate = dayjs(task.createdAt).format("YYYY-MM-DD")
-                                    console.log(formattedTaskDate)
-                                    return (
-                                        formattedTaskDate === testDate && <ItemContainer
-                                            task={task}
-                                            key={task.id}
-                                            // setTasks={setTasks}
-                                            updateInputs={updateInputs}
-                                            user={user}
-                                            setUsers={setUsers}
-                                            setDisplayInputContainer={setDisplayInputContainer}
-                                            setIsEditingTicket={setIsEditingTicket}
-                                            setTicketToEdit={setTicketToEdit}
-                                        />
-                                    );
-                                })
+      <div className="main-content">
+        <header>
+          <h1 className="project-name dark-blue">TicketFocus</h1>
+        </header>
 
-                            }
-                        </ul>
+        <main>
+          <section className="task-details-container">
+            <TasksProgressContainer
+              user={user ? user : ""}
+              todaysDate={""}
+              ticketDate={ticketDate}
+              setTicketDate={setTicketDate}
+              page={page}
+              ticketDateParams={ticketDateParams}
+            />
+          </section>
 
-                    </section>
+          <section className="task-list-container p-inline-1rem white-bg rounded-8px">
+            <div className="list-container p-block-1rem">
+              {displayInputContainer && (
+                <InputContainer
+                  input={input}
+                  setInput={setInput}
+                  officeSelected={officeSelected}
+                  setOfficeSelected={setOfficeSelected}
+                  user={user ? user : ""}
+                  setUsers={setUsers}
+                  page={"prev-ticket"}
+                  isEditingTicket={isEditingTicket}
+                  setIsEditingTicket={setIsEditingTicket}
+                  ticketToEdit={ticketToEdit}
+                  setTicketToEdit={setTicketToEdit}
+                  setDisplayInputContainer={setDisplayInputContainer}
+                />
+              )}
+            </div>
+
+            <ul className="task-list">
+              {!user.tasks.find(
+                (task) =>
+                  dayjs(task.createdAt).format("YYYY-MM-DD") ===
+                  ticketDateParams,
+              ) && (
+                <li className="no-task-yet item-container p-block-1rem">
+                  No tickets for{" "}
+                  {dayjs(ticketDateParams).format("DD MMMM, YYYY")}
+                </li>
+              )}
+
+              {user.tasks &&
+                user.tasks.map((task) => {
+                  const formattedTaskDate = dayjs(task.createdAt).format(
+                    "YYYY-MM-DD",
+                  );
+                  console.log(formattedTaskDate);
+                  return (
+                    formattedTaskDate === ticketDateParams && (
+                      <ItemContainer
+                        task={task}
+                        key={task.id}
+                        // setTasks={setTasks}
+                        updateInputs={updateInputs}
+                        user={user}
+                        setUsers={setUsers}
+                        setDisplayInputContainer={setDisplayInputContainer}
+                        setIsEditingTicket={setIsEditingTicket}
+                        setTicketToEdit={setTicketToEdit}
+                      />
+                    )
+                  );
+                })}
+            </ul>
+          </section>
 
           <LogoutBtnContainer />
-
-                </main>    
-                
-
-
-
-            </div>
-            <h1>Tracking Page</h1>
-        </>
-    );
-
+        </main>
+      </div>
+    </>
+  );
 }

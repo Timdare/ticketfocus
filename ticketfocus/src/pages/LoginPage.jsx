@@ -11,19 +11,21 @@ export function LoginPage({ users, setOngoingSess }) {
 
   const navigate = useNavigate();
 
-  function togglePasswordVisibility(){
+  function togglePasswordVisibility() {
     hidePassword ? setHidePassword(false) : setHidePassword(true);
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     // Handle login logic here
-    const user = users.find((u) => u.username === username.toLowerCase() && u.password === password);
+    const user = users.find(
+      (u) => u.username === username.toLowerCase() && u.password === password,
+    );
 
     const ongoingSess = {
       userId: user ? user.userId : null,
-    }
+    };
 
     console.log(ongoingSess.userId);
 
@@ -32,14 +34,13 @@ export function LoginPage({ users, setOngoingSess }) {
       console.log("Login successful!");
       updateLocalStorage("ongoingSess", ongoingSess);
       setOngoingSess(ongoingSess);
-      navigate("/",{ replace: true });
-
+      navigate("/", { replace: true });
     } else {
       // Login failed
       console.log("Login failed!");
       setLoginError("Invalid username/password");
     }
-  }
+  };
 
   return (
     <>
@@ -48,7 +49,9 @@ export function LoginPage({ users, setOngoingSess }) {
       <div className="main-content-login">
         <section className="form-container white-bg rounded-8px">
           <h2 className="centered-text">Welcome to TicketFocus!</h2>
-          <p className="dark-grey-text centered-text m-0">Login to continue to your dashboard.</p>
+          <p className="dark-grey-text centered-text m-0">
+            Login to continue to your dashboard.
+          </p>
 
           <form className="login-form">
             <div className="login-input-container">
@@ -79,7 +82,10 @@ export function LoginPage({ users, setOngoingSess }) {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <div className="input-icon toggle-visibility-icon" onClick={togglePasswordVisibility}>
+              <div
+                className="input-icon toggle-visibility-icon"
+                onClick={togglePasswordVisibility}
+              >
                 {hidePassword ? (
                   <i className="fa-regular fa-eye-slash"></i>
                 ) : (
@@ -88,9 +94,15 @@ export function LoginPage({ users, setOngoingSess }) {
               </div>
             </div>
 
-            {loginError && <p className="login-error-message m-0">{loginError}</p>}
+            {loginError && (
+              <p className="login-error-message m-0">{loginError}</p>
+            )}
 
-            <button type="submit" className="login-btn dark-blue-bg" onClick={handleSubmit}>
+            <button
+              type="submit"
+              className="login-btn dark-blue-bg"
+              onClick={handleSubmit}
+            >
               Log In <i className="fa-solid fa-arrow-right login-icon"></i>
             </button>
           </form>

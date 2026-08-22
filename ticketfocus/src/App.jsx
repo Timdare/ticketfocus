@@ -2,12 +2,11 @@ import { useState } from "react";
 import { Routes, Route } from "react-router";
 import { Dashboard } from "./pages/Dashboard";
 import { LoginPage } from "./pages/LoginPage";
-import { PrevTicketPage } from "./pages/PrevTicketPage.jsx"
-import {ProtectedRoute } from "./components/ProtectedRoute";
+import { PrevTicketPage } from "./pages/PrevTicketPage.jsx";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 import "./App.css";
 
 function App() {
-
   // const users = [
   //   {
   //     userId: "staff-0001",
@@ -55,44 +54,46 @@ function App() {
   //   },
   // ];
 
-  const [users, setUsers] = useState(JSON.parse(localStorage.getItem("users")) || [
-    {
-      userId: 'staff-0001',
-      firstname: "Oluwatimilehin",
-      lastname: "Atandare",
-      username: "oluwatimilehin.atandare",
-      password: "123456",
-      isAdmin: true,
-      tasks: []
-    },
-    {
-      userId: 'staff-0002',
-      firstname: "Hassan",
-      lastname: "Olamilekan",
-      username: "hassan.olamilekan",
-      password: "123456",
-      isAdmin: false,
-      tasks: []
-    },
-    {
-      userId: 'staff-0003',
-      firstname: "Gift",
-      lastname: "Asuquo",
-      username: "gift.asuquo",
-      password: "123456",
-      isAdmin: false,
-      tasks: []
-    },
-    {
-      userId: 'staff-0004',
-      firstname: "Moses",
-      lastname: "Bliss",
-      username: "moses.bliss",
-      password: "123456",
-      isAdmin: false,
-      tasks: []
-    },
-  ]);
+  const [users, setUsers] = useState(
+    JSON.parse(localStorage.getItem("users")) || [
+      {
+        userId: "staff-0001",
+        firstname: "Oluwatimilehin",
+        lastname: "Atandare",
+        username: "oluwatimilehin.atandare",
+        password: "123456",
+        isAdmin: true,
+        tasks: [],
+      },
+      {
+        userId: "staff-0002",
+        firstname: "Hassan",
+        lastname: "Olamilekan",
+        username: "hassan.olamilekan",
+        password: "123456",
+        isAdmin: false,
+        tasks: [],
+      },
+      {
+        userId: "staff-0003",
+        firstname: "Gift",
+        lastname: "Asuquo",
+        username: "gift.asuquo",
+        password: "123456",
+        isAdmin: false,
+        tasks: [],
+      },
+      {
+        userId: "staff-0004",
+        firstname: "Moses",
+        lastname: "Bliss",
+        username: "moses.bliss",
+        password: "123456",
+        isAdmin: false,
+        tasks: [],
+      },
+    ],
+  );
   console.log(users);
 
   const [ongoingSess, setOngoingSess] = useState(() => {
@@ -105,7 +106,8 @@ function App() {
   const [displayInputContainer, setDisplayInputContainer] = useState(false);
   const [page, setPage] = useState("dashboard");
   const [isEditingTicket, setIsEditingTicket] = useState(false);
-  const [ticketToEdit,setTicketToEdit] = useState({});
+  const [ticketToEdit, setTicketToEdit] = useState({});
+  const [ticketDate, setTicketDate] = useState("today");
 
   function updateInputs(name, office) {
     setInput(name);
@@ -140,17 +142,19 @@ function App() {
                 setIsEditingTicket={setIsEditingTicket}
                 ticketToEdit={ticketToEdit}
                 setTicketToEdit={setTicketToEdit}
+                ticketDate={ticketDate}
+                setTicketDate={setTicketDate}
               />
             </ProtectedRoute>
           }
         />
-        <Route 
-          path="prev-ticket"
+        <Route
+          path="prev-ticket/:ticketDateParams"
           element={
             <ProtectedRoute>
-              <PrevTicketPage 
-                ongoingSess={ongoingSess} 
-                users={users} 
+              <PrevTicketPage
+                ongoingSess={ongoingSess}
+                users={users}
                 setUsers={setUsers}
                 input={input}
                 setInput={setInput}
@@ -165,11 +169,16 @@ function App() {
                 setIsEditingTicket={setIsEditingTicket}
                 ticketToEdit={ticketToEdit}
                 setTicketToEdit={setTicketToEdit}
+                ticketDate={ticketDate}
+                setTicketDate={setTicketDate}
               />
             </ProtectedRoute>
           }
         />
-        <Route path="login" element={<LoginPage users={users} setOngoingSess={setOngoingSess} />} />
+        <Route
+          path="login"
+          element={<LoginPage users={users} setOngoingSess={setOngoingSess} />}
+        />
       </Routes>
     </>
   );

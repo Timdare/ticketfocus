@@ -1,13 +1,13 @@
 import { updateLocalStorage } from "../utils/updateLocalStorage";
 import "./ItemContainer.css";
-export function ItemContainer({ 
-  task, 
-  updateInputs, 
-  user, 
-  setUsers, 
+export function ItemContainer({
+  task,
+  updateInputs,
+  user,
+  setUsers,
   setDisplayInputContainer,
   setIsEditingTicket,
-  setTicketToEdit 
+  setTicketToEdit,
 }) {
   function updateTaskStatus(e) {
     setUsers((prevUsers) => {
@@ -50,7 +50,7 @@ export function ItemContainer({
   const editTask = () => {
     setDisplayInputContainer(true);
     setIsEditingTicket(true);
-    const ticketCopy = {...task};
+    const ticketCopy = { ...task };
     setTicketToEdit(ticketCopy);
     updateInputs(ticketCopy.text, ticketCopy.office);
     setUsers((prevUsers) => {

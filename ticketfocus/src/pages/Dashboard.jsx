@@ -23,6 +23,8 @@ export function Dashboard({
   setIsEditingTicket,
   ticketToEdit,
   setTicketToEdit,
+  ticketDate,
+  setTicketDate,
 }) {
   // const navigate = useNavigate();
   // const ongoingSess = JSON.parse(localStorage.getItem("ongoingSess")) || {};
@@ -41,10 +43,10 @@ export function Dashboard({
   useEffect(() => {
     setPage("dashboard");
     setDisplayInputContainer(() => page === "dashboard");
+    setTicketDate("today");
   }, [page]);
 
   const user = users.find((u) => u.userId === ongoingSess.userId);
-  console.log(user);
 
   // const [input, setInput] = useState("");
   // const [officeSelected, setOfficeSelected] = useState("701");
@@ -65,6 +67,9 @@ export function Dashboard({
               // tasks={tasks}
               user={user ? user : ""}
               date={todaysDate}
+              ticketDate={ticketDate}
+              setTicketDate={setTicketDate}
+              page={page}
             />
 
             <WorkSessionContainer />
@@ -119,6 +124,14 @@ export function Dashboard({
             </div>
             <ul className="task-list">
               {user.tasks && user.tasks.length === 0 && (
+                <li className="no-task-yet item-container p-block-1rem">
+                  No tickets yet.
+                </li>
+              )}
+              {!user.tasks.find(
+                (task) =>
+                  dayjs(task.createdAt).format("YYYY-MM-DD") === todaysDate,
+              ) && (
                 <li className="no-task-yet item-container p-block-1rem">
                   No tickets yet.
                 </li>
@@ -190,7 +203,6 @@ export function Dashboard({
           </section>
 
           <LogoutBtnContainer />
-
         </main>
       </div>
     </>
