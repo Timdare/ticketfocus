@@ -20,7 +20,6 @@ export function TasksProgressContainer({
   ];
   const reversedDates = dates.toReversed();
   const pastTicketsExist = dates.some((d) => d !== date);
-  console.log(pastTicketsExist, date);
 
   const viewPastTicket = (e) => {
     setTicketDate(e.target.value);
@@ -45,10 +44,6 @@ export function TasksProgressContainer({
     );
   }
   if (page === "prev-ticket") {
-    console.log(
-      ticketDate,
-      psuedoTasks.filter((task) => task.createdAt === ticketDate),
-    );
     userTasksCopy = psuedoTasks.filter(
       (task) => task.createdAt === ticketDateParams,
     );
@@ -58,8 +53,6 @@ export function TasksProgressContainer({
     if (page === "dashboard") setTicketDate("today");
     if (page === "prev-ticket") setTicketDate(ticketDateParams);
   }, [page]);
-
-  // console.log(tasksToUse);
 
   const totalTasks = userTasksCopy ? userTasksCopy.length : 0;
   const completeTasks = userTasksCopy

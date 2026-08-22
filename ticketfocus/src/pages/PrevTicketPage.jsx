@@ -30,8 +30,6 @@ export function PrevTicketPage({
   const params = useParams();
   const { ticketDateParams } = params;
 
-  console.log(dayjs(ticketDate).valueOf());
-
   const user = users.find((u) => u.userId === ongoingSess.userId);
 
   useEffect(() => {
@@ -103,7 +101,6 @@ export function PrevTicketPage({
                   const formattedTaskDate = dayjs(task.createdAt).format(
                     "YYYY-MM-DD",
                   );
-                  console.log(formattedTaskDate);
                   return (
                     formattedTaskDate === ticketDateParams && (
                       <ItemContainer
