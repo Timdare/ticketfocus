@@ -15,7 +15,7 @@ app.use(cors({
     methods: ["POST","GET"],
     credentials: true,
 }));
-app.use("/api/auth", router);
+app.use("/api", router);
 
 app.get("/",(req,res)=> res.send("<h1> This is a message from the backend</h1>"))
 
