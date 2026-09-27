@@ -2,7 +2,8 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { mySqlPool } from "./config/db.js";
-import { router } from "./routes/userRoutes.js";
+import { userRouter } from "./routes/userRoutes.js";
+import { ticketRouter } from "./routes/ticketRoutes.js";
 
 const app = express();
 
@@ -15,7 +16,8 @@ app.use(cors({
     methods: ["POST","GET"],
     credentials: true,
 }));
-app.use("/api", router);
+app.use("/api/auth", userRouter);
+app.use("/api/tickets", ticketRouter);
 
 app.get("/",(req,res)=> res.send("<h1> This is a message from the backend</h1>"))
 
