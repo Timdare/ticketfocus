@@ -50,7 +50,7 @@ export const userLogin = async (req,res) => {
         }
         const user_password = data[0].user_password;
         if (user_password === req.body.password) {
-            const user_id = data[0].user_id;
+            const user_id = data[0].id;
             const token = jwt.sign({user_id}, "jwt-secret-login-token",{expiresIn: "2d"});
             res.cookie("userSessionToken",token);
 
