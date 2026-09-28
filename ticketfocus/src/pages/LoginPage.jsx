@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { updateLocalStorage } from "../utils/updateLocalStorage";
 import "./LoginPage.css";
 
-export function LoginPage({ users, setOngoingSess }) {
+export function LoginPage({ users, setOngoingSess, setFirstName }) {
   const [hidePassword, setHidePassword] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -50,6 +50,7 @@ export function LoginPage({ users, setOngoingSess }) {
     try {
       const res = await axios.post("/api/auth/login", inputValues);
       if (res.data.success) {
+        setFirstName(res.data.firstname);
         alert(res.data.message);
         navigate("/");
       }

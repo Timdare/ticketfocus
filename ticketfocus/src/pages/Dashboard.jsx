@@ -27,7 +27,8 @@ export function Dashboard({
   setTicketDate,
 
   tickets,
-  loadTickets
+  loadTickets,
+  firstName
 }) {
   // const navigate = useNavigate();
   // const ongoingSess = JSON.parse(localStorage.getItem("ongoingSess")) || {};
@@ -79,7 +80,10 @@ export function Dashboard({
               page={page}
             /> */}
 
-            <TasksProgressContainer tickets={tickets} />
+            <TasksProgressContainer 
+              tickets={tickets} 
+              firstName={firstName}  
+            />
 
             <WorkSessionContainer />
           </section>

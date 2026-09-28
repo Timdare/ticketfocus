@@ -116,6 +116,7 @@ function App() {
   }
 
   const [tickets,setTickets] = useState([]);
+  const [firstName, setFirstName] = useState("user");
   
   const loadTickets = async () => {
     try {
@@ -170,6 +171,7 @@ function App() {
 
                 tickets={tickets}
                 loadTickets={loadTickets}
+                firstName={firstName}
               />
             </ProtectedRoute>
           }
@@ -203,7 +205,7 @@ function App() {
         />
         <Route
           path="login"
-          element={<LoginPage users={users} setOngoingSess={setOngoingSess} />}
+          element={<LoginPage users={users} setOngoingSess={setOngoingSess} setFirstName={setFirstName} />}
         />
       </Routes>
     </>

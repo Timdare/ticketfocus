@@ -11,7 +11,8 @@ export function TasksProgressContainer({
   page,
   ticketDateParams,
 
-  tickets
+  tickets,
+  firstName
 }) {
   const navigate = useNavigate();
 
@@ -139,7 +140,7 @@ export function TasksProgressContainer({
 
       <section className="tasks-progress-container white-bg rounded-8px p-inline-1rem">
         <h3 className="dark-grey-text">Today's Tickets</h3>
-        <p className="mt-8px">Welcome Timi!</p>
+        <p className="mt-8px">Welcome {firstName}!</p>
 
         <div className="tasks-progress mt-16px">
           <div className="task-progress-status">
