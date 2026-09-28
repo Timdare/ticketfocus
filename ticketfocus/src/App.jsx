@@ -117,6 +117,10 @@ function App() {
 
   const [tickets,setTickets] = useState([]);
   const [firstName, setFirstName] = useState("user");
+  const [inputValues, setInputValues] =  useState({
+    text: "",
+    office: "701"
+  })
   
   const loadTickets = async () => {
     try {
@@ -181,7 +185,8 @@ function App() {
                 loadTickets={loadTickets}
                 firstName={firstName}
                 updateFirstName={updateFirstName}
-                
+                inputValues={inputValues}
+                setInputValues={setInputValues}
               />
             </ProtectedRoute>
           }

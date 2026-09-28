@@ -30,7 +30,8 @@ export function Dashboard({
   loadTickets,
   firstName,
   updateFirstName,
-  
+  inputValues,
+  setInputValues
 }) {
   // const navigate = useNavigate();
   // const ongoingSess = JSON.parse(localStorage.getItem("ongoingSess")) || {};
@@ -139,7 +140,11 @@ export function Dashboard({
                 />
               )} */}
 
-              <InputContainer />
+              <InputContainer
+                inputValues={inputValues}
+                setInputValues={setInputValues}
+                loadTickets={loadTickets}
+              />
             </div>
             {/* <ul className="task-list">
               {user.tasks && user.tasks.length === 0 && (

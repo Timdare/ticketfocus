@@ -1,3 +1,4 @@
+import axios from "axios";
 import dayjs from "dayjs";
 import { updateLocalStorage } from "../utils/updateLocalStorage";
 import "./InputContainer.css";
@@ -15,6 +16,10 @@ export function InputContainer({
   ticketToEdit,
   setTicketToEdit,
   setDisplayInputContainer,
+
+  inputValues,
+  setInputValues,
+  loadTickets
 }) {
   // const user = users.find((u) => u.userId === JSON.parse(localStorage.getItem("ongoingSess"))?.userId);
   function saveInput(e) {
@@ -24,38 +29,45 @@ export function InputContainer({
     setOfficeSelected(e.target.value.toLowerCase());
   };
 
-  function addTask() {
+  async function addTicket() {
     if (input === "") return;
-    const newTasks = [
-      ...user.tasks,
-      {
-        id: crypto.randomUUID(),
-        text: input,
-        office: officeSelected,
-        completed: false,
-        createdAt: dayjs().valueOf(),
-      },
-    ];
-    // setTasks(newTasks);
-    setUsers((prevUsers) => {
-      const ongoingSess = JSON.parse(localStorage.getItem("ongoingSess")) || {};
-      if (!ongoingSess.userId) return prevUsers; // If no ongoing session, return previous users
-      const updatedUsers = prevUsers.map((user) => {
-        if (user.userId === ongoingSess.userId) {
-          return { ...user, tasks: newTasks };
-        }
-        return user;
-      });
-      updateLocalStorage("users", updatedUsers);
-      return updatedUsers;
-    });
+    // const newTasks = [
+    //   ...user.tasks,
+    //   {
+    //     id: crypto.randomUUID(),
+    //     text: input,
+    //     office: officeSelected,
+    //     completed: false,
+    //     createdAt: dayjs().valueOf(),
+    //   },
+    // ];
+    // // setTasks(newTasks);
+    // setUsers((prevUsers) => {
+    //   const ongoingSess = JSON.parse(localStorage.getItem("ongoingSess")) || {};
+    //   if (!ongoingSess.userId) return prevUsers; // If no ongoing session, return previous users
+    //   const updatedUsers = prevUsers.map((user) => {
+    //     if (user.userId === ongoingSess.userId) {
+    //       return { ...user, tasks: newTasks };
+    //     }
+    //     return user;
+    //   });
+    //   updateLocalStorage("users", updatedUsers);
+    //   return updatedUsers;
+    // });
 
-    setInput("");
-    setDisplayInputContainer(true);
+    // setInput("");
+    // setDisplayInputContainer(true);
+
+    // CREATE TICKET LOGIC
+    const res = await axios.post("/api/tickets/createticket",inputValues);
+    alert(res.data.message);
+    await loadTickets();
+    setInputValues({...inputValues,text: ""});
   }
 
   const handleSpecialKeys = (e) => {
-    e.key === "Enter" && (isEditingTicket ? editTask() : addTask());
+    e.key === "Enter" && addTicket();
+    // e.key === "Enter" && (isEditingTicket ? editTask() : addTask());
     if (e.key === "Escape") {
       setInput("");
       setIsEditingTicket(false);
@@ -148,11 +160,14 @@ export function InputContainer({
           type="text"
           placeholder="Add a new ticket..."
           className="light-grey-bg"
-          
+          onChange={e => setInputValues({...inputValues,text: e.target.value})}
+          value={inputValues.text}
+          onKeyDown={handleSpecialKeys}
         />
         <select
           className="office dark-grey-text"
-          
+          onChange={e => setInputValues({...inputValues,office: e.target.value})}
+          value={inputValues.office}
         >
           <option value="701">701</option>
           <option value="702">702</option>
@@ -167,7 +182,10 @@ export function InputContainer({
         </select>
 
         <div className="add-task-button-container">
-          <button className="add-task-button">Add ticket</button>
+          <button 
+            className="add-task-button"
+            onClick={addTicket}
+          >Add ticket</button>
         </div>
 
       </div>
