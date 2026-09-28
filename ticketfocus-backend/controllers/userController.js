@@ -75,7 +75,14 @@ export const userLogin = async (req,res) => {
     }
 }
 
-
+// LOGOUT API
+export const userLogout =  async (req,res) => {
+    res.clearCookie("userSessionToken");
+    return res.status(200).json({
+        success: true,
+        message: "Logout successful"
+    });
+}
 
 // VERIFY/AUTHENTICATE USER FUNCTION
 export const authUser = async (req,res) => {

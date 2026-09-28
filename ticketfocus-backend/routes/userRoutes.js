@@ -1,7 +1,7 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
-import { getUsers, userLogin, authUser } from "../controllers/userController.js";
+import { getUsers, userLogin, authUser, userLogout } from "../controllers/userController.js";
 import { verifyUser } from "../utils/verifyUser.js";
 
 export const userRouter = express.Router();    // ROUTER OBJECT
@@ -10,6 +10,7 @@ userRouter.use(cookieParser()); // MIDDLEWARE TO READ/EXTRACT COOKIES FROM CLIEN
 
 userRouter.get("/getusers", getUsers);
 userRouter.post("/login", userLogin); // LOGIN API
+userRouter.get("/logout", userLogout); // LOGOUT API
 
 // const verifyUser = (req,res, next) => {
 //     const token = req.cookies.userSessionToken;
