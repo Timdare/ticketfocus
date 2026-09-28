@@ -1,4 +1,5 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router";
 import { Dashboard } from "./pages/Dashboard";
 import { LoginPage } from "./pages/LoginPage";
@@ -114,6 +115,28 @@ function App() {
     setOfficeSelected(office);
   }
 
+  const [tickets,setTickets] = useState([]);
+  
+  const loadTickets = async () => {
+    try {
+      const response = await axios.get("/api/tickets/getusertickets");
+      console.log(response.data.tickets);
+      setTickets(response.data.tickets);
+    } catch (error) {
+      console.log(error.response.data);
+    }
+    
+  }
+// loadTickets()
+
+
+  useEffect(()=>{
+    function callLoadTickets() {
+     loadTickets();
+    }
+    callLoadTickets();
+  },[]);
+
   // const taskDate = users[0].tasks[0].createdAt;
   // console.log(dayjs(taskDate).minute())
   // console.log(dayjs().valueOf())
@@ -126,24 +149,27 @@ function App() {
           element={
             <ProtectedRoute>
               <Dashboard
-                users={users}
-                setUsers={setUsers}
-                ongoingSess={ongoingSess}
-                input={input}
-                setInput={setInput}
-                officeSelected={officeSelected}
-                setOfficeSelected={setOfficeSelected}
-                displayInputContainer={displayInputContainer}
-                setDisplayInputContainer={setDisplayInputContainer}
-                page={page}
-                setPage={setPage}
-                updateInputs={updateInputs}
-                isEditingTicket={isEditingTicket}
-                setIsEditingTicket={setIsEditingTicket}
-                ticketToEdit={ticketToEdit}
-                setTicketToEdit={setTicketToEdit}
-                ticketDate={ticketDate}
-                setTicketDate={setTicketDate}
+                // users={users}
+                // setUsers={setUsers}
+                // ongoingSess={ongoingSess}
+                // input={input}
+                // setInput={setInput}
+                // officeSelected={officeSelected}
+                // setOfficeSelected={setOfficeSelected}
+                // displayInputContainer={displayInputContainer}
+                // setDisplayInputContainer={setDisplayInputContainer}
+                // page={page}
+                // setPage={setPage}
+                // updateInputs={updateInputs}
+                // isEditingTicket={isEditingTicket}
+                // setIsEditingTicket={setIsEditingTicket}
+                // ticketToEdit={ticketToEdit}
+                // setTicketToEdit={setTicketToEdit}
+                // ticketDate={ticketDate}
+                // setTicketDate={setTicketDate}
+
+                tickets={tickets}
+                loadTickets={loadTickets}
               />
             </ProtectedRoute>
           }

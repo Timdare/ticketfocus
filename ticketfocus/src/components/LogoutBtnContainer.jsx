@@ -8,7 +8,10 @@ export function LogoutBtnContainer() {
 
   return (
     <div className="logout-btn-container">
-      <button className="logout-btn" onClick={logoutUser}>
+      <button 
+        className="logout-btn" 
+        // onClick={logoutUser}
+      >
         Logout
       </button>
     </div>

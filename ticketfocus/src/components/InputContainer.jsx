@@ -96,45 +96,82 @@ export function InputContainer({
   };
 
   return (
-    <div className="input-container">
-      <div className="input-icon">
-        <i className="fa-solid fa-plus"></i>
+    <>
+      {/* <div className="input-container">
+        <div className="input-icon">
+          <i className="fa-solid fa-plus"></i>
+        </div>
+        <input
+          type="text"
+          placeholder="Add a new ticket..."
+          className="light-grey-bg"
+          onChange={saveInput}
+          onKeyDown={handleSpecialKeys}
+          value={input}
+        />
+        <select
+          className="office dark-grey-text"
+          onChange={selectOffice}
+          value={officeSelected}
+        >
+          <option value="701">701</option>
+          <option value="702">702</option>
+          <option value="703">703</option>
+          <option value="704">704</option>
+          <option value="705">705</option>
+          <option value="706">706</option>
+          <option value="707">707</option>
+          <option value="708">708</option>
+          <option value="709">709</option>
+          <option value="710">710</option>
+        </select>
+        <div className="add-task-button-container">
+          {isEditingTicket ? (
+            <button className="add-task-button" onClick={editTask}>
+              Edit Ticket
+            </button>
+          ) : (
+            <button className="add-task-button" onClick={addTask}>
+              {page === "dashboard" ? "Add" : "Edit"} Ticket
+            </button>
+          )}
+        </div>
+      </div> */}
+
+
+      <div className="input-container">
+        <div className="input-icon">
+          <i className="fa-solid fa-plus"></i>
+        </div>
+
+        <input
+          type="text"
+          placeholder="Add a new ticket..."
+          className="light-grey-bg"
+          
+        />
+        <select
+          className="office dark-grey-text"
+          
+        >
+          <option value="701">701</option>
+          <option value="702">702</option>
+          <option value="703">703</option>
+          <option value="704">704</option>
+          <option value="705">705</option>
+          <option value="706">706</option>
+          <option value="707">707</option>
+          <option value="708">708</option>
+          <option value="709">709</option>
+          <option value="710">710</option>
+        </select>
+
+        <div className="add-task-button-container">
+          <button className="add-task-button">Add ticket</button>
+        </div>
+
       </div>
-      <input
-        type="text"
-        placeholder="Add a new ticket..."
-        className="light-grey-bg"
-        onChange={saveInput}
-        onKeyDown={handleSpecialKeys}
-        value={input}
-      />
-      <select
-        className="office dark-grey-text"
-        onChange={selectOffice}
-        value={officeSelected}
-      >
-        <option value="701">701</option>
-        <option value="702">702</option>
-        <option value="703">703</option>
-        <option value="704">704</option>
-        <option value="705">705</option>
-        <option value="706">706</option>
-        <option value="707">707</option>
-        <option value="708">708</option>
-        <option value="709">709</option>
-        <option value="710">710</option>
-      </select>
-      <div className="add-task-button-container">
-        {isEditingTicket ? (
-          <button className="add-task-button" onClick={editTask}>
-            Edit Ticket
-          </button>
-        ) : (
-          <button className="add-task-button" onClick={addTask}>
-            {page === "dashboard" ? "Add" : "Edit"} Ticket
-          </button>
-        )}
-      </div>
-    </div>
+    </>
+    
   );
 }
