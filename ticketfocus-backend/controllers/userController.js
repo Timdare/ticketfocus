@@ -93,3 +93,35 @@ export const authUser = async (req,res) => {
     status: "success"
    }); 
 }
+
+// AUTHENTICATE USER WITH FEW DETAILS
+export const getUser = async (req,res) => {
+    const user_id = req.user_id;
+    try {
+        const sql = `SELECT * FROM users WHERE id = (?)`;
+        const data = await mySqlPool.query(sql,[user_id]);
+        if(!data){
+            return res.status(400).json({
+                success: false,
+                message: "User not found"
+            });
+        }
+        const {user_name,first_name,last_name,user_role} = data[0][0];
+        return res.status(200).json({
+            success: true,
+            message: "User details",
+            user: {
+                user_name,
+                first_name,
+                last_name,
+                user_role
+            }
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            success: false,
+            message: "Error in get user API"
+        })
+    }
+}

@@ -128,15 +128,23 @@ function App() {
     }
     
   }
+  const updateFirstName = async () => {
+    try {
+      const response = await axios.get("/api/auth/userdetails");
+      setFirstName(response.data.user.first_name);
+    } catch (error) {
+      console.log(error.response);
+    }
+  }
 // loadTickets()
 
 
-  useEffect(()=>{
-    function callLoadTickets() {
-     loadTickets();
-    }
-    callLoadTickets();
-  },[]);
+  // useEffect(()=>{
+  //   function callLoadTickets() {
+  //    loadTickets();
+  //   }
+  //   callLoadTickets();
+  // },[]);
 
   // const taskDate = users[0].tasks[0].createdAt;
   // console.log(dayjs(taskDate).minute())
@@ -172,6 +180,8 @@ function App() {
                 tickets={tickets}
                 loadTickets={loadTickets}
                 firstName={firstName}
+                updateFirstName={updateFirstName}
+                
               />
             </ProtectedRoute>
           }

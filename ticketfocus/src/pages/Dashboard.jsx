@@ -28,7 +28,9 @@ export function Dashboard({
 
   tickets,
   loadTickets,
-  firstName
+  firstName,
+  updateFirstName,
+  
 }) {
   // const navigate = useNavigate();
   // const ongoingSess = JSON.parse(localStorage.getItem("ongoingSess")) || {};
@@ -51,7 +53,9 @@ export function Dashboard({
     // setDisplayInputContainer(() => page === "dashboard");
     // setTicketDate("today");
 
-    // loadTickets();
+    loadTickets();
+    updateFirstName();
+
   }, []);
 
   // const user = users.find((u) => u.userId === ongoingSess.userId);
