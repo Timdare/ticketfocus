@@ -14,25 +14,34 @@ export function ItemContainer({
   loadTickets
 }) {
 
-  function updateTaskStatus(e) {
-    setUsers((prevUsers) => {
-      // const ongoingSess = JSON.parse(localStorage.getItem("ongoingSess")) || {};
-      // if (!ongoingSess.userId) return prevUsers;
-      if (!user.tasks) return prevUsers;
-      const updatedUsers = prevUsers.map((u) => {
-        if (u.userId === user.userId) {
-          const updatedTasks = u.tasks.map((prevTask) =>
-            prevTask.id === task.id
-              ? { ...prevTask, completed: e.target.checked }
-              : prevTask,
-          );
-          return { ...u, tasks: updatedTasks };
-        }
-        return u;
-      });
-      updateLocalStorage("users", updatedUsers);
-      return updatedUsers;
-    });
+  async function updateTaskStatus(e) {
+    // setUsers((prevUsers) => {
+    //   // const ongoingSess = JSON.parse(localStorage.getItem("ongoingSess")) || {};
+    //   // if (!ongoingSess.userId) return prevUsers;
+    //   if (!user.tasks) return prevUsers;
+    //   const updatedUsers = prevUsers.map((u) => {
+    //     if (u.userId === user.userId) {
+    //       const updatedTasks = u.tasks.map((prevTask) =>
+    //         prevTask.id === task.id
+    //           ? { ...prevTask, completed: e.target.checked }
+    //           : prevTask,
+    //       );
+    //       return { ...u, tasks: updatedTasks };
+    //     }
+    //     return u;
+    //   });
+    //   updateLocalStorage("users", updatedUsers);
+    //   return updatedUsers;
+    // });
+
+    // UPDATE TICKET STATUS USING API
+    try {
+      await axios.put(`/api/tickets/updateticket/${ticket.id}`,{completed: e.target.checked});
+      await loadTickets();  
+    } catch (error) {
+      console.log(error.response);
+    }
+
   }
 
   async function deleteTicket() {
@@ -54,6 +63,7 @@ export function ItemContainer({
     // DELETE TICKET USING API
     try {
       const res = await axios.delete(`/api/tickets/deleteticket/${ticket.id}`);
+      console.log(res.data.message);
       await loadTickets();
     } catch (error) {
       console.log(error.response.data);
@@ -164,7 +174,7 @@ export function ItemContainer({
             id={ticket.id}
             className="check"
             checked={ticket.completed}
-            onChange={()=>{}}
+            onChange={updateTaskStatus}
             title="Mark as complete"
           />
           <label className="item-text dark-grey-text" htmlFor={ticket.id}>

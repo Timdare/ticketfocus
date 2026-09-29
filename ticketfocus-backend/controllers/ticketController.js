@@ -117,3 +117,51 @@ export const deleteTicket = async (req,res) => {
         });
     }
 }
+
+// UPDATE A TICKET
+export const updateTicket = async (req,res) => {
+    try {
+        const user_id = req.user_id;
+        if(!user_id) {
+            return res.status(401).json({
+                success: false,
+                message: "You are not logged in"
+            });
+        }
+        const ticket_id = parseInt(req.params.ticket_id);
+        if(!ticket_id) {
+            return res.status(400).json({
+                success: false,
+                message: "Please give a valid ticket"
+            })
+        }
+        const { text, office, completed } = req.body;
+        let data;
+        if(text) {
+            data = await mySqlPool.query(`UPDATE TICKETS SET ticket = ? WHERE id = ?`,[text,ticket_id]);
+        }
+        if(office) {
+            data = await mySqlPool.query(`UPDATE TICKETS SET office = ? WHERE id = ?`,[office,ticket_id]);
+        }
+        if("completed" in req.body) {
+            data = await mySqlPool.query(`UPDATE TICKETS SET completed = ? WHERE id = ?`,[completed,ticket_id]);
+        }
+
+        if(!data) {
+            return res.status(500).json({
+                success: false,
+                message: "Error in DB query"
+            });
+        }
+        return res.status(200).json({
+            success: true,
+            message: "Ticket updated successfully"
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            success: false,
+            message: "Error in update ticket API"
+        })
+    }
+}

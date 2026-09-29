@@ -52,7 +52,7 @@ export function LoginPage({ users, setOngoingSess, setFirstName }) {
       if (res.data.success) {
         setFirstName(res.data.firstname);
         alert(res.data.message);
-        navigate("/");
+        navigate("/", {replace: true});
       }
     } catch (error) {
       console.log(error.response);
