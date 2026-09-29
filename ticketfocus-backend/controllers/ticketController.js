@@ -76,3 +76,44 @@ export const createTicket = async (req,res) => {
         });
     }
 }
+
+// DELETE A TICKET
+export const deleteTicket = async (req,res) => {
+    const sql = `DELETE FROM tickets WHERE id = (?)`;
+    try {
+        const user_id = req.user_id;
+        const ticket_id = parseInt(req.params.ticket_id);
+
+        if (!user_id) {
+            return res.status(401).json({
+                success: false,
+                message: "User not authenticated"
+            })
+        }
+        if(!ticket_id) {
+            return res.status(404).json({
+                success: false,
+                message: "Please provide a valid ticket ID"
+            })
+        }
+
+        const data = await mySqlPool.query(sql,[ticket_id]);
+        if(!data) {
+            return res.status(500).json({
+                success: false,
+                message: "Error in DB query"
+            })
+        }
+        res.status(200).json({
+            success: true,
+            message: "Ticket deleted successfully"
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            success: false,
+            message: "Error in delete ticket API"
+        });
+    }
+}

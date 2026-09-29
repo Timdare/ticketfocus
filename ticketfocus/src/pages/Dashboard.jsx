@@ -197,13 +197,11 @@ export function Dashboard({
                   <ItemContainer
                     key={ticket.id}
                     ticket={ticket}
+                    loadTickets={loadTickets}
                   />
                 )
               })}
 
-              
-              {/* <ItemContainer/>
-              <ItemContainer/> */}
             </ul>
           </section>
 

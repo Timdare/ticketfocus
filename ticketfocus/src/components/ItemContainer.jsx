@@ -1,3 +1,4 @@
+import axios from "axios";
 import { updateLocalStorage } from "../utils/updateLocalStorage";
 import "./ItemContainer.css";
 export function ItemContainer({
@@ -9,7 +10,8 @@ export function ItemContainer({
   setIsEditingTicket,
   setTicketToEdit,
 
-  ticket
+  ticket,
+  loadTickets
 }) {
 
   function updateTaskStatus(e) {
@@ -33,21 +35,30 @@ export function ItemContainer({
     });
   }
 
-  function deleteTask() {
-    setUsers((prevUsers) => {
-      if (!user.tasks) return prevUsers;
-      const updatedUsers = prevUsers.map((u) => {
-        if (u.userId === user.userId) {
-          const updatedTasks = u.tasks.filter(
-            (currentTask) => currentTask.id !== task.id,
-          );
-          return { ...u, tasks: updatedTasks };
-        }
-        return u;
-      });
-      updateLocalStorage("users", updatedUsers);
-      return updatedUsers;
-    });
+  async function deleteTicket() {
+    // setUsers((prevUsers) => {
+    //   if (!user.tasks) return prevUsers;
+    //   const updatedUsers = prevUsers.map((u) => {
+    //     if (u.userId === user.userId) {
+    //       const updatedTasks = u.tasks.filter(
+    //         (currentTask) => currentTask.id !== task.id,
+    //       );
+    //       return { ...u, tasks: updatedTasks };
+    //     }
+    //     return u;
+    //   });
+    //   updateLocalStorage("users", updatedUsers);
+    //   return updatedUsers;
+    // });
+
+    // DELETE TICKET USING API
+    try {
+      const res = await axios.delete(`/api/tickets/deleteticket/${ticket.id}`);
+      await loadTickets();
+    } catch (error) {
+      console.log(error.response.data);
+    }
+
   }
 
   const editTask = () => {
@@ -176,7 +187,7 @@ export function ItemContainer({
           </span>
           <span 
             className="delete-icon-container" 
-            // onClick={deleteTask}
+            onClick={deleteTicket}
           >
             <i className="fa-solid fa-trash-can delete-icon "></i>
           </span>

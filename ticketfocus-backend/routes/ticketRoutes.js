@@ -1,6 +1,6 @@
 import express from "express";
 import cookieParser from "cookie-parser";
-import { createTicket, getUserTickets } from "../controllers/ticketController.js";
+import { createTicket, deleteTicket, getUserTickets } from "../controllers/ticketController.js";
 import { verifyUser } from "../utils/verifyUser.js";
 
 export const ticketRouter = express.Router();
@@ -10,3 +10,5 @@ ticketRouter.use(cookieParser()); // MIDDLEWARE TO READ/EXTRACT COOKIES FROM CLI
 ticketRouter.get("/getUserTickets",verifyUser,getUserTickets); // GET USER TICKETS API
 
 ticketRouter.post("/createTicket",verifyUser,createTicket); // CREATE TICKET API
+
+ticketRouter.delete("/deleteticket/:ticket_id",verifyUser,deleteTicket);
