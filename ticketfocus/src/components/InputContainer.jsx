@@ -11,15 +11,17 @@ export function InputContainer({
   setUsers,
   user,
   page,
-  isEditingTicket,
-  setIsEditingTicket,
+  // isEditingTicket,
+  // setIsEditingTicket,
   ticketToEdit,
   setTicketToEdit,
   setDisplayInputContainer,
 
   inputValues,
   setInputValues,
-  loadTickets
+  loadTickets,
+  isEditingTicket,
+  setIsEditingTicket
 }) {
   // const user = users.find((u) => u.userId === JSON.parse(localStorage.getItem("ongoingSess"))?.userId);
   function saveInput(e) {
@@ -30,7 +32,7 @@ export function InputContainer({
   };
 
   async function addTicket() {
-    if (input === "") return;
+    if (inputValues.text === "") return;
     // const newTasks = [
     //   ...user.tasks,
     //   {
@@ -65,46 +67,75 @@ export function InputContainer({
     setInputValues({...inputValues,text: ""});
   }
 
-  const handleSpecialKeys = (e) => {
-    e.key === "Enter" && addTicket();
-    // e.key === "Enter" && (isEditingTicket ? editTask() : addTask());
+  const handleSpecialKeys = async (e) => {
+    e.key === "Enter" && (isEditingTicket ? editTicket() : addTicket());
     if (e.key === "Escape") {
-      setInput("");
-      setIsEditingTicket(false);
-      page !== "dashboard" && setDisplayInputContainer(false);
-      setUsers(JSON.parse(localStorage.getItem("users")));
+      // setInput("");
+      // setIsEditingTicket(false);
+      // page !== "dashboard" && setDisplayInputContainer(false);
+      // setUsers(JSON.parse(localStorage.getItem("users")));
+
+      setInputValues({...inputValues,text: ""});
+      setIsEditingTicket({
+        ...isEditingTicket,
+        status: false,
+      })
+      await loadTickets();
     }
   };
 
-  const editTask = () => {
-    if (input === "") return;
-    const newTasks = [
-      ...user.tasks,
-      {
-        id: ticketToEdit.id,
-        text: input,
-        office: officeSelected,
-        completed: ticketToEdit.completed,
-        createdAt: ticketToEdit.createdAt,
-      },
-    ];
-    setUsers((prevUsers) => {
-      const ongoingSess = JSON.parse(localStorage.getItem("ongoingSess")) || {};
-      if (!ongoingSess.userId) return prevUsers; // If no ongoing session, return previous users
-      const updatedUsers = prevUsers.map((user) => {
-        if (user.userId === ongoingSess.userId) {
-          return { ...user, tasks: newTasks };
-        }
-        return user;
-      });
-      updateLocalStorage("users", updatedUsers);
-      return updatedUsers;
-    });
+  const editTicket = async () => {
+    // if (input === "") return;
+    // const newTasks = [
+    //   ...user.tasks,
+    //   {
+    //     id: ticketToEdit.id,
+    //     text: input,
+    //     office: officeSelected,
+    //     completed: ticketToEdit.completed,
+    //     createdAt: ticketToEdit.createdAt,
+    //   },
+    // ];
+    // setUsers((prevUsers) => {
+    //   const ongoingSess = JSON.parse(localStorage.getItem("ongoingSess")) || {};
+    //   if (!ongoingSess.userId) return prevUsers; // If no ongoing session, return previous users
+    //   const updatedUsers = prevUsers.map((user) => {
+    //     if (user.userId === ongoingSess.userId) {
+    //       return { ...user, tasks: newTasks };
+    //     }
+    //     return user;
+    //   });
+    //   updateLocalStorage("users", updatedUsers);
+    //   return updatedUsers;
+    // });
 
-    setIsEditingTicket(false);
-    setTicketToEdit({});
-    setInput("");
-    page === "dashboard" ? setDisplayInputContainer(true) : setDisplayInputContainer(false);
+    // setIsEditingTicket(false);
+    // setTicketToEdit({});
+    // setInput("");
+    // page === "dashboard" ? setDisplayInputContainer(true) : setDisplayInputContainer(false);
+
+    if(inputValues.text === "") return;
+    const {id,completed} = isEditingTicket.ticket;
+    // UPDATE TICKET USING API
+    try {
+      const res = await axios.put(`/api/tickets/updateticket/${id}`,{
+        text: inputValues.text,
+        office: inputValues.office,
+        completed
+      });
+      alert(res.data.message);
+      await loadTickets();
+      setInputValues({...inputValues, text: ""})
+    } catch (error) {
+      console.log(error.response);
+    } finally{
+      setIsEditingTicket({
+        status: false,
+        ticket: {}
+      });
+      await loadTickets();
+    }
+
   };
 
   return (
@@ -182,10 +213,18 @@ export function InputContainer({
         </select>
 
         <div className="add-task-button-container">
-          <button 
-            className="add-task-button"
-            onClick={addTicket}
-          >Add ticket</button>
+          {isEditingTicket.status ? (
+            <button 
+              className="add-task-button"
+              onClick={editTicket}
+            >Edit ticket</button>
+          ) : (
+            <button 
+              className="add-task-button"
+              onClick={addTicket}
+            >Add ticket</button>
+          )}
+          
         </div>
 
       </div>

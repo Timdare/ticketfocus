@@ -18,20 +18,24 @@ export function Dashboard({
   setDisplayInputContainer,
   page,
   setPage,
-  updateInputs,
-  isEditingTicket,
-  setIsEditingTicket,
+  // updateInputs,
+  // isEditingTicket,
+  // setIsEditingTicket,
   ticketToEdit,
   setTicketToEdit,
   ticketDate,
   setTicketDate,
 
   tickets,
+  setTickets,
   loadTickets,
   firstName,
   updateFirstName,
   inputValues,
-  setInputValues
+  setInputValues,
+  updateInputs,
+  isEditingTicket,
+  setIsEditingTicket,
 }) {
   // const navigate = useNavigate();
   // const ongoingSess = JSON.parse(localStorage.getItem("ongoingSess")) || {};
@@ -47,8 +51,6 @@ export function Dashboard({
   //   }
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // } , []);
-  console.log(tickets);
-  tickets.map(ticket => console.log(ticket))
   useEffect(() => {
     // setPage("dashboard");
     // setDisplayInputContainer(() => page === "dashboard");
@@ -144,6 +146,8 @@ export function Dashboard({
                 inputValues={inputValues}
                 setInputValues={setInputValues}
                 loadTickets={loadTickets}
+                isEditingTicket={isEditingTicket}
+                setIsEditingTicket={setIsEditingTicket}
               />
             </div>
             {/* <ul className="task-list">
@@ -198,6 +202,9 @@ export function Dashboard({
                     key={ticket.id}
                     ticket={ticket}
                     loadTickets={loadTickets}
+                    setIsEditingTicket={setIsEditingTicket}
+                    updateInputs={updateInputs}
+                    setTickets={setTickets}
                   />
                 )
               })}

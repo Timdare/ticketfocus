@@ -106,21 +106,32 @@ function App() {
   const [officeSelected, setOfficeSelected] = useState("701");
   const [displayInputContainer, setDisplayInputContainer] = useState(false);
   const [page, setPage] = useState("dashboard");
-  const [isEditingTicket, setIsEditingTicket] = useState(false);
+  // const [isEditingTicket, setIsEditingTicket] = useState(false);
   const [ticketToEdit, setTicketToEdit] = useState({});
   const [ticketDate, setTicketDate] = useState("today");
 
-  function updateInputs(name, office) {
-    setInput(name);
-    setOfficeSelected(office);
-  }
+  // function updateInputs(name, office) {
+  //   setInput(name);
+  //   setOfficeSelected(office);
+  // }
 
   const [tickets,setTickets] = useState([]);
   const [firstName, setFirstName] = useState("user");
+  const [isEditingTicket, setIsEditingTicket] = useState({
+    status: false,
+    ticket: {}
+  });
   const [inputValues, setInputValues] =  useState({
     text: "",
     office: "701"
-  })
+  });
+
+  function updateInputs(ticket) {
+    setInputValues({
+      text: ticket.text,
+      office: ticket.office
+    });
+  }
   
   const loadTickets = async () => {
     try {
@@ -182,11 +193,15 @@ function App() {
                 // setTicketDate={setTicketDate}
 
                 tickets={tickets}
+                setTickets={setTickets}
                 loadTickets={loadTickets}
                 firstName={firstName}
                 updateFirstName={updateFirstName}
                 inputValues={inputValues}
                 setInputValues={setInputValues}
+                isEditingTicket={isEditingTicket}
+                setIsEditingTicket={setIsEditingTicket}
+                updateInputs={updateInputs}
               />
             </ProtectedRoute>
           }

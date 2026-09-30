@@ -7,11 +7,13 @@ export function ItemContainer({
   user,
   setUsers,
   setDisplayInputContainer,
-  setIsEditingTicket,
+  // setIsEditingTicket,
   setTicketToEdit,
 
   ticket,
-  loadTickets
+  setTickets,
+  loadTickets,
+  setIsEditingTicket,
 }) {
 
   async function updateTaskStatus(e) {
@@ -71,25 +73,36 @@ export function ItemContainer({
 
   }
 
-  const editTask = () => {
-    setDisplayInputContainer(true);
-    setIsEditingTicket(true);
-    const ticketCopy = { ...task };
-    setTicketToEdit(ticketCopy);
-    updateInputs(ticketCopy.text, ticketCopy.office);
-    setUsers((prevUsers) => {
-      if (!user.tasks) return prevUsers;
-      const updatedUsers = prevUsers.map((u) => {
-        if (u.userId === user.userId) {
-          const updatedTasks = u.tasks.filter(
-            (currentTask) => currentTask.id !== task.id,
-          );
-          return { ...u, tasks: updatedTasks };
-        }
-        return u;
-      });
-      return updatedUsers;
+  const editTicket = () => {
+    // setDisplayInputContainer(true);
+    // setIsEditingTicket(true);
+    // const ticketCopy = { ...task };
+    // setTicketToEdit(ticketCopy);
+    // updateInputs(ticketCopy.text, ticketCopy.office);
+    // setUsers((prevUsers) => {
+    //   if (!user.tasks) return prevUsers;
+    //   const updatedUsers = prevUsers.map((u) => {
+    //     if (u.userId === user.userId) {
+    //       const updatedTasks = u.tasks.filter(
+    //         (currentTask) => currentTask.id !== task.id,
+    //       );
+    //       return { ...u, tasks: updatedTasks };
+    //     }
+    //     return u;
+    //   });
+    //   return updatedUsers;
+    // });
+    
+    const ticketCopy = {...ticket}
+    setIsEditingTicket({
+      status: true,
+      ticket: {...ticketCopy}
     });
+    updateInputs(ticketCopy)
+    setTickets(prevTickets => {
+      return prevTickets.filter(t => t.id !== ticket.id);
+    });
+
   };
 
   return (
@@ -185,7 +198,7 @@ export function ItemContainer({
         <div className="utils">
           <span 
             className="edit-icon-container" 
-            // onClick={editTask}
+            onClick={editTicket}
           >
             <i className="fa-regular fa-pen-to-square edit-icon"></i>
           </span>
