@@ -1,6 +1,6 @@
 import express from "express";
 import cookieParser from "cookie-parser";
-import { createTicket, deleteTicket, getUserTickets, updateTicket } from "../controllers/ticketController.js";
+import { createTicket, deleteTicket, getTicketDate, getUserTickets, updateTicket } from "../controllers/ticketController.js";
 import { verifyUser } from "../utils/verifyUser.js";
 
 export const ticketRouter = express.Router();
@@ -14,3 +14,5 @@ ticketRouter.post("/createTicket",verifyUser,createTicket); // CREATE TICKET API
 ticketRouter.delete("/deleteticket/:ticket_id",verifyUser,deleteTicket); // DELETE TICKET API
 
 ticketRouter.put("/updateticket/:ticket_id",verifyUser,updateTicket); // UPDATE TICKET API
+
+ticketRouter.get("/ticketDate",verifyUser,getTicketDate) // GET DATE FOR TICKET

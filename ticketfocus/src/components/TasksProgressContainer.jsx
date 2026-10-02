@@ -1,13 +1,14 @@
-import { useEffect } from "react";
+import axios from "axios";
 import dayjs from "dayjs";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import "./TasksProgressContainer.css";
 
 export function TasksProgressContainer({
   user,
   date,
-  ticketDate,
-  setTicketDate,
+  // ticketDate,
+  // setTicketDate,
   page,
   ticketDateParams,
 
@@ -70,13 +71,37 @@ export function TasksProgressContainer({
   // const completeTasksPercent =
   //   totalTasks > 0 ? (completeTasks.length / totalTasks) * 100 : 0;
 
+  //TICKETS PROGRESS LOGIC
   const totalTickets = tickets ? tickets.length : 0;
   const completeTickets = tickets
     ? tickets.filter((task) => task.completed === true)
     : [];
-
   const completeTicketsPercent =
     totalTickets > 0 ? (completeTickets.length / totalTickets) * 100 : 0;
+
+  // TICKET DATE LOGIC
+  const [ticketDate, setTicketDate] = useState("today");
+  const todaysDate = dayjs().format("YYYY-MM-DD");
+  const [dates,setDates] = useState([]);
+
+  useEffect(()=>{
+    const getTicketsDate = async () => {
+      try {
+        const res = await axios.get("/api/tickets/ticketdate");
+        console.log(res.data.dates);
+        setDates([...new Set(
+          res.data.dates.map(date => dayjs(date).format("YYYY-MM-DD"))
+        )]);
+      } catch (error) {
+        console.log(error.response.data);
+      }
+    }
+    getTicketsDate();    
+  }, []);
+
+  const viewPastTicket = e => {
+    setTicketDate(e.target.value);
+  }
 
   return (
     <>
@@ -162,10 +187,31 @@ export function TasksProgressContainer({
 
         </div>
 
-        <select id="" className="past-tickets">
-          <option value="" title="Monday 28th Sep, 2026">Today's tickets</option>
-          <option value="" title="Monday 28th Sep, 2026">Today's tickets</option>
-        </select>
+        {dates.some(d => d !== todaysDate) &&
+          <select 
+            className="past-tickets"
+            onChange={viewPastTicket}
+            value={ticketDate}>
+            <option 
+              value="today"
+              title="Today's tickets"
+            >Today's tickets</option>
+
+            {
+              dates.map(date => {
+                return(
+                  date !== todaysDate &&
+                    <option 
+                      key={date}
+                      value={date}
+                      title={dayjs(date).format("dddd D MMM, YYYY")}
+                    >{dayjs(date).format("MMM DD, YYYY")}</option>
+                );
+              })
+            }
+
+          </select>
+        }
       </section>
     </>
     
