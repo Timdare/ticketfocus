@@ -206,3 +206,59 @@ export const getTicketDate = async (req, res) => {
     });
   }
 };
+
+// GET TICKETS BY DATES
+export const getTicketsByDate = async (req,res) => {
+  const sql = `SELECT * FROM tickets WHERE user_id = ?`;
+
+  try {
+    const user_id = req.user_id;
+    if(!user_id) {
+      return res.status(401).json({
+        success: false,
+        message: "You are not authenticated"
+      })
+    }
+    const date = req.params.ticketsDate;
+    if(!date) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide a valid date"
+      });
+    }
+
+    const data = await mySqlPool.query(sql,[user_id]);
+    if(!data) {
+      return res.status(500).json({
+        success: false,
+        message: "Error in db query"
+      });
+    }
+
+    const ticketsData = data[0].map(ticket => {
+      return {
+        id: ticket.id,
+        text: ticket.ticket,
+        office: ticket.office,
+        completed: Boolean(ticket.completed),
+        createdAt: dayjs(ticket.created_at).valueOf(),
+      }
+    });
+
+    const ticketsDateMatch = ticketsData.filter(ticket => {
+      return dayjs(ticket.createdAt).format("YYYY-MM-DD") === date
+    });
+    return res.status(200).json({
+      success: true,
+      message: `All tickets for ${date}`,
+      tickets: ticketsDateMatch
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error in get tickets by date API",
+      error
+    });
+  }
+}
