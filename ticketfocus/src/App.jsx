@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router";
 import { Dashboard } from "./pages/Dashboard";
 import { LoginPage } from "./pages/LoginPage";
 import { PrevTicketPage } from "./pages/PrevTicketPage.jsx";
+import { PageNotFound } from "./pages/PageNotFound.jsx";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { getCurrentPage } from "./utils/getCurrentPage.js";
 import "./App.css";
@@ -173,10 +174,10 @@ function App() {
       // }
       
       const response = await axios.get(`/api/tickets/ticketdate/${date}`)
-      setTickets(response.data.tickets);
-            
+      setTickets(response.data.tickets ? response.data.tickets : []);
+
     } catch (error) {
-      console.log(error.response.data);
+      console.log(error.response);
     }
     
   }
@@ -291,6 +292,7 @@ function App() {
           path="login"
           element={<LoginPage users={users} setOngoingSess={setOngoingSess} setFirstName={setFirstName} />}
         />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </>
   );

@@ -248,6 +248,12 @@ export const getTicketsByDate = async (req,res) => {
     const ticketsDateMatch = ticketsData.filter(ticket => {
       return dayjs(ticket.createdAt).format("YYYY-MM-DD") === date
     });
+    if(ticketsDateMatch.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: `No tickets for ${date}`
+      })
+    }
     return res.status(200).json({
       success: true,
       message: `All tickets for ${date}`,
