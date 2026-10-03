@@ -5,7 +5,9 @@ import { Dashboard } from "./pages/Dashboard";
 import { LoginPage } from "./pages/LoginPage";
 import { PrevTicketPage } from "./pages/PrevTicketPage.jsx";
 import { ProtectedRoute } from "./components/ProtectedRoute";
+import { getCurrentPage } from "./utils/getCurrentPage.js";
 import "./App.css";
+import dayjs from "dayjs";
 
 function App() {
   // const users = [
@@ -104,7 +106,7 @@ function App() {
 
   const [input, setInput] = useState("");
   const [officeSelected, setOfficeSelected] = useState("701");
-  const [displayInputContainer, setDisplayInputContainer] = useState(false);
+  // const [displayInputContainer, setDisplayInputContainer] = useState(false);
   const [page, setPage] = useState("dashboard");
   // const [isEditingTicket, setIsEditingTicket] = useState(false);
   const [ticketToEdit, setTicketToEdit] = useState({});
@@ -121,6 +123,7 @@ function App() {
     status: false,
     ticket: {}
   });
+  const [displayInputContainer,setDisplayInputContainer] = useState(false);
   const [inputValues, setInputValues] =  useState({
     text: "",
     office: "701"
@@ -132,12 +135,46 @@ function App() {
       office: ticket.office
     });
   }
-  
-  const loadTickets = async () => {
+  const dummyTickets = [
+    {
+      id: 30,
+      text: "replaced the faulty RAM of a PC",
+      office: "708",
+      completed: false,
+      createdAt: 1791033452457
+    },
+    {
+      id: 31,
+      text: "replaced the faulty RAM of a PC",
+      office: "708",
+      completed: false,
+      createdAt: 1791033452457
+    },
+    {
+      id: 32,
+      text: "replaced the faulty RAM of a PC",
+      office: "708",
+      completed: false,
+      createdAt: 1791033452457
+    }
+  ]
+
+  const loadTickets = async (date) => {
     try {
-      const response = await axios.get("/api/tickets/getusertickets");
-      console.log(response.data.tickets);
+      // if (getCurrentPage() === "/") {
+      //   const response = await axios.get("/api/tickets/getusertickets");
+      //   console.log(response.data.tickets);
+      //   setTickets(response.data.tickets);
+      // } else if(getCurrentPage() === "prev-ticket") {
+      //   const response = await axios.get(`/api/tickets/ticketdate/${date}`)
+      //   setTickets(response.data.tickets);
+      // } else {
+      //   setTickets([]);
+      // }
+      
+      const response = await axios.get(`/api/tickets/ticketdate/${date}`)
       setTickets(response.data.tickets);
+            
     } catch (error) {
       console.log(error.response.data);
     }
@@ -170,6 +207,7 @@ function App() {
       <Routes>
         <Route
           index
+          // path="home/1"
           element={
             <ProtectedRoute>
               <Dashboard
@@ -202,33 +240,49 @@ function App() {
                 isEditingTicket={isEditingTicket}
                 setIsEditingTicket={setIsEditingTicket}
                 updateInputs={updateInputs}
+                displayInputContainer={displayInputContainer}
+                setDisplayInputContainer={setDisplayInputContainer}
               />
             </ProtectedRoute>
           }
         />
         <Route
           path="prev-ticket/:ticketDateParams"
+          // path="prev-ticket"
           element={
             <ProtectedRoute>
               <PrevTicketPage
-                ongoingSess={ongoingSess}
-                users={users}
-                setUsers={setUsers}
-                input={input}
-                setInput={setInput}
-                officeSelected={officeSelected}
-                setOfficeSelected={setOfficeSelected}
-                displayInputContainer={displayInputContainer}
-                setDisplayInputContainer={setDisplayInputContainer}
-                page={page}
-                setPage={setPage}
-                updateInputs={updateInputs}
+                // ongoingSess={ongoingSess}
+                // users={users}
+                // setUsers={setUsers}
+                // input={input}
+                // setInput={setInput}
+                // officeSelected={officeSelected}
+                // setOfficeSelected={setOfficeSelected}
+                // displayInputContainer={displayInputContainer}
+                // setDisplayInputContainer={setDisplayInputContainer}
+                // page={page}
+                // setPage={setPage}
+                // updateInputs={updateInputs}
+                // isEditingTicket={isEditingTicket}
+                // setIsEditingTicket={setIsEditingTicket}
+                // ticketToEdit={ticketToEdit}
+                // setTicketToEdit={setTicketToEdit}
+                // ticketDate={ticketDate}
+                // setTicketDate={setTicketDate}
+
+                tickets={tickets}
+                setTickets={setTickets}
+                loadTickets={loadTickets}
+                firstName={firstName}
+                updateFirstName={updateFirstName}
+                inputValues={inputValues}
+                setInputValues={setInputValues}
                 isEditingTicket={isEditingTicket}
                 setIsEditingTicket={setIsEditingTicket}
-                ticketToEdit={ticketToEdit}
-                setTicketToEdit={setTicketToEdit}
-                ticketDate={ticketDate}
-                setTicketDate={setTicketDate}
+                updateInputs={updateInputs}
+                displayInputContainer={displayInputContainer}
+                setDisplayInputContainer={setDisplayInputContainer}
               />
             </ProtectedRoute>
           }

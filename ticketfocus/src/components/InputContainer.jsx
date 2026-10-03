@@ -1,6 +1,7 @@
 import axios from "axios";
 import dayjs from "dayjs";
 import { updateLocalStorage } from "../utils/updateLocalStorage";
+import { getCurrentPage } from "../utils/getCurrentPage";
 import "./InputContainer.css";
 
 export function InputContainer({
@@ -15,13 +16,14 @@ export function InputContainer({
   // setIsEditingTicket,
   ticketToEdit,
   setTicketToEdit,
-  setDisplayInputContainer,
+  // setDisplayInputContainer,
 
   inputValues,
   setInputValues,
   loadTickets,
   isEditingTicket,
-  setIsEditingTicket
+  setIsEditingTicket,
+  setDisplayInputContainer
 }) {
   // const user = users.find((u) => u.userId === JSON.parse(localStorage.getItem("ongoingSess"))?.userId);
   function saveInput(e) {
@@ -30,6 +32,8 @@ export function InputContainer({
   const selectOffice = (e) => {
     setOfficeSelected(e.target.value.toLowerCase());
   };
+
+  const todaysDate = dayjs().format("YYYY-MM-DD");
 
   async function addTicket() {
     if (inputValues.text === "") return;
@@ -60,31 +64,15 @@ export function InputContainer({
     // setInput("");
     // setDisplayInputContainer(true);
 
+
     // CREATE TICKET LOGIC
     const res = await axios.post("/api/tickets/createticket",inputValues);
     alert(res.data.message);
-    await loadTickets();
+    await loadTickets(todaysDate);
     setInputValues({...inputValues,text: ""});
   }
 
-  const handleSpecialKeys = async (e) => {
-    e.key === "Enter" && (isEditingTicket ? editTicket() : addTicket());
-    if (e.key === "Escape") {
-      // setInput("");
-      // setIsEditingTicket(false);
-      // page !== "dashboard" && setDisplayInputContainer(false);
-      // setUsers(JSON.parse(localStorage.getItem("users")));
-
-      setInputValues({...inputValues,text: ""});
-      setIsEditingTicket({
-        ...isEditingTicket,
-        status: false,
-      })
-      await loadTickets();
-    }
-  };
-
-  const editTicket = async () => {
+    const editTicket = async () => {
     // if (input === "") return;
     // const newTasks = [
     //   ...user.tasks,
@@ -124,19 +112,45 @@ export function InputContainer({
         completed
       });
       alert(res.data.message);
-      await loadTickets();
+      const editingTicketDate = dayjs(isEditingTicket.ticket.createdAt).format("YYYY-MM-DD");
+      getCurrentPage() === "/" ? await loadTickets(todaysDate) : await loadTickets(editingTicketDate);
       setInputValues({...inputValues, text: ""})
+      if (getCurrentPage() === "prev-ticket") setDisplayInputContainer(false)
     } catch (error) {
       console.log(error.response);
     } finally{
+      const editingTicketDate = dayjs(isEditingTicket.ticket.createdAt).format("YYYY-MM-DD");
+      getCurrentPage() === "/" ? await loadTickets(todaysDate) : await loadTickets(editingTicketDate);
       setIsEditingTicket({
         status: false,
         ticket: {}
       });
-      await loadTickets();
+      // await loadTickets();
     }
 
   };
+
+  const handleSpecialKeys = async (e) => {
+    e.key === "Enter" && (isEditingTicket.status ? editTicket() : addTicket());
+    if (e.key === "Escape") {
+      // setInput("");
+      // setIsEditingTicket(false);
+      // page !== "dashboard" && setDisplayInputContainer(false);
+      // setUsers(JSON.parse(localStorage.getItem("users")));
+
+      const editingTicketDate = dayjs(isEditingTicket.ticket.createdAt).format("YYYY-MM-DD");
+      getCurrentPage() === "/" ? await loadTickets(todaysDate) : await loadTickets(editingTicketDate);
+
+      setInputValues({...inputValues,text: ""});
+      setIsEditingTicket({
+        ...isEditingTicket,
+        status: false,
+      })
+      // await loadTickets();
+    }
+  };
+
+
 
   return (
     <>

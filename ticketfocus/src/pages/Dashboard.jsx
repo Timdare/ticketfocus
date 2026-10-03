@@ -14,8 +14,8 @@ export function Dashboard({
   setInput,
   officeSelected,
   setOfficeSelected,
-  displayInputContainer,
-  setDisplayInputContainer,
+  // displayInputContainer,
+  // setDisplayInputContainer,
   page,
   setPage,
   // updateInputs,
@@ -36,6 +36,8 @@ export function Dashboard({
   updateInputs,
   isEditingTicket,
   setIsEditingTicket,
+  displayInputContainer,
+  setDisplayInputContainer,
 }) {
   // const navigate = useNavigate();
   // const ongoingSess = JSON.parse(localStorage.getItem("ongoingSess")) || {};
@@ -51,14 +53,15 @@ export function Dashboard({
   //   }
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // } , []);
+  const todaysDate = dayjs().format("YYYY-MM-DD");
   useEffect(() => {
     // setPage("dashboard");
     // setDisplayInputContainer(() => page === "dashboard");
     // setTicketDate("today");
 
-    loadTickets();
+    loadTickets(todaysDate);
     updateFirstName();
-
+    setDisplayInputContainer(true);
   }, []);
 
   // const user = users.find((u) => u.userId === ongoingSess.userId);
@@ -66,7 +69,6 @@ export function Dashboard({
   // const [input, setInput] = useState("");
   // const [officeSelected, setOfficeSelected] = useState("701");
 
-  // const todaysDate = dayjs().format("YYYY-MM-DD");
 
   return (
     <>
@@ -142,13 +144,16 @@ export function Dashboard({
                 />
               )} */}
 
-              <InputContainer
-                inputValues={inputValues}
-                setInputValues={setInputValues}
-                loadTickets={loadTickets}
-                isEditingTicket={isEditingTicket}
-                setIsEditingTicket={setIsEditingTicket}
-              />
+              {displayInputContainer && (
+                <InputContainer
+                  inputValues={inputValues}
+                  setInputValues={setInputValues}
+                  loadTickets={loadTickets}
+                  isEditingTicket={isEditingTicket}
+                  setIsEditingTicket={setIsEditingTicket}
+                  setDisplayInputContainer={setDisplayInputContainer}
+                />
+              )}
             </div>
             {/* <ul className="task-list">
               {user.tasks && user.tasks.length === 0 && (
@@ -205,6 +210,7 @@ export function Dashboard({
                     setIsEditingTicket={setIsEditingTicket}
                     updateInputs={updateInputs}
                     setTickets={setTickets}
+                    setDisplayInputContainer={setDisplayInputContainer}
                   />
                 )
               })}

@@ -14,34 +14,51 @@ export function PrevTicketPage({
   setInput,
   officeSelected,
   setOfficeSelected,
-  displayInputContainer,
-  setDisplayInputContainer,
+  // displayInputContainer,
+  // setDisplayInputContainer,
   page,
   setPage,
-  updateInputs,
-  isEditingTicket,
-  setIsEditingTicket,
+  // updateInputs,
+  // isEditingTicket,
+  // setIsEditingTicket,
   ticketToEdit,
   setTicketToEdit,
   ticketDate,
   setTicketDate,
+
+  tickets,
+  setTickets,
+  loadTickets,
+  firstName,
+  updateFirstName,
+  inputValues,
+  setInputValues,
+  updateInputs,
+  isEditingTicket,
+  setIsEditingTicket,
+  displayInputContainer,
+  setDisplayInputContainer,
 }) {
   const navigate = useNavigate();
   const params = useParams();
   const { ticketDateParams } = params;
 
-  const user = users.find((u) => u.userId === ongoingSess.userId);
+  // const user = users.find((u) => u.userId === ongoingSess.userId);
 
   useEffect(() => {
-    setPage("prev-ticket");
-    setDisplayInputContainer(false);
-    setTicketDate(ticketDate);
+    // setPage("prev-ticket");
+    // setDisplayInputContainer(false);
+    // setTicketDate(ticketDate);
+
+    loadTickets(ticketDateParams);
+    updateFirstName();
+    setDisplayInputContainer(false)
   }, []);
 
-  const ticketDateExists = user.tasks.find(
-    (task) => dayjs(task.createdAt).format("YYYY-MM-DD") === ticketDateParams,
-  );
-  if (!ticketDateExists) navigate("/");
+  // const ticketDateExists = user.tasks.find(
+  //   (task) => dayjs(task.createdAt).format("YYYY-MM-DD") === ticketDateParams,
+  // );
+  // if (!ticketDateExists) navigate("/");
 
   return (
     <>
@@ -54,19 +71,25 @@ export function PrevTicketPage({
 
         <main>
           <section className="task-details-container">
-            <TasksProgressContainer
+            {/* <TasksProgressContainer
               user={user ? user : ""}
               todaysDate={""}
               ticketDate={ticketDate}
               setTicketDate={setTicketDate}
               page={page}
               ticketDateParams={ticketDateParams}
+            /> */}
+
+            <TasksProgressContainer 
+              tickets={tickets} 
+              firstName={firstName}  
+              ticketDateParams={ticketDateParams}
             />
           </section>
 
           <section className="task-list-container p-inline-1rem white-bg rounded-8px">
             <div className="list-container p-block-1rem">
-              {displayInputContainer && (
+              {/* {displayInputContainer && (
                 <InputContainer
                   input={input}
                   setInput={setInput}
@@ -81,10 +104,21 @@ export function PrevTicketPage({
                   setTicketToEdit={setTicketToEdit}
                   setDisplayInputContainer={setDisplayInputContainer}
                 />
+              )} */}
+
+              {displayInputContainer && (
+                <InputContainer
+                  inputValues={inputValues}
+                  setInputValues={setInputValues}
+                  loadTickets={loadTickets}
+                  isEditingTicket={isEditingTicket}
+                  setIsEditingTicket={setIsEditingTicket}
+                  setDisplayInputContainer={setDisplayInputContainer}
+                />
               )}
             </div>
 
-            <ul className="task-list">
+            {/* <ul className="task-list">
               {!user.tasks.find(
                 (task) =>
                   dayjs(task.createdAt).format("YYYY-MM-DD") ===
@@ -117,6 +151,30 @@ export function PrevTicketPage({
                     )
                   );
                 })}
+            </ul> */}
+
+            <ul className="task-list">
+
+              {tickets && tickets.length === 0 && (
+                <li className="no-task-yet item-container p-block-1rem">
+                  No tickets yet.
+                </li>
+              )}
+
+              {tickets.map(ticket => {
+                return (
+                  <ItemContainer
+                    key={ticket.id}
+                    ticket={ticket}
+                    loadTickets={loadTickets}
+                    setIsEditingTicket={setIsEditingTicket}
+                    updateInputs={updateInputs}
+                    setTickets={setTickets}
+                    setDisplayInputContainer={setDisplayInputContainer}
+                  />
+                )
+              })}
+
             </ul>
           </section>
 

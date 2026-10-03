@@ -2,6 +2,7 @@ import axios from "axios";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { getCurrentPage } from "../utils/getCurrentPage";
 import "./TasksProgressContainer.css";
 
 export function TasksProgressContainer({
@@ -10,12 +11,13 @@ export function TasksProgressContainer({
   // ticketDate,
   // setTicketDate,
   page,
-  ticketDateParams,
+  // ticketDateParams,
 
   tickets,
-  firstName
+  firstName,
+  ticketDateParams
 }) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // const dates = [
   //   ...new Set(
@@ -80,7 +82,7 @@ export function TasksProgressContainer({
     totalTickets > 0 ? (completeTickets.length / totalTickets) * 100 : 0;
 
   // TICKET DATE LOGIC
-  const [ticketDate, setTicketDate] = useState("today");
+  const [ticketDate, setTicketDate] = useState(getCurrentPage() === "prev-ticket" ? ticketDateParams: "today");
   const todaysDate = dayjs().format("YYYY-MM-DD");
   const [dates,setDates] = useState([]);
 
@@ -98,9 +100,16 @@ export function TasksProgressContainer({
     }
     getTicketsDate();    
   }, []);
+  
+  const navigate = useNavigate();
 
   const viewPastTicket = e => {
     setTicketDate(e.target.value);
+    if (e.target.value === "today") {
+      return navigate("/");
+    }
+    navigate(`/prev-ticket/${e.target.value}`);
+    location.reload(true);
   }
 
   return (
@@ -164,7 +173,11 @@ export function TasksProgressContainer({
 
 
       <section className="tasks-progress-container white-bg rounded-8px p-inline-1rem">
-        <h3 className="dark-grey-text">Today's Tickets</h3>
+        <h3 className="dark-grey-text">
+          {getCurrentPage() === "/" ? 
+            "Today's Tickets" : 
+            `Tickets for ${dayjs(ticketDateParams).format("ddd D MMM, YYYY")}`}
+        </h3>
         <p className="mt-8px">Welcome {firstName}!</p>
 
         <div className="tasks-progress mt-16px">

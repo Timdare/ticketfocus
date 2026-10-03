@@ -1,4 +1,5 @@
 import axios from "axios";
+import dayjs from "dayjs";
 import { updateLocalStorage } from "../utils/updateLocalStorage";
 import "./ItemContainer.css";
 export function ItemContainer({
@@ -6,7 +7,7 @@ export function ItemContainer({
   updateInputs,
   user,
   setUsers,
-  setDisplayInputContainer,
+  // setDisplayInputContainer,
   // setIsEditingTicket,
   setTicketToEdit,
 
@@ -14,6 +15,7 @@ export function ItemContainer({
   setTickets,
   loadTickets,
   setIsEditingTicket,
+  setDisplayInputContainer
 }) {
 
   async function updateTaskStatus(e) {
@@ -39,7 +41,8 @@ export function ItemContainer({
     // UPDATE TICKET STATUS USING API
     try {
       await axios.put(`/api/tickets/updateticket/${ticket.id}`,{completed: e.target.checked});
-      await loadTickets();  
+      const ticketDate = dayjs(ticket.createdAt).format("YYYY-MM-DD");
+      await loadTickets(ticketDate);  
     } catch (error) {
       console.log(error.response);
     }
@@ -64,9 +67,10 @@ export function ItemContainer({
 
     // DELETE TICKET USING API
     try {
+      const ticketCopy = {...ticket}
       const res = await axios.delete(`/api/tickets/deleteticket/${ticket.id}`);
       console.log(res.data.message);
-      await loadTickets();
+      await loadTickets(dayjs(ticketCopy.createdAt).format("YYYY-MM-DD"));
     } catch (error) {
       console.log(error.response.data);
     }
@@ -93,6 +97,7 @@ export function ItemContainer({
     //   return updatedUsers;
     // });
     
+    setDisplayInputContainer(true);
     const ticketCopy = {...ticket}
     setIsEditingTicket({
       status: true,
