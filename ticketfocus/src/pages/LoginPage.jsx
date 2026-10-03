@@ -1,17 +1,14 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { updateLocalStorage } from "../utils/updateLocalStorage";
 import "./LoginPage.css";
 
-export function LoginPage({ users, setOngoingSess, setFirstName }) {
+export function LoginPage({ setFirstName }) {
   const [hidePassword, setHidePassword] = useState(true);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState(null);
   const [inputValues, setInputValues] = useState({
     userName: "",
-    password: ""
+    password: "",
   });
 
   const navigate = useNavigate();
@@ -23,46 +20,22 @@ export function LoginPage({ users, setOngoingSess, setFirstName }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Handle login logic here
-  //   const user = users.find(
-  //     (u) => u.username === username.toLowerCase() && u.password === password,
-  //   );
-
-  //   const ongoingSess = {
-  //     userId: user ? user.userId : null,
-  //   };
-
-  //   console.log(ongoingSess.userId);
-
-  //   if (user) {
-  //     // Login successful
-  //     console.log("Login successful!");
-  //     updateLocalStorage("ongoingSess", ongoingSess);
-  //     setOngoingSess(ongoingSess);
-  //     navigate("/", { replace: true });
-  //   } else {
-  //     // Login failed
-  //     console.log("Login failed!");
-  //     setLoginError("Invalid username/password");
-  //   }
-
     // LOGIN WITH API
     try {
       const res = await axios.post("/api/auth/login", inputValues);
       if (res.data.success) {
         setFirstName(res.data.firstname);
         alert(res.data.message);
-        navigate("/", {replace: true});
+        navigate("/", { replace: true });
       }
     } catch (error) {
       console.log(error.response);
-      if(error.response.status === 401) setLoginError(error.response.data.message)
+      if (error.response.status === 401)
+        setLoginError(error.response.data.message);
     }
-
   };
 
-
-  useEffect(()=>{
+  useEffect(() => {
     axios.defaults.withCredentials = true;
   }, []);
 
@@ -77,10 +50,7 @@ export function LoginPage({ users, setOngoingSess, setFirstName }) {
             Login to continue to your dashboard.
           </p>
 
-          <form 
-            className="login-form" 
-            onSubmit={handleSubmit}
-          >
+          <form className="login-form" onSubmit={handleSubmit}>
             <div className="login-input-container">
               <div className="input-icon">
                 <i className="fa-regular fa-user"></i>
@@ -92,7 +62,9 @@ export function LoginPage({ users, setOngoingSess, setFirstName }) {
                 placeholder="Username"
                 required
                 // value={username}
-                onChange={(e) => setInputValues({...inputValues,userName: e.target.value})}
+                onChange={(e) =>
+                  setInputValues({ ...inputValues, userName: e.target.value })
+                }
               />
             </div>
 
@@ -107,7 +79,9 @@ export function LoginPage({ users, setOngoingSess, setFirstName }) {
                 placeholder="Password"
                 required
                 // value={password}
-                onChange={(e) => setInputValues({...inputValues,password: e.target.value})}
+                onChange={(e) =>
+                  setInputValues({ ...inputValues, password: e.target.value })
+                }
               />
               <div
                 className="input-icon toggle-visibility-icon"
@@ -125,10 +99,7 @@ export function LoginPage({ users, setOngoingSess, setFirstName }) {
               <p className="login-error-message m-0">{loginError}</p>
             )}
 
-            <button
-              type="submit"
-              className="login-btn dark-blue-bg"
-            >
+            <button type="submit" className="login-btn dark-blue-bg">
               Log In <i className="fa-solid fa-arrow-right login-icon"></i>
             </button>
           </form>

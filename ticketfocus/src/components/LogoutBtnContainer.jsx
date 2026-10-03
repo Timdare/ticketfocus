@@ -15,19 +15,15 @@ export function LogoutBtnContainer() {
     } catch (error) {
       console.log(error.response);
     }
-    
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     axios.defaults.withCredentials = true;
   }, []);
 
   return (
     <div className="logout-btn-container">
-      <button 
-        className="logout-btn" 
-        onClick={logoutUser}
-      >
+      <button className="logout-btn" onClick={logoutUser}>
         Logout
       </button>
     </div>
