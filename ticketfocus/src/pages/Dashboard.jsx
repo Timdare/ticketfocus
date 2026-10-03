@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import dayjs from "dayjs";
+import { Header } from "../components/Header";
 import { TasksProgressContainer } from "../components/TasksProgressContainer";
 import { InputContainer } from "../components/InputContainer";
 import { ItemContainer } from "../components/ItemContainer";
@@ -74,9 +75,11 @@ export function Dashboard({
     <>
       <title>TicketFocus - Dashboard</title>
       <div className="main-content">
-        <header>
+        {/* <header>
           <h1 className="project-name dark-blue">TicketFocus</h1>
-        </header>
+        </header> */}
+
+        <Header />
 
         <main>
           <section className="task-details-container">

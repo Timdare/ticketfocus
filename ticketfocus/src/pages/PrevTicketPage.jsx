@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
+import { Header } from "../components/Header";
 import { TasksProgressContainer } from "../components/TasksProgressContainer";
 import { InputContainer } from "../components/InputContainer";
 import { ItemContainer } from "../components/ItemContainer";
@@ -55,6 +56,10 @@ export function PrevTicketPage({
     setDisplayInputContainer(false)
   }, []);
 
+  if(tickets.length === 0) {
+    navigate("/");  
+  }
+
   // const ticketDateExists = user.tasks.find(
   //   (task) => dayjs(task.createdAt).format("YYYY-MM-DD") === ticketDateParams,
   // );
@@ -65,9 +70,11 @@ export function PrevTicketPage({
       <title>TicketFocus - Prev. Tickets</title>
 
       <div className="main-content">
-        <header>
+        {/* <header>
           <h1 className="project-name dark-blue">TicketFocus</h1>
-        </header>
+        </header> */}
+
+        <Header />
 
         <main>
           <section className="task-details-container">
