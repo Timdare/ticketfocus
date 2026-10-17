@@ -46,7 +46,9 @@ export function TasksProgressContainer({
   const viewPastTicket = (e) => {
     setTicketDate(e.target.value);
     if (e.target.value === "today") {
-      return navigate("/");
+      navigate("/");
+      location.reload(true);
+      return;
     }
     navigate(`/prev-ticket/${e.target.value}`);
     location.reload(true);
