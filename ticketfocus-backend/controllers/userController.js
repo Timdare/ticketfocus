@@ -1,5 +1,10 @@
 import { mySqlPool } from "../config/db.js";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config(); // CONFIGURE dotenv TO USE ENVIRONMENT VARIABLES
+
+const login_token = process.env.JWT_LOGIN_TOKEN;
 
 // GET ALL USERS
 export const getUsers = async (req, res) => {
@@ -50,7 +55,7 @@ export const userLogin = async (req, res) => {
     const user_password = data[0].user_password;
     if (user_password === req.body.password) {
       const user_id = data[0].id;
-      const token = jwt.sign({ user_id }, "jwt-secret-login-token", {
+      const token = jwt.sign({ user_id }, login_token, {
         expiresIn: "2d",
       });
       res.cookie("userSessionToken", token);

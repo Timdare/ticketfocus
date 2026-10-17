@@ -1,4 +1,9 @@
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config(); // CONFIGURE dotenv TO USE ENVIRONMENT VARIABLES
+
+const login_token = process.env.JWT_LOGIN_TOKEN;
 
 export const verifyUser = (req, res, next) => {
   const token = req.cookies.userSessionToken;
@@ -9,7 +14,7 @@ export const verifyUser = (req, res, next) => {
       message: "You are not authenticated",
     });
   } else {
-    jwt.verify(token, "jwt-secret-login-token", (err, decoded) => {
+    jwt.verify(token, login_token, (err, decoded) => {
       if (err) {
         return res.status(500).json({
           success: false,
