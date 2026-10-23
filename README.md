@@ -7,6 +7,7 @@ A simple **Ticketing Application** built with **ReactJs and NodeJs** as my SIWES
 The purpose of this project is to demonstrate the integration of MySQL, a popular relational database, with Node.js, a runtime environment for executing JavaScript code. The project showcases the ability to perform CRUD operations (Create tickets, Read tickets, Update tickets, and Delete tickets) on MySQL tables using Node.js, along with issuing queries to retrieve specific data from the database. CRUD operations are those operations that allows users to manipulate and interact with data stored in the database. The admin may also perform CRUD operations to Create a new user, Read the details of existing users, Update the details of existing users and Delete an existing user.
 
 It is my first full-stack project on my journey to becoming a full-stack dev. I am excited to have worked on it. I learned a lot.
+
 ---
 
 ## Features
@@ -73,7 +74,7 @@ git clone https://github.com/timdare/ticketfocus.git
 
 3. Setup a database connection and import mysql file:
    - Launch MySql Workbench.
-   - Delete the default connection: Right-click on the connection that exists and click “delete connection”.
+   - Delete the default connection: Right-click on the connection that exists and click “delete connection”. ***This step is entirely optional***.
    - Add a new connection by clicking the add icon next to MySql Connection.
    - Enter a connection name e.g “localhost”. You can keep the default values for the rest of the input fields. Click on ok.
    - Click on the connection you have just created, enter your password and click ok to login.
@@ -81,8 +82,8 @@ git clone https://github.com/timdare/ticketfocus.git
    - Click “import from self-contained file” and click the three-dots-menu next to the file path to navigate to the ticketfocus project.
    - Inside the project folder, navigate into ticketfocus.sql. The file path is ticketfocus > ticketfocus-backend > db_export > ticketfocus.sql. Open this file to import the database with some existing data.
 
-4. Open the project folder in you code editor:
-   - Navigate to where you extracted the project folder and select the folder.
+4. Open the project folder in your code editor:
+   - In your code editor, open the TicketFocus project folder. In VS code, enter `ctrl + k + o` on Windows or `cmd + k + o` on Macbook.  
 5. Setup an env file with your own variables
    - Click on the file icon to open the explorer tab.
    - Right click on ticketfocus-backend and create a new file. Name it “.env”.
@@ -101,4 +102,4 @@ git clone https://github.com/timdare/ticketfocus.git
 - [x] Add 'Page not found' page
 - [ ] Add all users and all tickets pages for admin
 - [ ] Add custom popup modals instead of alert boxes
-- [ ] Add password reset page
+- [ ] Add reset password page
