@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import "./LoginPage.css";
 
-export function LoginPage({ setFirstName }) {
+export function LoginPage({ setUser }) {
   const [hidePassword, setHidePassword] = useState(true);
   const [loginError, setLoginError] = useState(null);
   const [inputValues, setInputValues] = useState({
@@ -24,7 +24,7 @@ export function LoginPage({ setFirstName }) {
     try {
       const res = await axios.post("/api/auth/login", inputValues);
       if (res.data.success) {
-        setFirstName(res.data.firstname);
+        setUser(res.data.user);
         alert(res.data.message);
         navigate("/", { replace: true });
       }

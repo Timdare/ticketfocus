@@ -10,8 +10,8 @@ export function Dashboard({
   tickets,
   setTickets,
   loadTickets,
-  firstName,
-  updateFirstName,
+  user,
+  updateUser,
   inputValues,
   setInputValues,
   updateInputs,
@@ -23,7 +23,7 @@ export function Dashboard({
   const todaysDate = dayjs().format("YYYY-MM-DD");
   useEffect(() => {
     loadTickets(todaysDate);
-    updateFirstName();
+    updateUser();
     setDisplayInputContainer(true);
   }, []);
 
@@ -35,7 +35,10 @@ export function Dashboard({
 
         <main>
           <section className="task-details-container">
-            <TasksProgressContainer tickets={tickets} firstName={firstName} />
+            <TasksProgressContainer 
+              tickets={tickets} 
+              user={user} 
+            />
 
           </section>
 

@@ -64,6 +64,13 @@ export const userLogin = async (req, res) => {
         success: true,
         message: "Login successful",
         firstname: data[0].first_name,
+        user: {
+          id: data[0].id,
+          user_name: data[0].user_name,
+          firstname: data[0].first_name,
+          lastname: data[0].last_name,
+          role: data[0].user_role
+        }
       });
     } else {
       return res.status(401).json({
@@ -116,10 +123,11 @@ export const getUser = async (req, res) => {
       success: true,
       message: "User details",
       user: {
-        user_name,
-        first_name,
-        last_name,
-        user_role,
+        id: data[0][0].id,
+        user_name: data[0][0].user_name,
+        firstname: data[0][0].first_name,
+        lastname: data[0][0].last_name,
+        role: data[0][0].user_role
       },
     });
   } catch (error) {

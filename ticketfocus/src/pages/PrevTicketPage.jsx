@@ -10,8 +10,8 @@ export function PrevTicketPage({
   tickets,
   setTickets,
   loadTickets,
-  firstName,
-  updateFirstName,
+  user,
+  updateUser,
   inputValues,
   setInputValues,
   updateInputs,
@@ -26,7 +26,7 @@ export function PrevTicketPage({
 
   useEffect(() => {
     loadTickets(ticketDateParams);
-    updateFirstName();
+    updateUser();
     setDisplayInputContainer(false);
   }, []);
 
@@ -45,7 +45,7 @@ export function PrevTicketPage({
           <section className="task-details-container">
             <TasksProgressContainer
               tickets={tickets}
-              firstName={firstName}
+              user={user}
               ticketDateParams={ticketDateParams}
             />
           </section>

@@ -10,7 +10,7 @@ import "./App.css";
 
 function App() {
   const [tickets, setTickets] = useState([]);
-  const [firstName, setFirstName] = useState("user");
+  const [user, setUser] = useState({});
   const [isEditingTicket, setIsEditingTicket] = useState({
     status: false,
     ticket: {},
@@ -36,10 +36,11 @@ function App() {
       console.log(error.response);
     }
   };
-  const updateFirstName = async () => {
+
+  const updateUser = async () => {
     try {
       const response = await axios.get("/api/auth/userdetails");
-      setFirstName(response.data.user.first_name);
+      setUser(response.data.user);
     } catch (error) {
       console.log(error.response);
     }
@@ -56,8 +57,8 @@ function App() {
                 tickets={tickets}
                 setTickets={setTickets}
                 loadTickets={loadTickets}
-                firstName={firstName}
-                updateFirstName={updateFirstName}
+                user={user}
+                updateUser={updateUser}
                 inputValues={inputValues}
                 setInputValues={setInputValues}
                 isEditingTicket={isEditingTicket}
@@ -77,8 +78,8 @@ function App() {
                 tickets={tickets}
                 setTickets={setTickets}
                 loadTickets={loadTickets}
-                firstName={firstName}
-                updateFirstName={updateFirstName}
+                user={user}
+                updateUser={updateUser}
                 inputValues={inputValues}
                 setInputValues={setInputValues}
                 isEditingTicket={isEditingTicket}
@@ -92,7 +93,7 @@ function App() {
         />
         <Route
           path="login"
-          element={<LoginPage setFirstName={setFirstName} />}
+          element={<LoginPage setUser={setUser} />}
         />
         <Route path="*" element={<PageNotFound />} />
       </Routes>

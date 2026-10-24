@@ -7,7 +7,7 @@ import "./TasksProgressContainer.css";
 
 export function TasksProgressContainer({
   tickets,
-  firstName,
+  user,
   ticketDateParams,
 }) {
   //TICKETS PROGRESS LOGIC
@@ -62,7 +62,7 @@ export function TasksProgressContainer({
             ? "Today's Tickets"
             : `Tickets for ${dayjs(ticketDateParams).format("ddd D MMM, YYYY")}`}
         </h3>
-        <p className="mt-8px">Welcome {firstName}!</p>
+        <p className="mt-8px">Welcome {user.firstname}!</p>
 
         <div className="tasks-progress mt-16px">
           <div className="task-progress-status">
