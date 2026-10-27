@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router";
 import { Dashboard } from "./pages/Dashboard";
 import { LoginPage } from "./pages/LoginPage";
 import { PrevTicketPage } from "./pages/PrevTicketPage.jsx";
+import { AllTicketsPage } from "./pages/AllTicketsPage.jsx";
 import { PageNotFound } from "./pages/PageNotFound.jsx";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import "./App.css";
@@ -87,6 +88,17 @@ function App() {
                 updateInputs={updateInputs}
                 displayInputContainer={displayInputContainer}
                 setDisplayInputContainer={setDisplayInputContainer}
+              />
+            </ProtectedRoute>
+          }
+        />
+        <Route 
+          path="all-tickets"
+          element={
+            <ProtectedRoute>
+              <AllTicketsPage 
+                user={user} 
+                updateUser={updateUser}
               />
             </ProtectedRoute>
           }

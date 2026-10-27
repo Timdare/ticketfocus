@@ -1,0 +1,157 @@
+main .admin-workspace-text{
+    font-size: .8rem; 
+    font-weight: 600; 
+    animation-name: fade-in-out;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: linear;
+}
+@keyframes fade-in-out {
+    from{
+        opacity: 1;
+    }
+    to{
+        opacity: .3;
+    }
+}
+/* PAGE INFO CONTAINER */
+.page-info .page-desc{
+    flex-grow: 1;
+}
+.page-info h1, .page-info p{
+    margin-bottom: 0;
+}
+.page-info .add-ticket-btn{
+  padding: 1rem .5rem;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  background-color: var(--dark-blue-color);
+  color: var(--white-color);
+  cursor: pointer;
+  font-size: 1rem;
+  align-self: flex-end;
+}
+
+/* TICKET DETAILS CONTAINER */
+.tickets-details-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.tickets-details-container .detail-container{
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+}
+.tickets-details-container .detail-container .details-header .details-header-icon{
+    padding: 0.3rem;
+}
+.tickets-details-container .detail-container .details-no{
+    font-size: 2rem;
+    font-weight: 600;
+}
+@media (max-width: 768px) {
+    .tickets-details-container{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* FILTER CONTAINER */
+.filter-container{
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);  
+  flex-wrap: wrap;  
+}
+.filter-container .filter-users-container{
+    padding: .3rem 0.5rem;
+    overflow-x: auto;
+    gap: 0.2rem;
+}
+.filter-container .filter-users-container .user{
+    font-weight: 500;
+    padding: 0.3rem .7rem;
+    cursor: pointer;
+}
+.filter-container .filter-users-container .user:hover{
+    color: black;
+}
+.filter-container .filter-users-container .user.active{
+    background-color: var(--white-color);
+    color: var(--light-blue-color);
+    border-radius: 8px;
+}
+
+/* TICKETS TABLE */
+.tickets-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-block: 2rem;
+}
+.tickets-table tr:hover{
+    background-color: var(--light-grey-color);
+}
+.tickets-table th{
+    padding: .5rem;
+}
+.tickets-table tbody tr td:nth-child(2){
+    text-align: left;
+}
+.tickets-table tbody td{
+    padding: 1rem .5rem;
+}
+.tickets-table tbody td input[type="checkbox"]{
+  margin-right: .5rem;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  display: inline-grid;
+  place-content: center;
+  border: 1px solid var(--dark-grey-color);
+  border-radius: 7px;
+  margin: 0;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+.tickets-table tbody td input[type="checkbox"]::before{
+  content: "";
+  width: 10px;
+  height: 10px;
+  transform: scale(0);
+  transform-origin: center;
+  transition: transform 0.2s ease-in-out;
+  background-color: #ffffff;
+  /* Clips a sharp checkmark shape */
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+.tickets-table tbody td input[type="checkbox"]:checked {
+  background-color: var(--dark-blue-color);
+  border-color: var(--dark-blue-color);
+}
+.tickets-table tbody td input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+/* Keyboard focus accessibility states */
+.tickets-table tbody td input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--dark-blue-color);
+  outline-offset: 1px;
+}
+.tickets-table tbody td .delete-icon-container{
+    padding: 0.5rem;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.tickets-table tbody td .delete-icon-container:hover{
+    background-color: rgba(255, 0, 0, .1);
+}
+.tickets-table tbody td .delete-icon-container:hover .delete-icon{
+    color: red;
+}
+
+/* FORBIDDEN ERROR CONTAINER */
+.forbidden-err-container{
+    text-align: center;
+    font-size: 2rem;
+}
+.forbidden-err-container h1{
+    color: red;
+}
