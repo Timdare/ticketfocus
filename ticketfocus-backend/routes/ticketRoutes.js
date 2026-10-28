@@ -8,7 +8,7 @@ import {
   getUserTickets,
   updateTicket,
 } from "../controllers/ticketController.js";
-import { verifyUser } from "../utils/verifyUser.js";
+import { verifyUser } from "../utils/verify.js";
 
 export const ticketRouter = express.Router();
 

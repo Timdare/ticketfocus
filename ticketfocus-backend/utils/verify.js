@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { mySqlPool } from "../config/db.js";
 
 dotenv.config(); // CONFIGURE dotenv TO USE ENVIRONMENT VARIABLES
 
@@ -28,3 +29,22 @@ export const verifyUser = (req, res, next) => {
     });
   }
 };
+
+export const verifyAdmin = async (req,res) => {
+    const {user_id} = req;
+    if(!user_id) {
+        return res.status(401).json({
+            success: false,
+            message: "You are not authenticated"
+        });
+    }
+
+    const roleData = await mySqlPool.query(`SELECT user_role FROM users WHERE id = ?`, [user_id]);
+    const {user_role} = roleData[0][0];
+    if(user_role !== "admin"){
+        return res.status(403).json({
+            success: false,
+            message: "User forbidden from accessing this data"
+        });
+    };
+}

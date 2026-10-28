@@ -6,32 +6,6 @@ dotenv.config(); // CONFIGURE dotenv TO USE ENVIRONMENT VARIABLES
 
 const login_token = process.env.JWT_LOGIN_TOKEN;
 
-// GET ALL USERS
-export const getUsers = async (req, res) => {
-  try {
-    const data = await mySqlPool.query("SELECT * FROM users");
-    if (!data) {
-      return res.status(404).send({
-        message: "No users found",
-        success: false,
-      });
-    }
-    res.status(200).json({
-      message: "All users",
-      success: true,
-      totalUsers: data[0].length,
-      users: data[0],
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      success: false,
-      message: "Error in get all students API",
-      error,
-    });
-  }
-};
-
 // LOGIN API
 export const userLogin = async (req, res) => {
   const sql = `SELECT * FROM users WHERE user_name = (?)`;

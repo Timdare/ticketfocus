@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { mySqlPool } from "./config/db.js";
 import { userRouter } from "./routes/userRoutes.js";
 import { ticketRouter } from "./routes/ticketRoutes.js";
+import { adminRouter } from "./routes/adminAccessRoutes.js"
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(
 );
 app.use("/api/auth", userRouter);
 app.use("/api/tickets", ticketRouter);
+app.use("/api/admin", adminRouter)
 
 // app.get("/",(req,res)=> res.send("<h1> This is a message from the backend</h1>"))
 
