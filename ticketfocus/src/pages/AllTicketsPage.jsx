@@ -1,12 +1,26 @@
-import { useEffect } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { Header } from "../components/Header"
 import "./AllTicketsPage.css";
 
 export function AllTicketsPage({ user, updateUser }) {
     console.log(user);
+
+    const [users,setUsers] = useState([]);
+
     useEffect(()=>{
         updateUser();
+        
+        // GET USERS' DETAILS
+        axios.get("/api/admin/getusers")
+            .then(res => {
+                setUsers(res.data.users)
+            })
+            .catch(err => {
+                console.log(err.response);
+                setUsers([]);
+            })
     },[])
     return(
         <>
@@ -20,7 +34,7 @@ export function AllTicketsPage({ user, updateUser }) {
                         <p className="dark-blue letter-spacing-2px text-transform-uppercase m-0 admin-workspace-text">ADMIN WORKSPACE</p>
                         <section className="page-info d-flex gp-1">
                             <div className="page-desc">
-                                <h1 className="m-0">All Tasks Overview</h1>
+                                <h1 className="m-0">All Tickets Overview</h1>
                                 <p className="dark-grey-text mt-0">Monitor and manage tickets across all team members in real-time.</p>
                             </div>
                             <button className="dark-blue-bg white-text add-ticket-btn">Add new ticket</button>
@@ -31,7 +45,7 @@ export function AllTicketsPage({ user, updateUser }) {
                                 <div className="details-header d-flex justify-content-space-between align-items-center mt-0">
                                     <h5 className="text-transform-uppercase dark-grey-text">Total Tickets</h5>
                                     <span className="details-header-icon rounded-8px light-grey-bg">
-                                        <i class="fa-regular fa-clipboard dark-blue"></i>
+                                        <i className="fa-regular fa-clipboard dark-blue"></i>
                                     </span>
                                 </div>
                                 <span className="details-no">50</span>
@@ -41,7 +55,7 @@ export function AllTicketsPage({ user, updateUser }) {
                                 <div className="details-header d-flex justify-content-space-between align-items-center mt-0">
                                     <h5 className="text-transform-uppercase dark-grey-text">completed</h5>
                                     <span className="details-header-icon rounded-8px light-grey-bg">
-                                        <i class="fa-regular fa-circle-check" style={{color: "#006687"}}></i>
+                                        <i className="fa-regular fa-circle-check" style={{color: "#006687"}}></i>
                                     </span>
                                 </div>
                                 <span className="details-no">39</span>
@@ -51,7 +65,7 @@ export function AllTicketsPage({ user, updateUser }) {
                                 <div className="details-header d-flex justify-content-space-between align-items-center mt-0">
                                     <h5 className="text-transform-uppercase dark-grey-text">Pending</h5>
                                     <span className="details-header-icon rounded-8px light-grey-bg">
-                                        <i class="fa-solid fa-ellipsis dark-grey-text"></i>
+                                        <i className="fa-solid fa-ellipsis dark-grey-text"></i>
                                     </span>
                                 </div>
                                 <span className="details-no">11</span>
@@ -61,10 +75,10 @@ export function AllTicketsPage({ user, updateUser }) {
                                 <div className="details-header d-flex justify-content-space-between align-items-center mt-0">
                                     <h5 className="text-transform-uppercase dark-grey-text">Total users</h5>
                                     <span className="details-header-icon rounded-8px light-grey-bg">
-                                        <i class="fa-solid fa-users"></i>
+                                        <i className="fa-solid fa-users"></i>
                                     </span>
                                 </div>
-                                <span className="details-no">10</span>
+                                <span className="details-no">{users.length ? users.length : 0}</span>
                             </div>
 
                         </section>
@@ -72,11 +86,18 @@ export function AllTicketsPage({ user, updateUser }) {
                         <section className="filter-container white-bg d-flex p-block-1rem p-inline-1rem mt-16px rounded-8px gp-1">
                             <div className="filter-users-container d-flex light-grey-bg rounded-8px">
                                 <div className="user active">All</div>
-                                <div className="user dark-grey-text">Oluwatimilehin</div>
+
+                                {users.length && users.map(u => {
+                                    return(
+                                        <div key={u.id} className="user dark-grey-text">{u.first_name}</div>
+                                    );
+                                })}
+
+                                {/* <div className="user dark-grey-text">Oluwatimilehin</div>
                                 <div className="user dark-grey-text">Hassan</div>
                                 <div className="user dark-grey-text">Gift</div>
                                 <div className="user dark-grey-text">Mario</div>
-                                <div className="user dark-grey-text">Paul</div>
+                                <div className="user dark-grey-text">Paul</div> */}
                             </div>
                             <select className="completion-status-dropdown light-grey-bg rounded-8px">
                                 <option value="all">All</option>
