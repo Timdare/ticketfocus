@@ -118,119 +118,123 @@ export function AllTicketsPage({ user, updateUser }) {
                                 <option value="completed">Status: completed</option>
                                 <option value="pending">Status: pending</option>
                             </select>
-                        </section>                        
+                        </section>    
+
+                        <div style={{"overflowX": "auto"}}>
+                            <table className="tickets-table mt-16px rounded-8px">
+                                <thead className="text-transform-uppercase light-grey-bg dark-grey-text">
+                                    <tr>
+                                        <th>Status</th>
+                                        <th>Ticket description</th>
+                                        <th>creator</th>
+                                        <th>office</th>
+                                        <th>creation date</th>
+                                        <th>action</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="centered-text">
+
+                                    {tickets && tickets.allTickets && tickets.allTickets.length && tickets.allTickets.map(ticket => {
+
+                                        return(
+                                            <tr key={ticket.id}>
+                                                <td>
+                                                    <input
+                                                        type="checkbox"
+                                                        id={"ticket.id"}
+                                                        className="check"
+                                                        // checked={false}
+                                                        onChange={()=>{}}
+                                                        title="Mark as complete"
+                                                    />
+                                                </td>
+                                                <td>{ticket.text}</td>
+                                                <td className="text-transform-capitalize">{ticket.creator}</td>
+                                                <td>{ticket.office}</td>
+                                                <td>{dayjs(ticket.createdAt).format("MMM DD, YYYY")}</td>
+                                                <td>
+                                                    <span className="delete-icon-container">
+                                                        <i className="fa-solid fa-trash-can delete-icon dark-grey-text"></i>
+                                                    </span>
+                                                </td>
+                                            </tr>  
+                                        );
+                                        
+
+                                    })}
+        {/* 
+                                    <tr>
+                                        <td>
+                                            <input
+                                                type="checkbox"
+                                                id={"ticket.id"}
+                                                className="check"
+                                                // checked={false}
+                                                onChange={()=>{}}
+                                                title="Mark as complete"
+                                            />
+                                        </td>
+                                        <td>Crimped an ethernet cable for use in an office</td>
+                                        <td>Oluwatimilehin</td>
+                                        <td>703</td>
+                                        <td>Oct 24,2026</td>
+                                        <td>
+                                            <span className="delete-icon-container">
+                                                <i className="fa-solid fa-trash-can delete-icon dark-grey-text"></i>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>
+                                            <input
+                                                type="checkbox"
+                                                id={"ticket.id"}
+                                                className="check"
+                                                // checked={false}
+                                                onChange={()=>{}}
+                                                title="Mark as complete"
+                                            />
+                                        </td>
+                                        <td>Connected multiple guests to the company wi-fi network for use in a board meeting</td>
+                                        <td>Oluwatimilehin</td>
+                                        <td>703</td>
+                                        <td>Oct 24,2026</td>
+                                        <td>
+                                            <span className="delete-icon-container dark-grey-text">
+                                                <i className="fa-solid fa-trash-can delete-icon"></i>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>
+                                            <input
+                                                type="checkbox"
+                                                id={"ticket.id"}
+                                                className="check"
+                                                // checked={false}
+                                                onChange={()=>{}}
+                                                title="Mark as complete"
+                                            />
+                                        </td>
+                                        <td>Crimped an ethernet cable for use in an office</td>
+                                        <td>Oluwatimilehin</td>
+                                        <td>703</td>
+                                        <td>Oct 24,2026</td>
+                                        <td>
+                                            <span className="delete-icon-container">
+                                                <i className="fa-solid fa-trash-can delete-icon dark-grey-text"></i>
+                                            </span>
+                                        </td>
+                                    </tr> */}
+
+                                </tbody>
+                            </table>
+
+                        </div>                    
                                 
-                        <table className="tickets-table mt-16px rounded-8px">
-                            <thead className="text-transform-uppercase light-grey-bg dark-grey-text">
-                                <tr>
-                                    <th>Status</th>
-                                    <th>Ticket description</th>
-                                    <th>creator</th>
-                                    <th>office</th>
-                                    <th>creation date</th>
-                                    <th>action</th>
-                                </tr>
-                            </thead>
-                            <tbody className="centered-text">
-
-                                {tickets && tickets.allTickets && tickets.allTickets.length && tickets.allTickets.map(ticket => {
-
-                                    return(
-                                        <tr key={ticket.id}>
-                                            <td>
-                                                <input
-                                                    type="checkbox"
-                                                    id={"ticket.id"}
-                                                    className="check"
-                                                    // checked={false}
-                                                    onChange={()=>{}}
-                                                    title="Mark as complete"
-                                                />
-                                            </td>
-                                            <td>{ticket.text}</td>
-                                            <td className="text-transform-capitalize">{ticket.creator}</td>
-                                            <td>{ticket.office}</td>
-                                            <td>{dayjs(ticket.createdAt).format("MMM DD, YYYY")}</td>
-                                            <td>
-                                                <span className="delete-icon-container">
-                                                    <i className="fa-solid fa-trash-can delete-icon dark-grey-text"></i>
-                                                </span>
-                                            </td>
-                                        </tr>  
-                                    );
-                                   
-
-                                })}
-{/* 
-                                <tr>
-                                    <td>
-                                        <input
-                                            type="checkbox"
-                                            id={"ticket.id"}
-                                            className="check"
-                                            // checked={false}
-                                            onChange={()=>{}}
-                                            title="Mark as complete"
-                                        />
-                                    </td>
-                                    <td>Crimped an ethernet cable for use in an office</td>
-                                    <td>Oluwatimilehin</td>
-                                    <td>703</td>
-                                    <td>Oct 24,2026</td>
-                                    <td>
-                                        <span className="delete-icon-container">
-                                            <i className="fa-solid fa-trash-can delete-icon dark-grey-text"></i>
-                                        </span>
-                                    </td>
-                                </tr>
-                                
-                                <tr>
-                                    <td>
-                                        <input
-                                            type="checkbox"
-                                            id={"ticket.id"}
-                                            className="check"
-                                            // checked={false}
-                                            onChange={()=>{}}
-                                            title="Mark as complete"
-                                        />
-                                    </td>
-                                    <td>Connected multiple guests to the company wi-fi network for use in a board meeting</td>
-                                    <td>Oluwatimilehin</td>
-                                    <td>703</td>
-                                    <td>Oct 24,2026</td>
-                                    <td>
-                                        <span className="delete-icon-container dark-grey-text">
-                                            <i className="fa-solid fa-trash-can delete-icon"></i>
-                                        </span>
-                                    </td>
-                                </tr>
-                                
-                                <tr>
-                                    <td>
-                                        <input
-                                            type="checkbox"
-                                            id={"ticket.id"}
-                                            className="check"
-                                            // checked={false}
-                                            onChange={()=>{}}
-                                            title="Mark as complete"
-                                        />
-                                    </td>
-                                    <td>Crimped an ethernet cable for use in an office</td>
-                                    <td>Oluwatimilehin</td>
-                                    <td>703</td>
-                                    <td>Oct 24,2026</td>
-                                    <td>
-                                        <span className="delete-icon-container">
-                                            <i className="fa-solid fa-trash-can delete-icon dark-grey-text"></i>
-                                        </span>
-                                    </td>
-                                </tr> */}
-
-                            </tbody>
-                        </table>
-
+                       
                         <LogoutBtnContainer />
                     </main>
                 ) : (
