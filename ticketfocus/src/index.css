@@ -92,6 +92,9 @@
 .text-transform-uppercase{
   text-transform: uppercase;
 }
+.text-transform-capitalize{
+  text-transform: capitalize;
+}
 .cursor-pointer{
   cursor: pointer;
 }

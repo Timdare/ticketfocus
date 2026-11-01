@@ -148,6 +148,12 @@ main .admin-workspace-text{
     color: red;
 }
 
+/* ADMIN FOOTER */
+.admin-enabled-text{
+    text-align: right;
+    font-size: 0.8rem;
+}
+
 /* FORBIDDEN ERROR CONTAINER */
 .forbidden-err-container{
     text-align: center;

@@ -1,13 +1,16 @@
 import axios from "axios";
+import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import { Header } from "../components/Header"
+import { Header } from "../components/Header";
+import { LogoutBtnContainer } from "../components/LogoutBtnContainer";
 import "./AllTicketsPage.css";
 
 export function AllTicketsPage({ user, updateUser }) {
     console.log(user);
 
     const [users,setUsers] = useState([]);
+    const [tickets, setTickets] = useState({});
 
     useEffect(()=>{
         updateUser();
@@ -21,6 +24,17 @@ export function AllTicketsPage({ user, updateUser }) {
                 console.log(err.response);
                 setUsers([]);
             })
+
+        // GET TICKETS' DETAILS
+        axios.get("/api/admin/all-tickets")
+            .then(res => {
+                console.log(res.data.tickets);
+                setTickets(res.data.tickets);
+            })
+            .catch(err => {
+                console.log(err.response);
+                setTickets({});
+            });
     },[])
     return(
         <>
@@ -48,7 +62,7 @@ export function AllTicketsPage({ user, updateUser }) {
                                         <i className="fa-regular fa-clipboard dark-blue"></i>
                                     </span>
                                 </div>
-                                <span className="details-no">50</span>
+                                <span className="details-no">{tickets.totalTickets}</span>
                             </div>
                             
                             <div className="detail-container p-inline-1rem p-block-1rem white-bg rounded-8px">
@@ -58,7 +72,7 @@ export function AllTicketsPage({ user, updateUser }) {
                                         <i className="fa-regular fa-circle-check" style={{color: "#006687"}}></i>
                                     </span>
                                 </div>
-                                <span className="details-no">39</span>
+                                <span className="details-no">{tickets.completeTickets}</span>
                             </div>
 
                             <div className="detail-container p-inline-1rem p-block-1rem white-bg rounded-8px">
@@ -68,7 +82,7 @@ export function AllTicketsPage({ user, updateUser }) {
                                         <i className="fa-solid fa-ellipsis dark-grey-text"></i>
                                     </span>
                                 </div>
-                                <span className="details-no">11</span>
+                                <span className="details-no">{tickets.pendingTickets}</span>
                             </div>
                             
                             <div className="detail-container p-inline-1rem p-block-1rem white-bg rounded-8px">
@@ -118,6 +132,36 @@ export function AllTicketsPage({ user, updateUser }) {
                                 </tr>
                             </thead>
                             <tbody className="centered-text">
+
+                                {tickets && tickets.allTickets && tickets.allTickets.length && tickets.allTickets.map(ticket => {
+
+                                    return(
+                                        <tr key={ticket.id}>
+                                            <td>
+                                                <input
+                                                    type="checkbox"
+                                                    id={"ticket.id"}
+                                                    className="check"
+                                                    // checked={false}
+                                                    onChange={()=>{}}
+                                                    title="Mark as complete"
+                                                />
+                                            </td>
+                                            <td>{ticket.text}</td>
+                                            <td className="text-transform-capitalize">{ticket.creator}</td>
+                                            <td>{ticket.office}</td>
+                                            <td>{dayjs(ticket.createdAt).format("MMM DD, YYYY")}</td>
+                                            <td>
+                                                <span className="delete-icon-container">
+                                                    <i className="fa-solid fa-trash-can delete-icon dark-grey-text"></i>
+                                                </span>
+                                            </td>
+                                        </tr>  
+                                    );
+                                   
+
+                                })}
+{/* 
                                 <tr>
                                     <td>
                                         <input
@@ -182,10 +226,12 @@ export function AllTicketsPage({ user, updateUser }) {
                                             <i className="fa-solid fa-trash-can delete-icon dark-grey-text"></i>
                                         </span>
                                     </td>
-                                </tr>
+                                </tr> */}
 
                             </tbody>
                         </table>
+
+                        <LogoutBtnContainer />
                     </main>
                 ) : (
                     <div className="forbidden-err-container">
@@ -200,7 +246,7 @@ export function AllTicketsPage({ user, updateUser }) {
                 <hr />
 
                 <footer className="mt-16px">
-                    <p className="dark-grey-text"><i>Admin mode enabled</i></p>
+                    <p className="dark-grey-text admin-enabled-text"><i>Admin mode enabled</i></p>
                 </footer>
                 
             </div>
