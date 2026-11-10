@@ -15,11 +15,33 @@ export const getUsers = async (req, res) => {
         success: false,
       });
     }
+    
+    const users = await Promise.all(
+      usersData[0].map(async(user) => {
+        
+        const data = await mySqlPool.query(`
+          SELECT count(user_id) AS userTicketsCount
+          FROM tickets
+          WHERE user_id = ?
+        `,[user.id]);
+        const userTicketsCount = data[0][0].userTicketsCount;
+        return {
+          id: user.id,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          user_name: user.user_name,
+          role: user.user_role,
+          userTicketsCount
+        }
+
+      })
+    )  
+
     res.status(200).json({
       message: "All users",
       success: true,
       totalUsers: usersData[0].length,
-      users: usersData[0],
+      users,
     });
   } catch (error) {
     console.log(error);
@@ -29,8 +51,45 @@ export const getUsers = async (req, res) => {
       error,
     });
   }
-};
+}
 
+// DELETE A USER
+export const deleteUser =  async (req,res) => {
+  const sql = `DELETE FROM users WHERE id = (?)`;
+  try {
+
+    verifyAdmin(req,res);
+    const user_id = parseInt(req.params.user_id);
+    if (!user_id) {
+      return res.status(404).json({
+        success: false,
+        message: "Please provide a valid user ID",
+      });
+    }
+
+    const data = await mySqlPool.query(sql, [user_id]);
+    if (!data) {
+      return res.status(500).json({
+        success: false,
+        message: "Error in DB query",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "User deleted successfully",
+    });
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Error in delete user API",
+    });
+  }
+}
+
+// GET ALL TICKETS
 export const allTickets = async (req,res) => {
 
   try {

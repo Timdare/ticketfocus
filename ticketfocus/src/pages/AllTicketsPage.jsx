@@ -148,7 +148,7 @@ export function AllTicketsPage({ user, updateUser }) {
                                                         title="Mark as complete"
                                                     />
                                                 </td>
-                                                <td>{ticket.text}</td>
+                                                <td className="text-align-left">{ticket.text}</td>
                                                 <td className="text-transform-capitalize">{ticket.creator}</td>
                                                 <td>{ticket.office}</td>
                                                 <td>{dayjs(ticket.createdAt).format("MMM DD, YYYY")}</td>

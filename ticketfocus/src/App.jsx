@@ -5,6 +5,7 @@ import { Dashboard } from "./pages/Dashboard";
 import { LoginPage } from "./pages/LoginPage";
 import { PrevTicketPage } from "./pages/PrevTicketPage.jsx";
 import { AllTicketsPage } from "./pages/AllTicketsPage.jsx";
+import { AllUsersPage } from "./pages/AllUsersPage.jsx";
 import { PageNotFound } from "./pages/PageNotFound.jsx";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import "./App.css";
@@ -98,6 +99,17 @@ function App() {
             <ProtectedRoute>
               <AllTicketsPage 
                 user={user} 
+                updateUser={updateUser}
+              />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="all-users"
+          element={
+            <ProtectedRoute>
+              <AllUsersPage 
+                user={user}
                 updateUser={updateUser}
               />
             </ProtectedRoute>

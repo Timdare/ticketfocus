@@ -86,6 +86,9 @@
 .centered-text{
   text-align: center;
 }
+.text-align-left{
+  text-align: left;
+}
 .letter-spacing-2px{
   letter-spacing: 2px; 
 }
