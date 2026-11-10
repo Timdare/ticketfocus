@@ -7,10 +7,20 @@ import { LogoutBtnContainer } from "../components/LogoutBtnContainer";
 import "./AllTicketsPage.css";
 
 export function AllTicketsPage({ user, updateUser }) {
-    console.log(user);
 
     const [users,setUsers] = useState([]);
     const [tickets, setTickets] = useState({});
+
+    const getAllTickets = async () => {
+        try {
+            const res = await axios.get("/api/admin/all-tickets");
+            console.log(res.data.tickets);
+            setTickets(res.data.tickets);
+        } catch (error) {
+            console.log(error.response);
+            setTickets({});
+        }
+    }
 
     useEffect(()=>{
         updateUser();
@@ -26,15 +36,19 @@ export function AllTicketsPage({ user, updateUser }) {
             })
 
         // GET TICKETS' DETAILS
-        axios.get("/api/admin/all-tickets")
-            .then(res => {
-                console.log(res.data.tickets);
-                setTickets(res.data.tickets);
-            })
-            .catch(err => {
-                console.log(err.response);
-                setTickets({});
-            });
+        // axios.get("/api/admin/all-tickets")
+        //     .then(res => {
+        //         console.log(res.data.tickets);
+        //         setTickets(res.data.tickets);
+        //     })
+        //     .catch(err => {
+        //         console.log(err.response);
+        //         setTickets({});
+        //     });
+        const callGetAllTickets = () => {
+            getAllTickets();
+        }
+        callGetAllTickets();
     },[])
     return(
         <>
@@ -134,34 +148,38 @@ export function AllTicketsPage({ user, updateUser }) {
                                 </thead>
                                 <tbody className="centered-text">
 
-                                    {tickets && tickets.allTickets && tickets.allTickets.length && tickets.allTickets.map(ticket => {
+
+                                    {(tickets && tickets.allTickets && tickets.allTickets.length) ? tickets.allTickets.map(ticket => {
 
                                         return(
-                                            <tr key={ticket.id}>
-                                                <td>
-                                                    <input
-                                                        type="checkbox"
-                                                        id={"ticket.id"}
-                                                        className="check"
-                                                        // checked={false}
-                                                        onChange={()=>{}}
-                                                        title="Mark as complete"
-                                                    />
-                                                </td>
-                                                <td className="text-align-left">{ticket.text}</td>
-                                                <td className="text-transform-capitalize">{ticket.creator}</td>
-                                                <td>{ticket.office}</td>
-                                                <td>{dayjs(ticket.createdAt).format("MMM DD, YYYY")}</td>
-                                                <td>
-                                                    <span className="delete-icon-container">
-                                                        <i className="fa-solid fa-trash-can delete-icon dark-grey-text"></i>
-                                                    </span>
-                                                </td>
-                                            </tr>  
+                                            // <tr key={ticket.id}>
+                                            //     <td>
+                                            //         <input
+                                            //             type="checkbox"
+                                            //             id={"ticket.id"}
+                                            //             className="check"
+                                            //             // checked={false}
+                                            //             onChange={()=>{}}
+                                            //             title="Mark as complete"
+                                            //         />
+                                            //     </td>
+                                            //     <td className="text-align-left">{ticket.text}</td>
+                                            //     <td className="text-transform-capitalize">{ticket.creator}</td>
+                                            //     <td>{ticket.office}</td>
+                                            //     <td>{dayjs(ticket.createdAt).format("MMM DD, YYYY")}</td>
+                                            //     <td>
+                                            //         <span className="delete-icon-container">
+                                            //             <i className="fa-solid fa-trash-can delete-icon dark-grey-text"></i>
+                                            //         </span>
+                                            //     </td>
+                                            // </tr>  
+                                            <TicketRow key={ticket.id} ticket={ticket} getAllTickets={getAllTickets} />
                                         );
                                         
 
-                                    })}
+                                    }) : (
+                                        null
+                                    )}
         {/* 
                                     <tr>
                                         <td>
@@ -256,6 +274,49 @@ export function AllTicketsPage({ user, updateUser }) {
             </div>
 
             
+        </>
+    );
+}
+
+
+function TicketRow({ticket, getAllTickets}) {
+
+    const deleteTicket = async () => {
+        try {
+            const res = await axios.delete(`/api/admin/deleteticket/${ticket.id}`);
+            alert(res.data.message);
+            await getAllTickets();
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
+
+    return(
+        <>
+            <tr key={ticket.id}>
+                <td>
+                    <input
+                        type="checkbox"
+                        id={"ticket.id"}
+                        className="check"
+                        checked={ticket.completed}
+                        onChange={()=>{}}
+                        title="Mark as complete"
+                    />
+                </td>
+                <td className="text-align-left">{ticket.text}</td>
+                <td className="text-transform-capitalize">{ticket.creator}</td>
+                <td>{ticket.office}</td>
+                <td>{dayjs(ticket.createdAt).format("MMM DD, YYYY")}</td>
+                <td>
+                    <span 
+                        className="delete-icon-container"
+                        onClick={deleteTicket}
+                    >
+                        <i className="fa-solid fa-trash-can delete-icon dark-grey-text"></i>
+                    </span>
+                </td>
+            </tr>  
         </>
     );
 }
