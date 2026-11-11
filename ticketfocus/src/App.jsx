@@ -6,6 +6,8 @@ import { LoginPage } from "./pages/LoginPage";
 import { PrevTicketPage } from "./pages/PrevTicketPage.jsx";
 import { AllTicketsPage } from "./pages/AllTicketsPage.jsx";
 import { AllUsersPage } from "./pages/AllUsersPage.jsx";
+import { AddUser } from "./pages/AddUser.jsx";
+import { UpdateUser } from "./pages/UpdateUser.jsx";
 import { PageNotFound } from "./pages/PageNotFound.jsx";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import "./App.css";
@@ -109,6 +111,28 @@ function App() {
           element={
             <ProtectedRoute>
               <AllUsersPage 
+                user={user}
+                updateUser={updateUser}
+              />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="add-user"
+          element={
+            <ProtectedRoute>
+              <AddUser 
+                user={user}
+                updateUser={updateUser}
+              />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="update-user"
+          element={
+            <ProtectedRoute>
+              <UpdateUser 
                 user={user}
                 updateUser={updateUser}
               />

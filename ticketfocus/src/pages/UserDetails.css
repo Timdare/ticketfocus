@@ -1,0 +1,203 @@
+.back-to-users-link {
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.back-to-users-link:hover {
+  color: var(--dark-blue-color);
+}
+.back-to-users-link:hover .back-icon {
+  transform: translateX(-0.5rem);
+}
+/* USER DESC */
+.user-desc {
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+.user-desc .user-profile {
+  flex-grow: 1;
+}
+.user-desc .user-profile h2,
+.user-desc .user-profile p {
+  margin-block: 0.3rem;
+}
+.user-desc .tickets-no-info {
+  border-left: 2px solid var(--light-grey-color);
+  padding-block: 0;
+}
+.user-desc .tickets-no-info h5,
+.user-desc .tickets-no-info p {
+  margin-block: 0;
+  font-size: 0.8rem;
+}
+.user-desc .tickets-no-info p {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* FORM DATA SECTION */
+.form-data {
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+}
+.form-data .form-header {
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.form-data .form-header .form-info {
+  flex-grow: 1;
+}
+.form-data .form-header .form-info h3,
+.form-data .form-header .form-info p {
+  margin-block: 0;
+}
+.form-data .form-header .form-info p {
+  font-size: 1rem;
+}
+.form-data .form-header .form-btns {
+  align-items: center;
+  gap: 1rem;
+}
+.form-data .form-header .form-btns .reset-btn {
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 10px;
+}
+.form-data .form-header .form-btns .reset-btn:hover {
+  background-color: var(--light-grey-color);
+}
+.form-data .form-header .form-btns .add-save-btn {
+  padding: 1rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.form-data .form-header .form-btns .add-save-btn:hover {
+  filter: brightness(1.1);
+}
+.form-data form {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 1rem;
+}
+@media (max-width: 600px) {
+  .form-data form {
+    display: grid;
+    grid-template-columns: auto;
+  }
+}
+.form-data form div input,.form-data form div select{
+    width: 100%;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid black;
+    outline: none;
+    background-color: var(--light-grey-color);
+    font-size: 1.1rem;
+}
+
+/* TICKETS CONTAINER */
+.tickets-container {
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+}
+.tickets-container .tickets-container-header{
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+}
+.tickets-container .tickets-container-header .tickets-container-info{
+    padding: 0;
+    flex-grow: 1;
+}
+.tickets-container .tickets-container-header .tickets-container-info h4, .tickets-container .tickets-container-header .tickets-container-info p{
+    margin-block: 0.3rem;
+}
+.tickets-container .tickets-container-header .filter-container{
+    padding: .3rem 0.5rem;
+    gap: 0.2rem;
+}
+.tickets-container .tickets-container-header .filter-container .filter-btn{
+    font-weight: 500;
+    padding: 0.3rem .7rem;
+    cursor: pointer;
+    text-transform: capitalize;
+}
+.tickets-container .tickets-container-header .filter-container .filter-btn:hover{
+    color: black;
+}
+.tickets-container .tickets-container-header .filter-container .filter-btn.active{
+    background-color: var(--white-color);
+    color: var(--light-blue-color);
+    border-radius: 8px;
+}
+.tickets-container .tickets-list{
+    list-style-type: none;
+    margin: 0;
+    margin-left: 0;
+    padding: 0;
+}
+.tickets-container .tickets-list .ticket-item{
+    border-top: 1px solid var(--light-grey-color);
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.tickets-container .tickets-list .ticket-item:hover{
+    background-color: var(--light-grey-color);
+}
+.tickets-container .tickets-list .ticket-item .ticket-item-text-container{
+    flex-grow: 1;
+    gap: 1rem;
+    align-items: center;
+}
+.tickets-container .tickets-list .ticket-item .ticket-item-text-container input[type="checkbox"]{
+  margin-right: .5rem;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  display: inline-grid;
+  place-content: center;
+  border: 1px solid var(--dark-grey-color);
+  border-radius: 7px;
+  margin: 0;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+.tickets-container .tickets-list .ticket-item .ticket-item-text-container input[type="checkbox"]::before{
+  content: "";
+  width: 10px;
+  height: 10px;
+  transform: scale(0);
+  transform-origin: center;
+  transition: transform 0.2s ease-in-out;
+  background-color: #ffffff;
+  /* Clips a sharp checkmark shape */
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+.tickets-container .tickets-list .ticket-item .ticket-item-text-container input[type="checkbox"]:checked {
+  background-color: var(--dark-blue-color);
+  border-color: var(--dark-blue-color);
+}
+.tickets-container .tickets-list .ticket-item .ticket-item-text-container input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+.tickets-container .tickets-list .ticket-item .ticket-item-text-container input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--dark-blue-color);
+  outline-offset: 1px;
+}
+.tickets-container .tickets-list .ticket-item .ticket-item-text-container .ticket-item-desc{
+    font-size: 1.1rem;
+}
+.tickets-container .tickets-list .ticket-item .ticket-item-utils{
+    gap: 1rem;
+    align-items: center;
+}
+.tickets-container .tickets-list .ticket-item .ticket-item-utils .office{
+    background-color: var(--light-grey-color);
+    padding: 0.3rem 0.5rem;
+    border-radius: 5px;
+}

@@ -55,7 +55,7 @@ export function AllUsersPage({ user, updateUser }) {
                   Manage users in the IT support team.
                 </p>
               </div>
-              <Link to="/add-users" className="dark-blue-bg white-text add-ticket-btn">
+              <Link to="/add-user" className="dark-blue-bg white-text add-ticket-btn">
                 <i className="fa-solid fa-user-plus"></i> Add User
               </Link>
             </section>
