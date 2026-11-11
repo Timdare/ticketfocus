@@ -83,6 +83,9 @@
 .m-0{
   margin: 0;
 }
+.m-block-1rem{
+  margin-block: 1rem;
+}
 .centered-text{
   text-align: center;
 }

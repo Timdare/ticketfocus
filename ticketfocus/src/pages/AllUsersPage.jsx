@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { Header } from "../components/Header";
+import { LogoutBtnContainer } from "../components/LogoutBtnContainer";
 import "./AllTicketsPage.css";
 
 export function AllUsersPage({ user, updateUser }) {
@@ -54,9 +55,9 @@ export function AllUsersPage({ user, updateUser }) {
                   Manage users in the IT support team.
                 </p>
               </div>
-              <button className="dark-blue-bg white-text add-ticket-btn">
+              <Link to="/add-users" className="dark-blue-bg white-text add-ticket-btn">
                 <i className="fa-solid fa-user-plus"></i> Add User
-              </button>
+              </Link>
             </section>
 
             <section className="tickets-details-container gp-1 mt-16px">
@@ -118,30 +119,13 @@ export function AllUsersPage({ user, updateUser }) {
                     }) : (null)
                   }
 
-                  <tr>
-                    <td>
-                      <span className="text-transform-capitalize">
-                        Atandare Oluwatimilehin
-                      </span>
-                      <br />
-                      <span className="dark-grey-text">
-                        oluwatimilehin.atandare
-                      </span>
-                    </td>
-                    <td>IT Support</td>
-                    <td>14</td>
-                    <td>
-                      <button className="light-blue cursor-pointer view-edit-btn">
-                        view / edit
-                      </button>{" "}
-                      <span className="delete-icon-container dark-grey-text">
-                        <i className="fa-solid fa-trash-can delete-icon"></i>
-                      </span>
-                    </td>
-                  </tr>
+                  
                 </tbody>
               </table>
             </div>
+
+
+            <LogoutBtnContainer />
           </main>
         ) : (
           <div className="forbidden-err-container">

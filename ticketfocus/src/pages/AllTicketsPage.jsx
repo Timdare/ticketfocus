@@ -61,11 +61,11 @@ export function AllTicketsPage({ user, updateUser }) {
                     <main>
                         <p className="dark-blue letter-spacing-2px text-transform-uppercase m-0 admin-workspace-text">ADMIN WORKSPACE</p>
                         <section className="page-info d-flex gp-1">
-                            <div className="page-desc">
+                                <div className="page-desc">
                                 <h1 className="m-0">All Tickets Overview</h1>
                                 <p className="dark-grey-text mt-0">Monitor and manage tickets across all team members in real-time.</p>
                             </div>
-                            <button className="dark-blue-bg white-text add-ticket-btn">Add new ticket</button>
+                            <Link to="/" className="dark-blue-bg white-text add-ticket-btn">Add new ticket</Link>
                         </section>
 
                         <section className="tickets-details-container gp-1 mt-16px">
