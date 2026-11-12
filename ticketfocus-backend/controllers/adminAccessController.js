@@ -53,6 +53,148 @@ export const getUsers = async (req, res) => {
   }
 }
 
+// CREATE A NEW USER
+export const addUser = async(req,res) => {
+  const sql = `INSERT INTO users (first_name,last_name,user_role) VALUES (?,?,?)`
+  try {
+    verifyAdmin(req,res);
+
+    const { firstName,lastName,role } = req.body;
+    if(!firstName){
+      return res.status(400).json({
+        success: false,
+        message: "First name field is required",
+      });
+    }
+    
+    if(!lastName){
+      return res.status(400).json({
+        success: false,
+        message: "Last name field is required",
+      });
+    }
+    
+    if(!role){
+      return res.status(400).json({
+        success: false,
+        message: "User role field is required",
+      });
+    }
+
+    const data = await mySqlPool.query(sql,[firstName,lastName,role]);
+    if (!data) {
+      return res.status(500).json({
+        success: false,
+        message: "error in DB query",
+      });
+    }
+    return res.status(201).json({
+      success: true,
+      message: "User created successfully",
+    });
+    
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error in add user API"
+    })
+  }
+}
+
+// GET USER DETAILS
+export const getUserDetails = async (req,res) => {
+  const sql = `
+    SELECT *
+    FROM users
+    LEFT JOIN tickets
+    ON users.id = tickets.user_id
+    WHERE users.id = ?;
+  `;
+  try {
+    verifyAdmin(req,res);
+
+    const user_id = req.params.user_id;
+    if(!user_id) {
+      return res.status(404).json({
+        success: false,
+        message: "INvalid User Id"
+      })
+    }
+
+    const [data] = await mySqlPool.query(sql,[user_id]);
+    if(!data) {
+      return res.status(500).json({
+        success: false,
+        message: "Error in DB query"
+      })
+    }
+
+  const user = {
+    id: data[0].id,
+    first_name: data[0].first_name,
+    last_name: data[0].last_name,
+    user_name: data[0].user_name,
+    user_role: data[0].user_role,
+    tickets: data
+      .filter(row => row.ticket_id !== null)
+      .map(row => ({
+            id: row.id,
+            text: row.ticket,
+            office: row.office,
+            completed: Boolean(row.completed),
+            createdAt: dayjs(row.created_at).valueOf(),
+      }))
+  };
+    
+    res.status(200).json({
+      success: true,
+      message: "All user details",
+      details: user
+    })
+
+  } catch (error) {
+    
+  }
+}
+
+// UPDATE USER DETAILS
+export const updateUserDetails = async (req,res) => {
+  const sql = `UPDATE users SET first_name = ?, last_name = ?, user_role = ? WHERE id = ?`;
+  try {
+    verifyAdmin(req,res);
+    const user_id = req.params.user_id;
+    if(!user_id) {
+      return res.status(404).json({
+        success: false,
+        message: "Please provide a valid user ID",
+      });
+    }
+    const { firstName,lastName,role } = req.body;
+    if(!firstName || !lastName || !role) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide all required fields",
+      });
+    }
+    const data = await mySqlPool.query(sql,[firstName,lastName,role,user_id]);
+    if(!data) {
+      return res.status(500).json({
+        success: false,
+        message: "Error in DB query"
+      })
+    }
+    res.status(200).json({
+      success: true,
+      message: "User details updated successfully"
+    })
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error in update user details API"
+    })
+  }
+}
+
 // DELETE A USER
 export const deleteUser =  async (req,res) => {
   const sql = `DELETE FROM users WHERE id = (?)`;

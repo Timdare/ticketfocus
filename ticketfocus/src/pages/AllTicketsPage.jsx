@@ -301,6 +301,7 @@ function TicketRow({ticket, getAllTickets}) {
                         className="check"
                         checked={ticket.completed}
                         onChange={()=>{}}
+                        readOnly
                         title="Mark as complete"
                     />
                 </td>

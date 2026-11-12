@@ -134,6 +134,12 @@ main .admin-workspace-text{
   outline: 2px solid var(--dark-blue-color);
   outline-offset: 1px;
 }
+.tickets-table tbody td .view-edit-btn{
+    background: none;
+    outline: none;
+    border: none;
+    text-decoration: none;
+}
 .tickets-table tbody td .delete-icon-container{
     padding: 0.5rem;
     cursor: pointer;

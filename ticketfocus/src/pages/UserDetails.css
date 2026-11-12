@@ -142,7 +142,7 @@
 }
 .tickets-container .tickets-list .ticket-item{
     border-top: 1px solid var(--light-grey-color);
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     gap: 1rem;
 }
 .tickets-container .tickets-list .ticket-item:hover{

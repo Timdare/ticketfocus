@@ -1,12 +1,36 @@
-import { useEffect } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { Header } from "../components/Header";
 import "./UserDetails.css";
 
+
 export function AddUser({ user, updateUser }) {
+
+  const [inputValues, setInputValues] = useState({
+    firstName: "",
+    lastName: "",
+    role: "IT Staff"
+  })
+
   useEffect(() => {
     updateUser();
   }, []);
+
+  const handleSubmit = async () => {
+    if (inputValues.firstName == "" || inputValues.lastName == "") {
+      alert("Input fields are required");
+      return;
+    }
+    try {
+      const res = await axios.post("/api/admin/adduser", inputValues);
+      alert(res.data.message);
+      setInputValues({firstName: "", lastName: "", role: "IT Staff"})
+    } catch (error) {
+      console.log(error.response);
+    }
+    
+  }
 
   return (
     <>
@@ -32,7 +56,7 @@ export function AddUser({ user, updateUser }) {
 
                     <div className="d-flex form-btns">
                         <button className="dark-grey-text reset-btn">Cancel</button>
-                        <button className="dark-blue-bg white-text add-save-btn rounded-8px">Add User</button>
+                        <button className="dark-blue-bg white-text add-save-btn rounded-8px" onClick={handleSubmit}>Add User</button>
                     </div>
 
                 </div>
@@ -40,16 +64,30 @@ export function AddUser({ user, updateUser }) {
                 <form className="mt-16px">
                     <div>
                         <label htmlFor="fname">First Name</label><br />
-                        <input type="text" placeholder="Enter first name" />
+                        <input 
+                          type="text" 
+                          placeholder="Enter first name" 
+                          name="fname"
+                          value={inputValues.firstName}
+                          onChange={(e)=> setInputValues({...inputValues, firstName: e.target.value})}
+                        />
                     </div>
                     <div>
                         <label htmlFor="fname">Last Name</label><br />
-                        <input type="text" placeholder="Enter last name" />
+                        <input 
+                          type="text" 
+                          placeholder="Enter last name" 
+                          value={inputValues.lastName}
+                          onChange={(e)=> setInputValues({...inputValues, lastName: e.target.value})}
+                        />
                     </div>
                     <div>
                         <label htmlFor="fname">Role</label><br />
-                        <select>
-                            <option value="it-staff">IT staff</option>
+                        <select 
+                          value={inputValues.role}
+                          onChange={(e)=> setInputValues({...inputValues, role: e.target.value})}
+                        >
+                            <option value="IT Staff">IT staff</option>
                         </select>
                     </div>
                 </form>

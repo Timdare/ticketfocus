@@ -129,7 +129,7 @@ function App() {
           }
         />
         <Route
-          path="update-user"
+          path="update-user/:user_id"
           element={
             <ProtectedRoute>
               <UpdateUser 

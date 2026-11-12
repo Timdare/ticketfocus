@@ -177,9 +177,9 @@ function UserRow({user,getUsers}) {
         <td>{user.role}</td>
         <td>{user.userTicketsCount}</td>
         <td>
-          <button className="light-blue cursor-pointer">
+          <Link to={`/update-user/${user.id}`} className="light-blue cursor-pointer view-edit-btn">
             view / edit
-          </button>{" "}
+          </Link>{" "}
           {user.role !== "admin" && <span 
               className="delete-icon-container dark-grey-text"
               onClick={deleteUser}
