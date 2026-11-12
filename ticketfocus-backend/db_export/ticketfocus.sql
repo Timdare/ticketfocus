@@ -34,7 +34,7 @@ CREATE TABLE `tickets` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `tickets_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `tickets` (
 
 LOCK TABLES `tickets` WRITE;
 /*!40000 ALTER TABLE `tickets` DISABLE KEYS */;
-INSERT INTO `tickets` VALUES (1,1,'crimped an ethernet cable for use in connecting an office desk phone','702',0,'2026-09-27 20:17:13'),(2,1,'connected a staff to a printer by downloading the driver and installing it using the IP','708',1,'2026-09-27 02:04:13'),(3,1,'updated the OS and drivers of a system to ensure it works smoothly','710',1,'2026-09-23 20:54:13'),(4,2,'setup a new pc for a staff by adding it to the company domain and installing the necessary apps','701',0,'2026-09-26 20:54:13'),(5,2,'updated the OS and drivers of a system to ensure smooth running of the system','702',0,'2026-09-26 20:14:13'),(6,3,'crimped an ethernet cable for use in connecting an office desk phone','701',0,'2026-09-25 20:54:13'),(7,3,'replaced a broken faceplate','710',0,'2026-09-26 20:54:13'),(9,1,'Replaced the faulty RAM of a PC','704',0,'2026-09-28 21:42:01'),(14,1,'connected a staff to a printer by downloading the driver and installing it using the IP','708',0,'2026-10-02 16:24:18'),(15,1,'Took inventory of new systems for record keeping','710',0,'2026-10-03 17:25:58');
+INSERT INTO `tickets` VALUES (1,1,'crimped an ethernet cable for use in connecting an office desk phone','702',1,'2026-09-27 20:17:13'),(2,1,'connected a staff to a printer by downloading the driver and installing it using the IP','708',1,'2026-09-27 02:04:13'),(3,1,'updated the OS and drivers of a system to ensure it works smoothly','710',1,'2026-09-23 20:54:13'),(4,2,'setup a new pc for a staff by adding it to the company domain and installing the necessary apps','701',1,'2026-09-26 20:54:13'),(5,2,'updated the OS and drivers of a system to ensure smooth running of the system','702',0,'2026-09-26 20:14:13'),(7,3,'replaced a broken faceplate','710',0,'2026-09-26 20:54:13'),(9,1,'Replaced the faulty RAM of a PC','704',0,'2026-09-28 21:42:01'),(15,1,'Took inventory of new systems for record keeping','710',0,'2026-10-03 17:25:58'),(21,1,'Replaced catridges in several printers','704',0,'2026-10-21 23:38:53'),(22,1,'Connected multiple guests to the company Wi-fi network for use in a board meeting','704',0,'2026-10-21 23:40:30');
 /*!40000 ALTER TABLE `tickets` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -59,10 +59,10 @@ CREATE TABLE `users` (
   `user_name` varchar(100) DEFAULT NULL,
   `first_name` varchar(50) DEFAULT NULL,
   `last_name` varchar(50) DEFAULT NULL,
-  `user_password` varchar(255) DEFAULT NULL,
-  `user_role` varchar(25) DEFAULT NULL,
+  `user_password` varchar(255) NOT NULL DEFAULT '123456',
+  `user_role` varchar(25) NOT NULL DEFAULT 'IT Staff',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,7 +71,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'oluwatimilehin.atandare','oluwatimilehin','atandare','123456','admin'),(2,'Hassan.Olamilekan','Hassan','Olamilekan','123456','IT Staff'),(3,'Gift.Asuquo','Gift','Asuquo','123456','IT Staff'),(4,'paul.dogo','paul','dogo','123456','IT Staff');
+INSERT INTO `users` VALUES (1,'oluwatimilehin.atandare','oluwatimilehin','atandare','123456','admin'),(2,'Hassan.Olamilekan','Hassan','Olamilekan','123456','IT Staff'),(3,'gift.asuquo','gift','asuquo','123456','IT Staff'),(4,'paul.dogo','paul','dogo','123456','IT Staff');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -104,14 +104,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-
---
--- Dumping events for database 'ticketfocus_db'
---
-
---
--- Dumping routines for database 'ticketfocus_db'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -122,4 +114,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-10-21 19:08:54
+-- Dump completed on 2026-11-12  6:43:09
