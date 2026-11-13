@@ -7,6 +7,7 @@ import "./AllTicketsPage.css";
 
 export function AllUsersPage({ user, updateUser }) {
   const [users, setUsers] = useState([]);
+  const [isLoading,setIsLoading] = useState(true);
 
   const getUsers =  async () => {
     try {
@@ -20,8 +21,13 @@ export function AllUsersPage({ user, updateUser }) {
   }
 
   useEffect(() => {
-    updateUser();
-
+    function callUpdateUser(){
+      setIsLoading(true)
+      updateUser();
+      setIsLoading(false)
+    }
+    callUpdateUser();
+    
     // GET USER DETAILS
     // axios
     //   .get("/api/admin/getusers")
@@ -36,6 +42,12 @@ export function AllUsersPage({ user, updateUser }) {
     callGetUsers();
   }, []);
 
+  if(isLoading) {
+    return (
+      <div>Checking authentication</div>
+    );
+  }
+
   return (
     <>
       <title>TicketFocus - All users</title>
@@ -43,7 +55,7 @@ export function AllUsersPage({ user, updateUser }) {
       <div className="main-content">
         <Header />
 
-        {user.role === "admin" ? (
+        { isLoading === false && (user.role === "admin" ? (
           <main>
             <p className="dark-blue letter-spacing-2px text-transform-uppercase m-0 admin-workspace-text">
               ADMIN WORKSPACE
@@ -135,7 +147,7 @@ export function AllUsersPage({ user, updateUser }) {
               Click <Link to="/">here</Link> to return to home!
             </p>
           </div>
-        )}
+        ))}
 
         <hr />
 

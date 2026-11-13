@@ -12,6 +12,7 @@ export function UpdateUser({ user, updateUser }) {
     role: "",
   });
   const [currentUser, setCurrentUser] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   const params = useParams();
   const { user_id } = params;
@@ -26,6 +27,7 @@ export function UpdateUser({ user, updateUser }) {
         lastName: res.data.details.last_name,
         role: res.data.details.user_role,
       });
+      setIsLoading(false);
     } catch (error) {
       console.log(error.response);
     }
@@ -48,6 +50,12 @@ export function UpdateUser({ user, updateUser }) {
     }
     callGetUserDetails();
   }, []);
+
+  if(isLoading) {
+    return (
+      <div>Retrieving user details...</div>
+    );
+  }
 
   return (
     <>

@@ -10,6 +10,7 @@ export function AllTicketsPage({ user, updateUser }) {
 
     const [users,setUsers] = useState([]);
     const [tickets, setTickets] = useState({});
+    const [isLoading,setIsLoading] = useState(true);
 
     const getAllTickets = async () => {
         try {
@@ -23,8 +24,21 @@ export function AllTicketsPage({ user, updateUser }) {
     }
 
     useEffect(()=>{
-        updateUser();
-        
+        function callUpdateUser(){
+            setIsLoading(true);
+            updateUser();
+            setIsLoading(false);
+        }
+        callUpdateUser();
+        // updateUser();
+        // function retrieveUser(){
+        //     if(user.role){
+        //         setIsLoading(true)
+        //         // updateUser();
+        //         setIsLoading(false);
+        //     }
+        // }
+        // retrieveUser();
         // GET USERS' DETAILS
         axios.get("/api/admin/getusers")
             .then(res => {
@@ -49,7 +63,12 @@ export function AllTicketsPage({ user, updateUser }) {
             getAllTickets();
         }
         callGetAllTickets();
-    },[])
+    },[]);
+    if(isLoading){
+        return(
+            <div>Checking authentication...</div>
+        );
+    }
     return(
         <>
             <title>TicketFocus - All-tickets</title>
@@ -57,7 +76,7 @@ export function AllTicketsPage({ user, updateUser }) {
             <div className="main-content">
                 <Header />
 
-                {user.role === "admin" ? (
+                {(isLoading === false) && (user.role === "admin" ? (
                     <main>
                         <p className="dark-blue letter-spacing-2px text-transform-uppercase m-0 admin-workspace-text">ADMIN WORKSPACE</p>
                         <section className="page-info d-flex gp-1">
@@ -261,7 +280,7 @@ export function AllTicketsPage({ user, updateUser }) {
                         <p>You don't have access to this page</p>
                         <p>Click <Link to="/">here</Link> to return to home!</p>
                     </div>
-                )}
+                ))}
                 
 
 
