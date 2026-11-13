@@ -101,5 +101,6 @@ git clone https://github.com/timdare/ticketfocus.git
 
 - [x] Add 'Page not found' page
 - [x] Add all users and all tickets pages for admin
+- [ ] Add functionality to filter buttons
 - [ ] Add custom popup modals instead of alert boxes
 - [ ] Add reset password page
