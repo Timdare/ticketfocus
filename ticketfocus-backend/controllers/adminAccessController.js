@@ -104,9 +104,19 @@ export const addUser = async(req,res) => {
 // GET USER DETAILS
 export const getUserDetails = async (req,res) => {
   const sql = `
-    SELECT *
+    SELECT 
+      users.id, 
+      user_name,
+      first_name,
+      last_name,
+      user_role,
+      tickets.id AS ticket_id, 
+      user_id,ticket, 
+      office, 
+      completed, 
+      created_at
     FROM users
-    LEFT JOIN tickets
+    LEFT JOIN tickets 
     ON users.id = tickets.user_id
     WHERE users.id = ?;
   `;
@@ -117,7 +127,7 @@ export const getUserDetails = async (req,res) => {
     if(!user_id) {
       return res.status(404).json({
         success: false,
-        message: "INvalid User Id"
+        message: "Invalid User Id"
       })
     }
 
@@ -138,7 +148,7 @@ export const getUserDetails = async (req,res) => {
     tickets: data
       .filter(row => row.ticket_id !== null)
       .map(row => ({
-            id: row.id,
+            id: row.ticket_id,
             text: row.ticket,
             office: row.office,
             completed: Boolean(row.completed),
@@ -153,7 +163,10 @@ export const getUserDetails = async (req,res) => {
     })
 
   } catch (error) {
-    
+    res.status(500).json({
+      success: false,
+      message: "Error in get user details API"
+    });
   }
 }
 

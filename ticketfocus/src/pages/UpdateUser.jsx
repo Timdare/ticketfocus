@@ -86,7 +86,7 @@ export function UpdateUser({ user, updateUser }) {
               <div className="tickets-no-info p-inline-1rem">
                 <h5 className="dark-grey-text">NO. OF TICKETS</h5>
                 <p>
-                  {currentUser.tickets.length ? currentUser.tickets.length : 0}{" "}
+                  {(currentUser.tickets && currentUser.tickets.length) ? currentUser.tickets.length : 0}{" "}
                   {currentUser.tickets.length === 1 ? "Ticket" : "Tickets"}
                 </p>
               </div>
